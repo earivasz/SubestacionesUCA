@@ -1,11 +1,11 @@
-var berlin = new google.maps.LatLng(52.520816, 13.410186);
+var berlin = new google.maps.LatLng(13.681099, -89.235701);
 
-var neighborhoods = [
+/*var neighborhoods = [
     new google.maps.LatLng(52.511467, 13.447179),
     new google.maps.LatLng(52.549061, 13.422975),
     new google.maps.LatLng(52.497622, 13.396110),
     new google.maps.LatLng(52.517683, 13.394393)
-];
+];*/
 
 var markers = [];
 var iterator = 0;
@@ -15,7 +15,7 @@ var map;
 
 function initialize() {
     var mapOptions = {
-        zoom: 12,
+        zoom: 17,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         center: berlin
     };
@@ -52,4 +52,4 @@ function alertaClic(correlativo) {
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
-setTimeout(drop(), 1000);
+//setTimeout(drop(), 1000);

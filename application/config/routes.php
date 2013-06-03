@@ -37,6 +37,8 @@
 | in the URL cannot be matched to a valid route.
 |
 */
+$route['subestaciones/(:any)'] = 'subestaciones/home/$1';
+$route['subestaciones'] = 'subestaciones';
 $route['news/create'] = 'news/create';
 $route['news/(:any)'] = 'news/views/$1';
 $route['news'] = 'news';
