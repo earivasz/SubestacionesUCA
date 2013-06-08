@@ -1,4 +1,4 @@
 <?php
-echo "Hola Mundo ola ke ase \\n como estas";
+phpinfo();
 ?>
 <br/>

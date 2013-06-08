@@ -5,6 +5,7 @@ class Subestaciones extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('subest_model');
+                $this->load->helper('url');
 	}
 
 	public function index()
@@ -13,6 +14,15 @@ class Subestaciones extends CI_Controller {
             
             $this->load->view('templates/header');
             $this->load->view('subestaciones/home', $data);
+            $this->load->view('templates/footer');
+	}
+        
+        public function subest($id)
+	{          
+            $data['subest'] = $this->subest_model->get_subest($id);
+            
+            $this->load->view('templates/header');
+            $this->load->view('subestaciones/detalle', $data);
             $this->load->view('templates/footer');
 	}
 }

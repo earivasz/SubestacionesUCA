@@ -40,10 +40,12 @@
 $route['subestaciones/(:any)'] = 'subestaciones/home/$1';
 $route['subestaciones'] = 'subestaciones';
 $route['news/create'] = 'news/create';
+$route['subestaciones/subest'] = 'subestaciones/subest';
+$route['subestaciones/subest/(:any)'] = 'subestaciones/subest/$1';
 $route['news/(:any)'] = 'news/views/$1';
 $route['news'] = 'news';
 $route['(:any)'] = 'pages/view/$1';
-$route['default_controller'] = "pages/view";
+$route['default_controller'] = "subestaciones/index";
 $route['404_override'] = '';
 
 
