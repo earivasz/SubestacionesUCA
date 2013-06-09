@@ -37,14 +37,14 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-$route['subestaciones/(:any)'] = 'subestaciones/home/$1';
+//$route['subestaciones/(:any)'] = 'subestaciones/home';
 $route['subestaciones'] = 'subestaciones';
-$route['news/create'] = 'news/create';
-$route['subestaciones/subest'] = 'subestaciones/subest';
-$route['subestaciones/subest/(:any)'] = 'subestaciones/subest/$1';
-$route['news/(:any)'] = 'news/views/$1';
-$route['news'] = 'news';
-$route['(:any)'] = 'pages/view/$1';
+//$route['news/create'] = 'news/create';
+//$route['subestaciones/(:any)'] = 'subestaciones/index';
+$route['subestaciones/detalle/(:num)'] = 'subestaciones/detalle/$1';
+//$route['news/(:any)'] = 'news/views/$1';
+//$route['news'] = 'news';
+$route['(:any)'] = 'subestaciones/index';
 $route['default_controller'] = "subestaciones/index";
 $route['404_override'] = '';
 

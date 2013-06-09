@@ -1,4 +1,5 @@
 var berlin = new google.maps.LatLng(13.681099, -89.235701);
+var newMarker;
 
 /*var neighborhoods = [
     new google.maps.LatLng(52.511467, 13.447179),
@@ -22,6 +23,9 @@ function initialize() {
 
     map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
+    google.maps.event.addListener(map, 'click', function (event) {
+        placeMarker(event.latLng);
+    });
 }
 
 function drop() {
@@ -53,3 +57,15 @@ function alertaClic(correlativo) {
 google.maps.event.addDomListener(window, 'load', initialize);
 
 //setTimeout(drop(), 1000);
+
+function placeMarker(location) {
+  if ( newMarker ) {
+    newMarker.setPosition(location);
+  } else {
+    newMarker = new google.maps.Marker({
+      position: location,
+      map: map
+    });
+  }
+  alert(newMarker.position.jb+'    '+newMarker.position.kb);
+}

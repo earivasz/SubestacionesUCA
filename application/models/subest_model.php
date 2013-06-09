@@ -12,7 +12,7 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
-        public function get_subest($id)
+        public function get_subest($id=1)
         {
             $query = $this->db->get_where('subestacion',array('idSubestacion' => $id));
             return $query->result_array();
