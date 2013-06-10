@@ -1,105 +1,112 @@
 body{
-            font-family:Calibri;
-            background-image: url("../img/body.png");
-            margin-top: 20px; margin-bottom: 0px; margin-left: auto; margin-right: auto;
-            color:#ffffff;
-        }
+    font-family:Calibri;
+    background-image: url("../img/body.png");
+    margin-top: 20px; margin-bottom: 0px; margin-left: auto; margin-right: auto;
+    color:#ffffff;
+}
 
-        a {
-            text-decoration:none;
-            color:#ffffff;
-        }
+a {
+    text-decoration:none;
+    color:#ffffff;
+}
 
-        a:hover{
-            text-decoration:none;}
+a:hover{
+    text-decoration:none;}
 
-        .centro {
-            margin-right:auto;
-            margin-left:auto;
-        }
+.centro {
+    margin-right:auto;
+    margin-left:auto;
+}
 
-        #principal {
-            width: 900px;
-            height:auto;
-            background-color:#202020;
-            border-radius:15px;
-        }
+#principal {
+    width: 900px;
+    height:auto;
+    background-color:#202020;
+    border-radius:15px;
+}
 
-        #titulo {
-            height:60px;
-            font-style:italic;
-            font-size:30px;
-            padding-top:20px;
-            padding-left:20px;
-            font-family:Verdana;
-        }
+#titulo {
+    height:60px;
+    font-style:italic;
+    font-size:30px;
+    padding-top:20px;
+    padding-left:20px;
+    font-family:Verdana;
+}
 
-        #separacion_arriba {
-            height:3px;
-            background-image: url("../img/separacion_arriba.jpg");
-        }
+#separacion_arriba {
+    height:3px;
+    background-image: url("../img/separacion_arriba.jpg");
+}
 
-        #menu {
-            height:50px;
-            font-size:18px;
-        }
+#menu {
+    height:50px;
+    font-size:18px;
+}
 
-        .menu_item {
-            float:left;
-            height:50px;
-            width:120px;
-            text-align:center;
-        }
+.menu_item {
+    float:left;
+    height:50px;
+    width:120px;
+    text-align:center;
+}
 
-            .menu_item a {
-                display:block;
-                padding-top:10px;
-                height:40px;
-                width:100%;
-            }
+.menu_item a {
+    display:block;
+    padding-top:10px;
+    height:40px;
+    width:100%;
+}
 
-        #separacion_contenido {
-            background-color:#000000;
-            height:1px;
-        }
+#separacion_contenido {
+    background-color:#000000;
+    height:1px;
+}
 
-        #contenido {
-            background-color:#ffffff;
-            position:relative;
-        }
+#contenido {
+    background-color:#ffffff;
+    position:relative;
+}
 
-        #separacion_abajo {
-            height:8px;
-            background-image: url("../img/separacion_abajo.jpg");
-        }
+#separacion_abajo {
+    height:8px;
+    background-image: url("../img/separacion_abajo.jpg");
+}
 
-        #footer {
-            height: 50px;
-            text-align:center;
-            padding-top:15px;
-            font-size:14px;
-        }
+#footer {
+    height: 50px;
+    text-align:center;
+    padding-top:15px;
+    font-size:14px;
+}
 
-        #map-canvas {
-        margin: 0;
-        padding: 0;
-        height: 500px;
-        width:670px;
-        float:left;
-      }
+.map-canvas {
+    margin: 0;
+    padding: 0;
+    height: 500px;
+    width:670px;
+    float:left;
+}
 
-        #overlay-mapa {
-        padding: 0;
-        height: 500px;
-        width:230px;
-        background-color:aqua;
-        margin-left:670px;
-      }
-      
-      .arrow-left {
-	width: 0; 
-	height: 0; 
-	border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent; 
-	border-right:10px solid blue; 
-       }
+.map-create {
+    margin: 0;
+    padding: 0;
+    height: 350px;
+    width: 100%;
+}
+
+#overlay-mapa {
+    padding: 0;
+    height: 500px;
+    width:230px;
+    background-color:aqua;
+    margin-left:670px;
+}
+
+.arrow-left {
+    width: 0; 
+    height: 0; 
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent; 
+    border-right:10px solid blue; 
+}

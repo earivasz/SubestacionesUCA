@@ -67,5 +67,6 @@ function placeMarker(location) {
       map: map
     });
   }
-  alert(newMarker.position.jb+'    '+newMarker.position.kb);
+  $('#coordX').val(newMarker.position.jb);
+  $('#coordY').val(newMarker.position.kb);
 }

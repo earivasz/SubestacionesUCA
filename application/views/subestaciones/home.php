@@ -19,7 +19,7 @@
     setTimeout(drop(), 1000);
 </script>
 <div id="contenido">
-    <div id="map-canvas"></div>
+    <div id="map-canvas" class="map-canvas"></div>
     <div id="overlay-mapa">
         <select onchange="javascript:setSub(this);">
             <?php foreach ($subest as $subest_item): ?>

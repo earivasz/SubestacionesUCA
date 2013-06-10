@@ -45,7 +45,7 @@ $config['index_page'] = 'index.php/';
 | 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
 |
 */
-$config['uri_protocol']	= 'REQUEST_URI';//CAMBIAR A AUTO DE NUEVO
+$config['uri_protocol']	= 'AUTO';//CAMBIAR A AUTO DE NUEVO
 
 /*
 |--------------------------------------------------------------------------
@@ -157,7 +157,7 @@ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 |
 */
 $config['allow_get_array']      = TRUE;
-$config['enable_query_strings'] = TRUE;//CAMBIAR DE REGRESO A FALSE
+$config['enable_query_strings'] = FALSE;//CAMBIAR DE REGRESO A FALSE
 $config['controller_trigger']	= 'c';
 $config['function_trigger']		= 'm';
 $config['directory_trigger']	= 'd'; // experimental not currently in use
