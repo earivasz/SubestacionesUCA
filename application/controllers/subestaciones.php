@@ -53,5 +53,33 @@ class Subestaciones extends CI_Controller {
                     }
             }
         }
+        
+        public function modificar($id)
+        {
+            $data['subest'] = $this->subest_model->get_subest($id);
+            
+            
+            $this->form_validation->set_rules('coordX', 'Coordenada X', 'required');
+            $this->form_validation->set_rules('coordY', 'Coordenada Y', 'required');
+            $this->form_validation->set_rules('numSub', 'Numero Subestacion', 'required');
+            
+
+            if ($this->form_validation->run() === FALSE)
+            {
+                    $this->load->view('templates/header');	
+                    $this->load->view('subestaciones/modificar', $data);
+                    $this->load->view('templates/footer');
+
+            }
+            else
+            {
+                    $response = $this->subest_model->set_subest();
+                    if($response){
+                        $this->load->view('subestaciones/exito');
+                    }else{
+                        $this->load->view('subestaciones/errordb');
+                    }
+            }
+        }
 }
 ?>
