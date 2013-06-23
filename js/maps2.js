@@ -28,12 +28,42 @@ function initialize() {
     });
 }
 
+function initialize_modificar() {
+    var mapOptions = {
+        zoom: 17,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        center: berlin
+    };
+
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+    google.maps.event.addListener(map, 'click', function (event) {
+        placeMarker(event.latLng);
+    });
+}
+
 function drop() {
     for (var i = 0; i < neighborhoods.length; i++) {
         setTimeout(function() {
             addMarker();
         }, (i + 1) * 600);
     }
+}
+
+function drop_modificar() {
+    for (var i = 0; i < neighborhoods.length; i++) {
+        setTimeout(function() {
+            addMarker_modificar();
+        }, (i + 1) * 600);
+    }
+}
+
+function addMarker_modificar() {
+    newMarker = new google.maps.Marker({
+      position: neighborhoods[iterator],
+      map: map,
+      animation: google.maps.Animation.DROP
+    });
 }
 
 function addMarker() {

@@ -46,6 +46,7 @@ $route['subestaciones/crear'] = 'subestaciones/crear';
 $route['subestaciones/modificar/(:num)'] = 'subestaciones/modificar/$1';
 //$route['news/(:any)'] = 'news/views/$1';
 //$route['news'] = 'news';
+$route['subestaciones/mod_sub'] = 'subestaciones/mod_sub';
 $route['excel/importar'] = 'excel/importar_line';
 $route['excel'] = 'excel';
 $route['(:any)'] = 'subestaciones/index';

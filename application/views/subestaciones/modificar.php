@@ -1,27 +1,64 @@
-<h2>Create a news item</h2>
+<script>
+    var neighborhoods = [
+    <?php 
+    $contSubEst = count($subest);
+    $cont = 1;
+    foreach ($subest as $subest_item): 
+        if($cont<$contSubEst){
+    ?>
+        new google.maps.LatLng(<?php echo $subest_item['coordX'] ?>, <?php echo $subest_item['coordY'] ?>),    
+    <?php 
+        }else{
+    ?>
+        new google.maps.LatLng(<?php echo $subest_item['coordX'] ?>, <?php echo $subest_item['coordY'] ?>)
+    <?php
+        }
+    endforeach;
+        
+        foreach ($subest as $subest_item) :
+                $cX = $subest_item['coordX'];
+                $cY = $subest_item['coordY'];
+                $numSub = $subest_item['numSubestacion'];
+                $localizacion = $subest_item['localizacion'];
+                $capacidad = $subest_item['capacidad'];
+                $conexion = $subest_item['conexion'];
+                $activo = $subest_item['activo'];
+            endforeach;
+            
+    ?>
+    ];
+    setTimeout(drop_modificar(), 1000);
+    
+    
+</script>
+<h2>Modificar Subestacion</h2>
 <div id="map-canvas" class="map-create"></div>
 <?php echo validation_errors(); ?>
+<?php $hidden=array('idSub' => $idSub);?>
+<?php echo form_open('subestaciones/mod_sub','',$hidden) ?>
 
-<?php echo form_open('subestaciones/modificar') ?>
+	<label for="coordX">X</label> 
+	<input type="input" name="coordX" id="coordX" value="<?php echo $cX; ?>" /><br />
 
-	<label for="coordX">Title</label> 
-	<input type="input" name="coordX" id="coordX"/><br />
-
-	<label for="coordY">Text</label>
-	<input type="input" name="coordY" id="coordY"/><br />
+	<label for="coordY">Y</label>
+	<input type="input" name="coordY" id="coordY" value="<?php echo $cY; ?>"/><br />
 	
-        <label for="numSub">Text</label>
-	<input type="input" name="numSub" /><br />
+        <label for="numSub">Numero Subestacion</label>
+	<input type="input" name="numSub" value="<?php echo $numSub; ?>" /><br />
         
-        <label for="localizacion">Text</label>
-	<input type="input" name="localizacion" /><br />
+        <label for="localizacion">Localizacion</label>
+	<input type="input" name="localizacion" value="<?php echo $localizacion; ?>" /><br />
         
-        <label for="capacidad">Text</label>
-	<input type="input" name="capacidad" /><br />
+        <label for="capacidad">Capacidad</label>
+	<input type="input" name="capacidad" value="<?php echo $capacidad; ?>" /><br />
         
-        <label for="conexion">Text</label>
-	<input type="input" name="conexion" /><br />
+        <label for="conexion">Conexion</label>
+	<input type="input" name="conexion" value="<?php echo $conexion; ?>" /><br />
         
+        <input type="radio" name="activo" value="Activa" <?php echo ($activo == 1 ? "checked" : ""); ?> />Activa<br />
+        <input type="radio" name="activo" value="Inactiva" <?php echo ($activo == 0 ? "checked" : ""); ?> />Inactiva
+        
+        <br />
 	<input type="submit" name="submit" value="Modificar subestacion" /> 
 
 </form>
