@@ -15,7 +15,9 @@ class Subest_model extends CI_Model {
         public function get_subest($id=1)
         {
             $query = $this->db->get_where('subestacion',array('idSubestacion' => $id));
+            //$query = $this->db->query('select * from subestuca.subestacion where idSubestacion = ' . $id );
             return $query->result_array();
+            
         }
         
         public function mod_subest($id)
@@ -46,7 +48,7 @@ class Subest_model extends CI_Model {
                 'localizacion' => $localizacion,
                 'capacidad' => $capacidad,
                 'conexion' => $conexion,
-                'activo' => 1
+                'activo' => $this->input->post('activo')
             );
             
             $this->db->where('idSubestacion', $id);

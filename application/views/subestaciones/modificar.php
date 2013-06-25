@@ -23,19 +23,22 @@
                 $capacidad = $subest_item['capacidad'];
                 $conexion = $subest_item['conexion'];
                 $activo = $subest_item['activo'];
-            endforeach;
+            endforeach;  
+
             
     ?>
     ];
     setTimeout(drop_modificar(), 1000);
     
-    
 </script>
+
 <h2>Modificar Subestacion</h2>
 <div id="map-canvas" class="map-create"></div>
 <?php echo validation_errors(); ?>
 <?php $hidden=array('idSub' => $idSub);?>
 <?php echo form_open('subestaciones/mod_sub','',$hidden) ?>
+
+        <?php echo "activo " . $subest_item['activo']; ?><br>
 
 	<label for="coordX">X</label> 
 	<input type="input" name="coordX" id="coordX" value="<?php echo $cX; ?>" /><br />
@@ -55,8 +58,8 @@
         <label for="conexion">Conexion</label>
 	<input type="input" name="conexion" value="<?php echo $conexion; ?>" /><br />
         
-        <input type="radio" name="activo" value="Activa" <?php echo ($activo == 1 ? "checked" : ""); ?> />Activa<br />
-        <input type="radio" name="activo" value="Inactiva" <?php echo ($activo == 0 ? "checked" : ""); ?> />Inactiva
+        <input type="radio" name="activo" value="1" <?php echo ($activo == 1 ? "checked" : ""); ?> />Activa<br />
+        <input type="radio" name="activo" value="0" <?php echo ($activo == 0 ? "checked" : ""); ?> />Inactiva
         
         <br />
 	<input type="submit" name="submit" value="Modificar subestacion" /> 
