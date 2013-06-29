@@ -22,7 +22,7 @@
                 $localizacion = $subest_item['localizacion'];
                 $capacidad = $subest_item['capacidad'];
                 $conexion = $subest_item['conexion'];
-                $activo = $subest_item['activo'];
+                //$activo = $subest_item['activo'];
             endforeach;  
 
             
@@ -36,10 +36,44 @@
 
     
     
-            <?php foreach ($subest as $subest_item): ?>
-            <?php echo $subest_item['idSubestacion'] ?>
+            
+            <?php echo $numSub ?>
         <br>
-            <?php echo $subest_item['localizacion'] ?>
+            <?php echo $localizacion ?>
+        <br>
+            <?php echo $capacidad ?>
+        <br>
+            <?php echo $conexion ?>
+        <br>
+        
+        <br>
+        <?php
+            foreach($transformadores as $trans):
+                echo '<div class ="transformador">';
+                echo $trans['noSerie'] . '<br>';
+                echo $trans['capacidad'] . '<br>';
+                echo $trans['fabricante'] . '<br>';
+                echo $trans['enfriamiento'] . '<br>';
+                echo $trans['impedancia'] . '<br>';
+                echo $trans['vPrimaria'] . '<br>';
+                echo $trans['vSecundario'] . '<br>';
+                echo $trans['rTransformacion'] . '<br>';
+                echo $trans['polaridad'] . '<br>';
+                echo $trans['aterrizamiento'] . '<br>';
+                echo $trans['pararrayos'] . '<br>';
+                echo $trans['cuchillas'] . '<br>';
+                echo '</div>';
+            endforeach;
+        ?>
+        
+        <?php
+            foreach($fotos as $foto):
+                echo '<div class ="foto">';
+                echo '<img src ="' . $foto['url'] . '" /><br>';
+                echo '</div>';
+            endforeach;
+        ?>
+        
         <br><br>
-            <?php endforeach ?>
+            
 

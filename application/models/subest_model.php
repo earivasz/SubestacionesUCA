@@ -12,12 +12,23 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
-        public function get_subest($id=1)
+        public function get_subest($id)
         {
             $query = $this->db->get_where('subestacion',array('idSubestacion' => $id));
             //$query = $this->db->query('select * from subestuca.subestacion where idSubestacion = ' . $id );
+            return $query->result_array();   
+        }
+        
+        public function get_transformadores($id)
+        {
+            $query = $this->db->get_where('transformador',array('idSubestacion' => $id));
             return $query->result_array();
-            
+        }
+        
+        public function get_fotosSubest($id)
+        {
+            $query = $this->db->get_where('foto',array('idSubestacion' => $id));
+            return $query->result_array();
         }
         
         public function mod_subest($id)
