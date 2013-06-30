@@ -75,6 +75,15 @@ class Subestaciones extends CI_Controller {
             $this->load->view('templates/footer');
         }
         
+        public function graficos($id)
+        {
+            $data['subest'] = $this->subest_model->get_subest($id);
+            $data['idSub'] = $id;
+            $this->load->view('templates/header');	
+            $this->load->view('subestaciones/graficos', $data);
+            $this->load->view('templates/footer');
+        }
+        
         public function mod_sub()
         {
             
