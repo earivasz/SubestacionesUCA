@@ -38,9 +38,6 @@ class Excel extends CI_Controller {
 		
 		$name	  = $_FILES['file']['name'];
 		$tname 	  = $_FILES['file']['tmp_name'];
-		print_r($name);
-                print_r('\n');
-                print_r($tname);
 		require_once BASEPATH.'libraries/excel_reader2.php';
 		$dato = new Spreadsheet_Excel_Reader($tname);
                 print_r($dato->rowcount($sheet_index=0));
@@ -91,7 +88,7 @@ class Excel extends CI_Controller {
 			}
 		}
 		$html .="</table>";	
-		$this->excel_model->prueba_trans();
+		//$this->excel_model->prueba_trans();
 		echo $html;	
 	}
 }
