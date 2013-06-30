@@ -12,10 +12,60 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
-        public function get_subest($id=1)
+        public function get_subest($id)
         {
             $query = $this->db->get_where('subestacion',array('idSubestacion' => $id));
+            //$query = $this->db->query('select * from subestuca.subestacion where idSubestacion = ' . $id );
+            return $query->result_array();   
+        }
+        
+        public function get_transformadores($id)
+        {
+            $query = $this->db->get_where('transformador',array('idSubestacion' => $id));
             return $query->result_array();
+        }
+        
+        public function get_fotosSubest($id)
+        {
+            $query = $this->db->get_where('foto',array('idSubestacion' => $id));
+            return $query->result_array();
+        }
+        
+        public function mod_subest($id)
+        {    
+            if($this->input->post('localizacion')==''){
+                $localizacion = null;
+            }else{
+                $localizacion = $this->input->post('localizacion');
+            }
+            
+            if($this->input->post('capacidad')==''){
+                $capacidad = null;
+            }else{
+                $capacidad = $this->input->post('capacidad');
+            }
+            
+            
+            if($this->input->post('conexion')==''){
+                $conexion = null;
+            }else{
+                $conexion = $this->input->post('conexion');
+            }
+            
+            $data = array(
+              'coordX' => $this->input->post('coordX'),
+                'coordY' => $this->input->post('coordY'),
+                'numSubestacion' => $this->input->post('numSub'),
+                'localizacion' => $localizacion,
+                'capacidad' => $capacidad,
+                'conexion' => $conexion,
+                'activo' => $this->input->post('activo')
+            );
+            
+            $this->db->where('idSubestacion', $id);
+            $this->db->update('subestacion', $data);
+            
+            return ($this->db->affected_rows() != 1) ? false : true;
         }
         
         public function set_subest()

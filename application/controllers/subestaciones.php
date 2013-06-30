@@ -23,6 +23,18 @@ class Subestaciones extends CI_Controller {
         public function detalle($id)
 	{          
             $data['subest'] = $this->subest_model->get_subest($id);
+            $data['transformadores'] = $this->subest_model->get_transformadores($id);
+            $data['fotos'] = $this->subest_model->get_fotosSubest($id);
+            
+            //TESTING
+//            foreach($data['transformadores'] as $trans):
+//                echo $trans['noSerie'];
+//            endforeach;
+            
+//            foreach($data['fotos'] as $trans):
+//                echo $trans['url'];
+//            endforeach;
+            //ENDTESTING
             
             $this->load->view('templates/header');
             $this->load->view('subestaciones/detalle', $data);
@@ -57,6 +69,14 @@ class Subestaciones extends CI_Controller {
         public function modificar($id)
         {
             $data['subest'] = $this->subest_model->get_subest($id);
+            $data['idSub'] = $id;
+            $this->load->view('templates/header');	
+            $this->load->view('subestaciones/modificar', $data);
+            $this->load->view('templates/footer');
+        }
+        
+        public function mod_sub()
+        {
             
             
             $this->form_validation->set_rules('coordX', 'Coordenada X', 'required');
@@ -66,18 +86,18 @@ class Subestaciones extends CI_Controller {
 
             if ($this->form_validation->run() === FALSE)
             {
-                    $this->load->view('templates/header');	
-                    $this->load->view('subestaciones/modificar', $data);
-                    $this->load->view('templates/footer');
-
+                $this->modificar($this->input->post('idSub'));
             }
             else
             {
-                    $response = $this->subest_model->set_subest();
+                    $response = $this->subest_model->mod_subest($this->input->post('idSub'));
+                    echo $id;
                     if($response){
-                        $this->load->view('subestaciones/exito');
+                        //$this->load->view('subestaciones/exito');
+                        echo 'eeeeeeexito';
                     }else{
-                        $this->load->view('subestaciones/errordb');
+                        //$this->load->view('subestaciones/errordb');
+                        echo 'waaaashinton';
                     }
             }
         }
