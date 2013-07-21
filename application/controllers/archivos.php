@@ -8,6 +8,7 @@ class Archivos extends CI_Controller {
                 $this->load->helper('url');
                 $this->load->helper('form');
                 $this->load->library('form_validation');
+                //$this->load->library('excel');
 	}
               
         public function mod_archivos($idSub,$idTipo)
@@ -15,7 +16,11 @@ class Archivos extends CI_Controller {
             $data['subest'] = $idSub;
             $data['tipo'] = $idTipo;
             $this->load->view('templates/header');
-            $this->load->view('archivos/subir',$data);
+            if($idTipo==1){
+                $this->load->view('archivos/subir',$data);
+            }else{
+                $this->load->view('archivos/subir_1',$data);
+            }
             $this->load->view('templates/footer');
 
         }
@@ -37,7 +42,13 @@ class Archivos extends CI_Controller {
             }
             else
             {*/
-                $result = $this->excel_model->cargas();
+                $tipo = $this->input->post('tipo');
+                $fase = $this->input->post('fase');
+                if($tipo == 1){
+                    $result = $this->excel_model->cargas();
+                }else{
+                    $result = $this->excel_model->dato_i_v($tipo,$fase);
+                }
                 if($result){
                     echo 'exito';
                 }else{

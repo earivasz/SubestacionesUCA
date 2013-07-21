@@ -22,11 +22,13 @@
     <div id="map-canvas" class="map-canvas"></div>
     <div id="overlay-mapa">
         <select onchange="javascript:setSub(this);">
+            <option value="#">----Seleccione una subestacion----</option>
             <?php foreach ($subest as $subest_item): ?>
             <option value="<?php echo $subest_item['idSubestacion'] ?>"><?php echo $subest_item['localizacion'] ?></option>
             <?php endforeach ?>
         </select>
         <br/>
-        <a  id="verSub" href="index.php/subestaciones/detalle/1">Ver subestacion</a>
+        <!--<a  id="verSub" href="index.php/subestaciones/detalle/1">Ver subestacion</a>-->
+        <a  id="verSub" href="<?php echo base_url("subestaciones/detalle/#"); ?>">Ver subestacion</a>
     </div>
 </div>

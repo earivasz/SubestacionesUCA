@@ -1,1 +1,8 @@
 1) Recordar modificar el base_url en config.php
+2) modificar php copnfig para aceptar zip
+3) MODIFICAR URLs: Seguir los pasos de este link: http://tinoarauz.blogspot.com/2010/01/htaccess-en-appserv-apache-windows.html
+   Luego agregar un .htaccess en la raiz del source files con los siguiente:
+   RewriteEngine On
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteRule ^(.*)$ index.php/$1 [L]

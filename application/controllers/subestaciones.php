@@ -7,17 +7,39 @@ class Subestaciones extends CI_Controller {
 		$this->load->model('subest_model');
                 $this->load->helper('url');
                 $this->load->helper('form');
-                $this->load->library('form_validation');
+                //$this->load->library('form_validation');
+                $this->load->library(array('session','form_validation'));
 	}
 
 	public function index()
 	{   
-            print('inicio index');
             $data['subest'] = $this->subest_model->get_subestaciones();
-            
-            $this->load->view('templates/header');
-            $this->load->view('subestaciones/home', $data);
-            $this->load->view('templates/footer');
+            if (!$this->session->userdata('perfil')){
+                redirect(base_url());
+            }else{
+                switch ($this->session->userdata('perfil')) {
+                    case '1':
+                        $this->load->view('templates/header');
+                        $this->load->view('subestaciones/home', $data);
+                        $this->load->view('templates/footer');
+                        break;
+                    case '2':
+                        $this->load->view('templates/header');
+                        $this->load->view('subestaciones/home', $data);
+                        $this->load->view('templates/footer');
+                        break;    
+                    case '3':
+                        $this->load->view('templates/header');
+                        $this->load->view('subestaciones/home', $data);
+                        $this->load->view('templates/footer');
+                        break;
+                    default:        
+                        $this->load->view('templates/header');
+                        $this->load->view('template/no_auth');
+                        $this->load->view('templates/footer');
+                        break;        
+                }
+            }
 	}
         
         public function detalle($id)
@@ -35,7 +57,7 @@ class Subestaciones extends CI_Controller {
 //                echo $trans['url'];
 //            endforeach;
             //ENDTESTING
-            
+            echo "DETALLE";
             $this->load->view('templates/header');
             $this->load->view('subestaciones/detalle', $data);
             $this->load->view('templates/footer');

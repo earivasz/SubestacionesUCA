@@ -52,8 +52,12 @@ $route['archivos/subir_cargas'] = 'archivos/subir_cargas';
 $route['subestaciones/mod_sub'] = 'subestaciones/mod_sub';
 $route['excel/importar'] = 'excel/importar_line';
 $route['excel'] = 'excel';
+$route['login/new_user'] = 'login/new_user';
+$route['login/logout_ci'] = 'login/logout_ci';
 $route['(:any)'] = 'subestaciones/index';
-$route['default_controller'] = "subestaciones/index";
+$route['login/guest_login'] = 'login/guest_login';
+//$route['default_controller'] = "subestaciones/index";
+$route['default_controller'] = "login/index";
 $route['404_override'] = '';
 
 

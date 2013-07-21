@@ -19,6 +19,14 @@
             <div class="menu_item"><a href="www.bing.com">Menu 1</a></div>
             <div class="menu_item"><a href="www.bing.com">Menu 2</a></div>
             <div class="menu_item"><a href="www.bing.com">Menu 3</a></div>
-            <div class="menu_item"><a href="www.bing.com">Menu 4</a></div>
+            <div class="menu_item"><a href="<?php echo base_url("login/logout_ci"); ?>">Salir</a></div>
         </div>
         <div id="separacion_contenido"></div>
+        
+ <?php 
+    function logout_ci()
+    {
+        $this->session->sess_destroy();
+        $this->index();
+    }
+ ?>
