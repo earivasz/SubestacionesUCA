@@ -5,14 +5,9 @@
     <meta charset="utf-8" />
     <title></title>
     <link href="<?=base_url()?>css/style.css" rel="stylesheet" type="text/css" />
-    <link href="<?=base_url()?>css/dhtmlxgrid.css" rel="stylesheet" type="text/css" />
-    <link href="<?=base_url()?>css/skins/dhtmlxgrid_dhx_skyblue.css" rel="stylesheet" type="text/css" />
-    <link href="<?=base_url()?>css/skins/dhtmlx_custom.css" rel="stylesheet" type="text/css" />
+    <link href="<?=base_url()?>css/jqx.base.css" rel="stylesheet" type="text/css" />
     <script src="<?=base_url()?>js/jquery-2.0.2.min.js"></script>
     <script src="<?=base_url()?>js/canvasjs.min.js"></script>
-    <script src="<?=base_url()?>js/dhtmlxcommon.js"></script>
-    <script src="<?=base_url()?>js/dhtmlxgrid.js"></script>
-    <script src="<?=base_url()?>js/dhtmlxgridcell.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="<?=base_url()?>js/maps2.js"></script>
     <script src="<?=base_url()?>js/functions.js"></script>
