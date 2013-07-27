@@ -16,7 +16,7 @@ class Archivos extends CI_Controller {
             $data['subest'] = $idSub;
             $data['tipo'] = $idTipo;
             $this->load->view('templates/header');
-            if($idTipo==1){
+            if($idTipo==1 || $idTipo == 4){
                 $this->load->view('archivos/subir',$data);
             }else{
                 $this->load->view('archivos/subir_1',$data);
