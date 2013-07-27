@@ -11,7 +11,7 @@ class Login extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->config->set_item('sess_expiration', '10');
+        //$this->config->set_item('sess_expiration', '10');
         $this->load->model('login_model');
         $this->load->library(array('session','form_validation'));
         $this->load->helper(array('url','form'));
@@ -121,6 +121,26 @@ class Login extends CI_Controller
         );        
         $this->session->set_userdata($data);
         $this->index();
+    }
+    
+    public function admin_users(){
+        
+        if($this->session->userdata('perfil')=='1'){
+            $data['usuarios'] = $this->login_model->get_users();
+            $this->load->view('templates/header');
+            $this->load->view('users/administracion', $data);
+            $this->load->view('templates/footer');
+            //print_r($data['usuarios']);
+            //echo '<br><br><br>';
+            //print_r(json_encode($data['usuarios']));
+        }else{
+            echo $this->session->userdata('perfil') . '<br/>';
+            echo 'ola ke ase';
+        }
+    }
+    
+    public function get_data(){
+        return $this->login_model->get_users();
     }
     
 }

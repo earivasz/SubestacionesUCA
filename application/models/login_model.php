@@ -59,6 +59,10 @@ class Login_model extends CI_Model {
             redirect(base_url().'login','refresh');
         }
     }
-}
 
+    public function get_users(){
+        $usuarios = $this->db->get('user');
+        return $usuarios->result_array();
+    }
+        }
 ?>
