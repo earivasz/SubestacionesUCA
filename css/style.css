@@ -110,3 +110,25 @@ a:hover{
     border-bottom: 10px solid transparent; 
     border-right:10px solid blue; 
 }
+
+/*ESTILOS PARA LA PAGINA DE GRAFICOS*/
+
+.cuadro-paginacion{
+    height:20px;
+    width:20px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #808080;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.cuadro-paginacion:hover{
+    background-color: #D3D3D3;
+    color: #ffffff;
+}
+
+/*FIN ESTILOS PARA LA PAGINA DE GRAFICOS*/
