@@ -49,6 +49,12 @@
                 ]
             });
             
+            $("#jqxgrid").bind('rowselect', function (event) {
+                var row = event.args.rowindex;
+                var datarow = $("#jqxgrid").jqxGrid('getrowdata', row);
+                alert(datarow.usuario);
+            });
+            
             var listSource = [{ label: 'Name', value: 'name', checked: false }, { label: 'Beverage Type', value: 'type', checked: true }, { label: 'Calories', value: 'calories', checked: true }, { label: 'Total Fat', value: 'totalfat', checked: true }, { label: 'Protein', value: 'protein', checked: true}];
 
             $("#jqxlistbox").jqxListBox({ source: listSource, width: 200, height: 200, theme: theme, checkboxes: true });
@@ -64,18 +70,7 @@
     
     
   };
-  
-//  var paginacion =function(indice){
-//      console.log(indice);
-//      myGrid.load(arreglo_pag[indice], "jsarray");
-//      myGrid.parse(arreglo_pag[indice], "jsarray");
-//      console.log(arreglo_pag[indice]);
-////    var myHonda = { color: "red", wheels: 4, engine: { cylinders: 4, size: 2.2 } };
-////    var myCar = [myHonda, 2, "cherry condition", "purchased 1997"];
-////    var newCar = myCar.slice(0, 2);
-////    //console.log(newCar);
 
-//  }
   
   var recargar =function(){
   //alert("hola que aseee");
