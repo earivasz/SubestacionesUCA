@@ -5,9 +5,12 @@
     <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxgrid.js"></script>
     <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxgrid.selection.js"></script> 
     <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxgrid.columnsresize.js"></script> 
+    <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxgrid.filter.js"></script>
     <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxdata.js"></script> 
     <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxcheckbox.js"></script> 
     <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxlistbox.js"></script> 
+    <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxdropdownlist.js"></script>
     <script type="text/javascript" src="<?=base_url()?>jqwidgets/gettheme.js"></script>
 
 <script>
@@ -29,107 +32,78 @@
                 localdata: arreglo_completo,
                 datatype: "array"
             };
-            var dataAdapter = new $.jqx.dataAdapter(source, {
-                downloadComplete: function (data, status, xhr) { },
-                loadComplete: function (data) { },
-                loadError: function (xhr, status, error) { }
-            });
+            
             $("#jqxgrid").jqxGrid(
             {
-                width: 900,
-                source: dataAdapter,
+                width: 670,
+                source: source,
+                showfilterrow: true,
+                pageable: true,
+                autoheight: true,
+                filterable: true,
                 columns: [
-                  { text: 'First Name', datafield: 'usuario', width: 100 },
-                  { text: 'Last Name', datafield: 'nomUser', width: 100 },
-                  { text: 'Product', datafield: 'apel', width: 180 },
-                  { text: 'Quantity', datafield: 'correo', width: 80, cellsalign: 'right' },
-                  { text: 'Unit Price', datafield: 'estado', width: 90, cellsalign: 'right', cellsformat: 'c2' },
-                  { text: 'Total', datafield: 'ultimoIngreso', width: 100, cellsalign: 'right', cellsformat: 'c2' },
-                  { text: 'First Name', datafield: 'idPerfil', width: 100 }
+                  { text: 'First Name', datafield: 'usuario', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with' },
+                  { text: 'Last Name', datafield: 'nomUser', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with' },
+                  { text: 'Product', datafield: 'apel', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with' },
+                  { text: 'Quantity', datafield: 'correo', width: 80, cellsalign: 'right', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with' },
+                  { text: 'Unit Price', datafield: 'estado', width: 90, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with' },
+                  { text: 'Total', datafield: 'ultimoIngreso', width: 175, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with' },
+                  { text: 'First Name', datafield: 'idPerfil', width: 25, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with' }
                 ]
             });
             
             $("#jqxgrid").bind('rowselect', function (event) {
                 var row = event.args.rowindex;
                 var datarow = $("#jqxgrid").jqxGrid('getrowdata', row);
-                alert(datarow.usuario);
+                $("#usuario").val(datarow.usuario);
+                $("#nomUser").val(datarow.nomUser);
+                $("#apel").val(datarow.apel);
+                $("#correo").val(datarow.correo);
+                $("#estado").val(datarow.estado);
+                $("#perfil").val(datarow.idPerfil);
+                $("#isMod").val('True');
             });
-            
-            var listSource = [{ label: 'Name', value: 'name', checked: false }, { label: 'Beverage Type', value: 'type', checked: true }, { label: 'Calories', value: 'calories', checked: true }, { label: 'Total Fat', value: 'totalfat', checked: true }, { label: 'Protein', value: 'protein', checked: true}];
-
-            $("#jqxlistbox").jqxListBox({ source: listSource, width: 200, height: 200, theme: theme, checkboxes: true });
-            $("#jqxlistbox").on('checkChange', function (event) {
-                if (event.args.checked) {
-                    $("#jqxgrid").jqxGrid('showcolumn', event.args.value);
-                }
-                else {
-                    $("#jqxgrid").jqxGrid('hidecolumn', event.args.value);
-                }
-            });
-    
-    
-    
   };
-
-  
-  var recargar =function(){
-  //alert("hola que aseee");
-            
-                chart.options.data[0].dataPoints = <?php
-                $datos2 = array('label: "cambio1", y: 28', 'label: "cambio2", y: 15',);
-            $top2 = count($datos2);
-            $cont2 = 1;
-            echo '[';
-            foreach ($datos2 as $itemGraf) {
-                if($cont2 < $top2)
-                    echo '{' . $itemGraf . '},';
-                else
-                    echo '{' . $itemGraf . '}';
-                $cont2++;
-            }
-            echo ']';
-            ?>;
-            chart.render();
-    
-  };
-  
-  
   </script>
-<h2>GRAFICOS</h2>
+<h2>MANTENIMIENTO USUARIOS</h2>
 <div id='jqxWidget'>
         
         <div style="width:100%; height: 600px;" id="jqxgrid"></div>
         <br>
-        <div style="" id="jqxlistbox"></div>
-    </div>
-<br>
-<button onClick="recargar();" name="pressme">Press Me</button>
-
-<?php
-//    foreach ($datos as $value) {
-//     echo $value;
-//    }
-    
-    //echo '<br>' . json_encode($datos) ;
-    echo '<br>';
-    //echo $datos_reales_json;
-    //echo $datos_simulados_json;
-    echo "<br>";
-    //echo json_encode($headers);
-    echo "<br>";
-    //echo json_encode($widths);
-    echo "<br>";
-    //echo $datos_simulados;
-    
-//    $top = count($datos);
-//    $cont = 1;
-//    echo '[';
-//    foreach ($datos as $itemGraf) {
-//        if($cont < $top)
-//            echo '{' . $itemGraf . '},';
-//        else
-//            echo '{' . $itemGraf . '}';
-//        $cont++;
-//    }
-//    echo ']';
-?>
+        <div id="formUsers">
+            <?php
+            echo form_open('login/crear_user');
+            echo form_input(array('name' => 'isMod', 'type'=>'hidden', 'id' =>'isMod', 'value' => 'False'));
+            echo '<br/>';
+            echo form_label('Usuario', 'usuario');
+            echo form_input(array('name' => 'usuario', 'type'=>'text', 'id' =>'usuario'));
+            echo '<br/>';
+            echo form_label('Nombre', 'nomUser');
+            echo form_input(array('name' => 'nomUser', 'type'=>'text', 'id' =>'nomUser'));
+            echo '<br/>';
+            echo form_label('Apellido', 'apel');
+            echo form_input(array('name' => 'apel', 'type'=>'text', 'id' =>'apel'));
+            echo '<br/>';
+            echo form_label('Correo', 'correo');
+            echo form_input(array('name' => 'correo', 'type'=>'text', 'id' =>'correo'));
+            echo '<br/>';
+            echo form_label('Estado', 'estado');
+            $options = array(
+                  ''  => 'Seleccione una opcion',
+                  'A'  => 'ACTIVO',
+                  'B'    => 'BLOQUEADO',
+                  'I'   => 'INACTIVO'
+                );
+            echo form_dropdown('estado', $options, '','id="estado"');
+            echo '<br/>';
+            echo form_label('Perfil', 'perfil');
+            echo '<select name="perfil" id="perfil">';
+            echo '<option value="">Seleccione una opcion</option>';
+            foreach ($perfiles as $perfil):
+                echo '<option value="'. $perfil['idPerfil'] .'">'. $perfil['tipoPerfil'] .'</option>';
+            endforeach;
+            echo '<select name="perfil" id="perfil">';
+            echo form_close();
+            ?>
+        </div>
+</div>

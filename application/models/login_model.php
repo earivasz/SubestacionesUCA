@@ -64,5 +64,10 @@ class Login_model extends CI_Model {
         $usuarios = $this->db->get('user');
         return $usuarios->result_array();
     }
+    
+    public function get_perfiles(){
+        $perfiles = $this->db->get('perfil');
+        return $perfiles->result_array();
+    }
         }
 ?>

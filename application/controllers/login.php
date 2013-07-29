@@ -127,10 +127,11 @@ class Login extends CI_Controller
         
         if($this->session->userdata('perfil')=='1'){
             $data['usuarios'] = $this->login_model->get_users();
+            $data['perfiles'] = $this->login_model->get_perfiles();
             $this->load->view('templates/header');
             $this->load->view('users/administracion', $data);
             $this->load->view('templates/footer');
-            //print_r($data['usuarios']);
+            //print_r($data['perfiles']);
             //echo '<br><br><br>';
             //print_r(json_encode($data['usuarios']));
         }else{
@@ -141,6 +142,12 @@ class Login extends CI_Controller
     
     public function get_data(){
         return $this->login_model->get_users();
+    }
+    
+    public function crear_user(){
+        $this->form_validation->set_rules('coordX', 'Coordenada X', 'required');
+        $this->form_validation->set_rules('coordY', 'Coordenada Y', 'required');
+        $this->form_validation->set_rules('numSub', 'Numero Subestacion', 'required');
     }
     
 }
