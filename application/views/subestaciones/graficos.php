@@ -9,6 +9,8 @@
     <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxcheckbox.js"></script> 
     <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxlistbox.js"></script> 
     <script type="text/javascript" src="<?=base_url()?>jqwidgets/gettheme.js"></script>
+    <script type="text/javascript" src="<?=base_url()?>js/jquery.datePicker.js"></script>
+    <script type="text/javascript" src="<?=base_url()?>js/date.js"></script>
 
 <script>
     
@@ -183,18 +185,6 @@
     
   };
   
-//  var paginacion =function(indice){
-//      console.log(indice);
-//      myGrid.load(arreglo_pag[indice], "jsarray");
-//      myGrid.parse(arreglo_pag[indice], "jsarray");
-//      console.log(arreglo_pag[indice]);
-////    var myHonda = { color: "red", wheels: 4, engine: { cylinders: 4, size: 2.2 } };
-////    var myCar = [myHonda, 2, "cherry condition", "purchased 1997"];
-////    var newCar = myCar.slice(0, 2);
-////    //console.log(newCar);
-
-//  }
-  
   var recargar =function(){
   //alert("hola que aseee");
             
@@ -218,7 +208,45 @@
   
   
   </script>
+  
+  <script type="text/javascript" charset="utf-8">
+			$(function()
+            {
+				$('.date-pick').datePicker({startDate:'01/01/1996'})
+				$('#start-date').bind(
+					'dpClosed',
+					function(e, selectedDates)
+					{
+						var d = selectedDates[0];
+						if (d) {
+							d = new Date(d);
+							$('#end-date').dpSetStartDate(d.addDays(1).asString());
+						}
+					}
+				);
+				$('#end-date').bind(
+					'dpClosed',
+					function(e, selectedDates)
+					{
+						var d = selectedDates[0];
+						if (d) {
+							d = new Date(d);
+							$('#start-date').dpSetEndDate(d.addDays(-1).asString());
+						}
+					}
+				);
+            });
+		</script>
+
 <h2>GRAFICOS</h2>
+
+    <div style="float:left;">Fecha de inicio<br>
+    <input name="start-date" id="start-date" class="date-pick" value="fecha de inicio" /></div>
+    <div>Fecha de finalizacion<br>
+    <input name="end-date" id="end-date" class="date-pick" value="ola ke ase" /></div>
+<button onClick="recargar();" name="pressme">Cargar datos</button>
+
+
 <div id="chartContainer" style="height: 300px; width: 100%;">
   </div>
 <div id='jqxWidget'>
