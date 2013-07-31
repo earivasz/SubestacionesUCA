@@ -69,5 +69,35 @@ class Login_model extends CI_Model {
         $perfiles = $this->db->get('perfil');
         return $perfiles->result_array();
     }
+    
+    public function create_user($datos){
+        $query = $this->db->get_where('user', array('usuario'=>$datos['usuario']));
+        $count = $query->num_rows();
+        if($count > 0){
+            $this->session->set_flashdata('msj', 'El usuario '. $datos['usuario']. ' ya existe');
+            return false;
+        }else{
+            $insert = $this->db->insert('user',$datos);
+            if($insert){
+                $this->session->set_flashdata('msj', 'Usuario creado correctamente');
+                return true;
+            }else{
+                $this->session->set_flashdata('msj', 'Usuario no pudo ser creado');
+                return false;
+            }
         }
+    }
+    
+    public function update_user($datos){
+        $this->db->where('usuario',$datos['usuario']);
+        $query = $this->db->update('user',$datos);
+        if($query > 0){
+            $this->session->set_flashdata('msj', 'Usuario actualizado correctamente.');
+            return true;
+        }else{
+            $this->session->set_flashdata('msj', 'No se pudo actualizar el usuario.');
+            return false;
+        }
+    }
+}
 ?>

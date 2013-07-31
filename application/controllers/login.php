@@ -145,10 +145,46 @@ class Login extends CI_Controller
     }
     
     public function crear_user(){
-        $this->form_validation->set_rules('coordX', 'Coordenada X', 'required');
-        $this->form_validation->set_rules('coordY', 'Coordenada Y', 'required');
-        $this->form_validation->set_rules('numSub', 'Numero Subestacion', 'required');
-    }
+        $this->form_validation->set_rules('usuario', '"Usuario"', 'required');
+        $this->form_validation->set_rules('nomUser', '"Nombre"', 'required');
+        $this->form_validation->set_rules('apel', '"Apellido"', 'required');
+        $this->form_validation->set_rules('correo', '"Correo"', 'required');
+        $this->form_validation->set_rules('estado', '"Estado"', 'required');
+        $this->form_validation->set_rules('perfil', '"Perfil"', 'required');
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
+        if ($this->form_validation->run() === FALSE)
+        {
+            $this->admin_users();
+        }else{
+            $isMod = $this->input->post('isMod');
+            
+            if($isMod == 'True'){
+                $data = array(
+                    'nomUser' => $this->input->post('nomUser'),
+                    'apel' => $this->input->post('apel'),
+                    'usuario' => $this->input->post('usuario'),
+                    'correo' => $this->input->post('correo'),
+                    'estado' => $this->input->post('estado'),
+                    'idPerfil' => $this->input->post('perfil')
+                );
+                $result = $this->login_model->update_user($data);
+            }else{
+                $data = array(
+                    'idUser' => null,
+                    'nomUser' => $this->input->post('nomUser'),
+                    'apel' => $this->input->post('apel'),
+                    'usuario' => $this->input->post('usuario'),
+                    'contrasena' => sha1('subUCA') ,
+                    'correo' => $this->input->post('correo'),
+                    'estado' => $this->input->post('estado'),
+                    'ultimoIngreso' => null,
+                    'idPerfil' => $this->input->post('perfil')
+                );
+                $result = $this->login_model->create_user($data);
+            }
+            redirect(base_url()."admin/usuarios");
+        }
     
+    }
 }
 ?>

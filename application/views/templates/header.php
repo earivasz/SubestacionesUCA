@@ -12,6 +12,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script src="<?=base_url()?>js/maps2.js"></script>
     <script src="<?=base_url()?>js/functions.js"></script>
+    <script src="<?=base_url()?>js/jquery.blockUI.js"></script>
 </head>
 <body>
     <div id="principal" class="centro">

@@ -58,6 +58,7 @@ $route['(:any)'] = 'subestaciones/index';
 $route['login/guest_login'] = 'login/guest_login';
 $route['admin/usuarios'] = 'login/admin_users';
 $route['admin/traer_users'] = 'login/get_data';
+$route['login/crear_user'] = 'login/crear_user';
 //$route['default_controller'] = "subestaciones/index";
 $route['default_controller'] = "login/index";
 $route['404_override'] = '';

@@ -68,7 +68,7 @@ class Subestaciones extends CI_Controller {
             $this->form_validation->set_rules('coordX', 'Coordenada X', 'required');
             $this->form_validation->set_rules('coordY', 'Coordenada Y', 'required');
             $this->form_validation->set_rules('numSub', 'Numero Subestacion', 'required');
-            
+            $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
 
             if ($this->form_validation->run() === FALSE)
             {
