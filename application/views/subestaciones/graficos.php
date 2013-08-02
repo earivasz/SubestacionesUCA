@@ -238,14 +238,26 @@
             });
 		</script>
 
-<h2>GRAFICOS</h2>
-
+ <h2 style="margin: 5px 5px 0px 20px;">GRAFICOS</h2>
+<div style="margin-left: 300px;">
     <div style="float:left;">Fecha de inicio<br>
     <input name="start-date" id="start-date" class="date-pick" value="fecha de inicio" /></div>
     <div>Fecha de finalizacion<br>
     <input name="end-date" id="end-date" class="date-pick" value="ola ke ase" /></div>
-<button onClick="recargar();" name="pressme">Cargar datos</button>
-
+    Fase:
+    <?php if ($tipo == 'arm'){
+        echo '<input type="checkbox" name="fase1">1
+            <input type="checkbox" name="fase2">2
+            <input type="checkbox" name="fase3">3';
+    }
+    if ($tipo == 'pri'){
+        echo '<input type="radio" name="fase" value="1">1
+            <input type="radio" name="fase" value="2">2
+            <input type="radio" name="fase" value="3">3';
+    }
+    ?>
+<button onClick="recargar();" name="pressme" style="">Cargar datos</button>
+</div>
 
 <div id="chartContainer" style="height: 300px; width: 100%;">
   </div>

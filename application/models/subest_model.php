@@ -31,6 +31,13 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
+        public function get_tablaPrincipal($idSubest, $fechaInicio, $fechaFin)
+        {
+            //tengo que filtrar por fecha, el filtrador por fase se hace en la vista
+            $query = $this->db->get_where('datop');
+            return $query->result_array();
+        }
+        
         public function mod_subest($id)
         {    
             if($this->input->post('localizacion')==''){
