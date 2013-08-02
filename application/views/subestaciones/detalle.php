@@ -50,7 +50,7 @@
         <?php
             foreach($transformadores as $trans):
                 echo '<div class ="transformador">';
-                echo $trans['noSerie'] . '<br>';
+                echo 'Numero de serie: ' . $trans['noSerie'] . '<br>';
                 echo $trans['capacidad'] . '<br>';
                 echo $trans['fabricante'] . '<br>';
                 echo $trans['enfriamiento'] . '<br>';
@@ -65,6 +65,10 @@
                 echo '</div>';
             endforeach;
         ?>
+        
+        <div>
+            
+        </div>
         
         <?php
             foreach($fotos as $foto):

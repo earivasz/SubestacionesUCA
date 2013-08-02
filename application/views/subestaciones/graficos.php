@@ -12,12 +12,13 @@
     <script type="text/javascript" src="<?=base_url()?>js/jquery.datePicker.js"></script>
     <script type="text/javascript" src="<?=base_url()?>js/date.js"></script>
 
-<script>
+<script  type="text/javascript" charset="utf-8">
     
     var chart;
     var arreglo_completo = new Array();
     var arreglo_pag = new Array();
     var myGrid;
+    var source;
     <?php
     
     //los datos entrarian linea por linea (cada linea es un conjunto de datos separados por comas)
@@ -26,11 +27,11 @@
     //el tipo de grafica dependera del valor que venga como parametro en la llamda de la pagina.
     
     //SIMULANDO DATOS:
-    $simulacion = "4/22/20131131,75.55185,0.451633,2.369664,0.261574,8.541767,0.121345,4.581907,0.113815,1.671975,0.09726,2.875276,0.089291,0.538053,0.073813,0.483467,0.0703,0.760839,0.076046,0.487163,0.082853,0.260822,0.076809,0.311854,0.238721,0.420766,0.130676,0.199594,0.270461,0.177867,0.079403,0.312972,0.07109,0.130364,0.069402,0.195517,0.076076,0.242641,0.076742,0.127689,0.085107";
-    $datos_simulados = array();
-    for($yy=0;$yy<1203;$yy++){
-        array_push($datos_simulados, explode(",", $simulacion));
-    }
+//    $simulacion = "4/22/20131131,75.55185,0.451633,,0.261574,8.541767,0.121345,4.581907,0.113815,1.671975,0.09726,2.875276,0.089291,0.538053,0.073813,0.483467,0.0703,0.760839,0.076046,0.487163,0.082853,0.260822,0.076809,0.311854,0.238721,0.420766,0.130676,0.199594,0.270461,0.177867,0.079403,0.312972,0.07109,0.130364,0.069402,0.195517,0.076076,0.242641,0.076742,0.127689,0.085107";
+//    $datos_simulados = array();
+//    for($yy=0;$yy<1203;$yy++){
+//        array_push($datos_simulados, explode(",", $simulacion));
+//    }
     //$datos_simulados_json = json_encode($datos_simulados);
     //$arreglo_paginacion = array();
     //el siguiente numero va a ser dinamico, por el momento es de prueba y estatico
@@ -98,28 +99,17 @@
     
     
     //******************CARGA DE TABLA
-    <?php 
-    //aqui voy a generar un arreglo con partes del arreglo total, para habilitar la paginacion
-    for($pp=0;$pp<($numFilas/200);$pp++){?>
-            arreglo_pag.push(<?php echo json_encode(array_slice($datos_simulados, ($pp * 200), 200)); ?>);
-            <?php
-    }?>
-    
-   arreglo_completo = <?php echo json_encode($datos_simulados); ?>;
-    //AQUI IBA EL CODIGO DEL GRID ANTERIOR
+    //arreglo_completo = <?php //echo json_encode($datos_simulados); ?>;
+    arreglo_completo = null;
     
     var theme = getDemoTheme();
             
-            var source =
+            source =
             {
                 localdata: arreglo_completo,
                 datatype: "array"
             };
-            var dataAdapter = new $.jqx.dataAdapter(source, {
-                downloadComplete: function (data, status, xhr) { },
-                loadComplete: function (data) { },
-                loadError: function (xhr, status, error) { }
-            });
+            var dataAdapter = new $.jqx.dataAdapter(source);
             $("#jqxgrid").jqxGrid(
             {
                 width: 900,
@@ -207,6 +197,48 @@
   };
   
   
+  var traerDatos = function(){
+      //hacer validaciones de fechas
+        var cct = $.cookie('cookieUCA');
+        var fechaIni = $('#start-date').val();
+        var fechaFin = $('#end-date').val();
+        console.log(fechaIni + fechaFin);
+     var request = $.ajax({
+        url: "<?=base_url()?>index.php/graficos_control/graficosDatos",
+        type: "POST",
+        data: {'tokenUCA' : cct, 'id' : <?php echo $idSub ?>, 'fechaIni' : fechaIni, 'fechaFin' : fechaFin},
+        dataType: "json"
+      });
+      request.done(function(msg, status, XHR) {
+        arreglo_completo = msg;
+        source.localdata = arreglo_completo;
+        $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        //console.log(msg);
+      });
+      request.fail(function(XHR, textStatus, response) {
+        alert( "Request failed: " + textStatus );
+        //console.log(XHR, textStatus, response);
+      });
+
+//     }
+
+      
+//      alert('<?//=base_url()?>index.php/graficos_control/graficosDatos');
+//      $.post('<?//=base_url()?>index.php/graficos_control/graficosDatos',
+//      { 'id':'1', 
+//        'fechaIni':'20/01/2013', 
+//        'fechaFin':'30/09/2013' },
+//      // when the Web server responds to the request
+//      function(result) {
+//          alert('olakease');
+//          $('#olakease').html(result);
+//      }
+//    );
+}
+//});
+  
+  
+  
   </script>
   
   <script type="text/javascript" charset="utf-8">
@@ -256,9 +288,9 @@
             <input type="radio" name="fase" value="3">3';
     }
     ?>
-<button onClick="recargar();" name="pressme" style="">Cargar datos</button>
+<button onClick="traerDatos();" name="pressmeDatos">Cargar Datos</button>
 </div>
-
+ 
 <div id="chartContainer" style="height: 300px; width: 100%;">
   </div>
 <div id='jqxWidget'>
@@ -271,30 +303,5 @@
 <button onClick="recargar();" name="pressme">Press Me</button>
 
 <?php
-//    foreach ($datos as $value) {
-//     echo $value;
-//    }
-    
-    //echo '<br>' . json_encode($datos) ;
-    echo '<br>';
-    //echo $datos_reales_json;
-    //echo $datos_simulados_json;
-    echo "<br>";
-    //echo json_encode($headers);
-    echo "<br>";
-    //echo json_encode($widths);
-    echo "<br>";
-    //echo $datos_simulados;
-    
-//    $top = count($datos);
-//    $cont = 1;
-//    echo '[';
-//    foreach ($datos as $itemGraf) {
-//        if($cont < $top)
-//            echo '{' . $itemGraf . '},';
-//        else
-//            echo '{' . $itemGraf . '}';
-//        $cont++;
-//    }
-//    echo ']';
+
 ?>

@@ -34,7 +34,11 @@ class Subest_model extends CI_Model {
         public function get_tablaPrincipal($idSubest, $fechaInicio, $fechaFin)
         {
             //tengo que filtrar por fecha, el filtrador por fase se hace en la vista
-            $query = $this->db->get_where('datop');
+            $query = $this->db->query("select t.fechaHora, p.datop from subestuca.datop p inner join subestuca.tiempo t on p.idTiempo = t.idTiempo 
+                where idSubestacion = " . $idSubest .  
+                " AND t.fechaHora BETWEEN STR_TO_DATE('" . $fechaInicio . "', '%d/%m/%Y') 
+                AND STR_TO_DATE('" . $fechaFin . "', '%d/%m/%Y')
+                LIMIT 0, 10000;");
             return $query->result_array();
         }
         
