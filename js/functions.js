@@ -23,3 +23,29 @@ function close_modal(){
     $.unblockUI();
 }
 
+function fechaValida(s) {
+   var bits = s.split('/');
+   var d = new Date(bits[2] + '/' + bits[1] + '/' + bits[0]);
+   return !!(d && (d.getMonth() + 1) == bits[1] && d.getDate() == Number(bits[0]) && d.getYear() < 1099 && d.getYear() > 0);
+}
+  
+ function validaFecha(CtrlSDate,CtrlEDate)
+ {
+     if(fechaValida(CtrlSDate) && fechaValida(CtrlEDate)){
+        var endDate = new Date(CtrlEDate); 
+        var startDate= new Date(CtrlSDate);
+        if(startDate > endDate)
+         {
+                //la fecha de inicio es mayor a la de final
+                return false;
+         }
+         else{
+             return true;
+         }
+     }
+     else{
+         return false;
+     }
+ }
+
+

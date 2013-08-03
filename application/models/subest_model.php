@@ -42,6 +42,29 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
+        public function get_tablaArmI($idSubest, $fechaInicio, $fechaFin)
+        {
+            //tengo que filtrar por fecha, el filtrador por fase se hace en la vista
+            
+            $query = $this->db->query("select t.fechaHora, i.datoi from subestuca.datoi i inner join subestuca.tiempo t on i.idTiempo = t.idTiempo 
+                where idSubestacion = " . $idSubest .  
+                " AND t.fechaHora BETWEEN STR_TO_DATE('" . $fechaInicio . "', '%d/%m/%Y') 
+                AND STR_TO_DATE('" . $fechaFin . "', '%d/%m/%Y')
+                LIMIT 0, 10000;");
+            return $query->result_array();
+        }
+        
+        public function get_tablaArmV($idSubest, $fechaInicio, $fechaFin)
+        {
+            //tengo que filtrar por fecha, el filtrador por fase se hace en la vista
+            $query = $this->db->query("select t.fechaHora, v.datov from subestuca.datov v inner join subestuca.tiempo t on v.idTiempo = t.idTiempo 
+                where idSubestacion = " . $idSubest .  
+                " AND t.fechaHora BETWEEN STR_TO_DATE('" . $fechaInicio . "', '%d/%m/%Y') 
+                AND STR_TO_DATE('" . $fechaFin . "', '%d/%m/%Y')
+                LIMIT 0, 10000;");
+            return $query->result_array();
+        }
+        
         public function mod_subest($id)
         {    
             if($this->input->post('localizacion')==''){

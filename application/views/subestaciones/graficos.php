@@ -1,39 +1,30 @@
+<script type="text/javascript" src="<?=base_url()?>js/canvasjs.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxbuttons.js"></script>
-    <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxscrollbar.js"></script>
-    <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxmenu.js"></script>
-    <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxgrid.js"></script>
-    <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxgrid.selection.js"></script> 
-    <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxgrid.columnsresize.js"></script> 
-    <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxdata.js"></script> 
-    <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxcheckbox.js"></script> 
-    <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxlistbox.js"></script> 
-    <script type="text/javascript" src="<?=base_url()?>jqwidgets/gettheme.js"></script>
-    <script type="text/javascript" src="<?=base_url()?>js/jquery.datePicker.js"></script>
-    <script type="text/javascript" src="<?=base_url()?>js/date.js"></script>
+<script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxscrollbar.js"></script>
+<script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxmenu.js"></script>
+<script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxgrid.js"></script>
+<script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxgrid.selection.js"></script> 
+<script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxgrid.columnsresize.js"></script> 
+<script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxdata.js"></script> 
+<script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxcheckbox.js"></script> 
+<script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxlistbox.js"></script> 
+<script type="text/javascript" src="<?=base_url()?>jqwidgets/gettheme.js"></script>
+<script type="text/javascript" src="<?=base_url()?>js/jquery.datePicker.js"></script>
+<script type="text/javascript" src="<?=base_url()?>js/date.js"></script>
+    
 
 <script  type="text/javascript" charset="utf-8">
-    
     var chart;
     var arreglo_completo = new Array();
-    var arreglo_pag = new Array();
+    //var arreglo_pag = new Array();
     var myGrid;
     var source;
     <?php
     
-    //los datos entrarian linea por linea (cada linea es un conjunto de datos separados por comas)
-    //hay que separarlos e ingresarlos en un arreglo para manipularlos localmente
     //la generacion de columnas en el grid debe ser dinamica, asi como la generaciond e puntos en la grafica,
     //el tipo de grafica dependera del valor que venga como parametro en la llamda de la pagina.
     
-    //SIMULANDO DATOS:
-//    $simulacion = "4/22/20131131,75.55185,0.451633,,0.261574,8.541767,0.121345,4.581907,0.113815,1.671975,0.09726,2.875276,0.089291,0.538053,0.073813,0.483467,0.0703,0.760839,0.076046,0.487163,0.082853,0.260822,0.076809,0.311854,0.238721,0.420766,0.130676,0.199594,0.270461,0.177867,0.079403,0.312972,0.07109,0.130364,0.069402,0.195517,0.076076,0.242641,0.076742,0.127689,0.085107";
-//    $datos_simulados = array();
-//    for($yy=0;$yy<1203;$yy++){
-//        array_push($datos_simulados, explode(",", $simulacion));
-//    }
-    //$datos_simulados_json = json_encode($datos_simulados);
-    //$arreglo_paginacion = array();
     //el siguiente numero va a ser dinamico, por el momento es de prueba y estatico
     $numColumnas = 40;
     $numFilas = 1203;
@@ -52,7 +43,7 @@
         $datos_reales_json = json_encode($datos_reales);
     ?>
   window.onload = function () {
-    
+    $('#loaderimg').hide();
     //**********************CARGANDO EL GRAFICO
         chart = new CanvasJS.Chart("chartContainer", {
         
@@ -98,8 +89,7 @@
     //******************FIN CARGA DE GRAFICO
     
     
-    //******************CARGA DE TABLA
-    //arreglo_completo = <?php //echo json_encode($datos_simulados); ?>;
+    //******************CARGA DE GRID
     arreglo_completo = null;
     
     var theme = getDemoTheme();
@@ -159,6 +149,25 @@
                 ]
             });
             
+            //registrando el evento de seleccion de una fila si estoy en las armonicas
+            var tipo = '<?php echo $tipo; ?>';
+            if(tipo == 'armi' || tipo == 'armv'){
+                $("#jqxgrid").bind('rowselect', function (event) {
+                    //console.log('seleccione la fila');
+                    var row = event.args.rowindex;
+                    var datarow = $("#jqxgrid").jqxGrid('getrowdata', row);
+                    console.log(datarow);
+//                    $("#usuario").attr('readonly','readonly');
+//                    $("#usuario").val(datarow.usuario);
+//                    $("#nomUser").val(datarow.nomUser);
+//                    $("#apel").val(datarow.apel);
+//                    $("#correo").val(datarow.correo);
+//                    $("#estado").val(datarow.estado);
+//                    $("#perfil").val(datarow.idPerfil);
+//                    $("#isMod").val('True');
+                });
+            }
+            
             var listSource = [{ label: 'Name', value: 'name', checked: false }, { label: 'Beverage Type', value: 'type', checked: true }, { label: 'Calories', value: 'calories', checked: true }, { label: 'Total Fat', value: 'totalfat', checked: true }, { label: 'Protein', value: 'protein', checked: true}];
 
             $("#jqxlistbox").jqxListBox({ source: listSource, width: 200, height: 200, theme: theme, checkboxes: true });
@@ -176,10 +185,8 @@
   };
   
   var recargar =function(){
-  //alert("hola que aseee");
-            
-                chart.options.data[0].dataPoints = <?php
-                $datos2 = array('label: "cambio1", y: 28', 'label: "cambio2", y: 15',);
+            chart.options.data[0].dataPoints = <?php
+            $datos2 = array('label: "cambio1", y: 28', 'label: "cambio2", y: 15',);
             $top2 = count($datos2);
             $cont2 = 1;
             echo '[';
@@ -193,105 +200,101 @@
             echo ']';
             ?>;
             chart.render();
-    
   };
-  
   
   var traerDatos = function(){
       //hacer validaciones de fechas
-        var cct = $.cookie('cookieUCA');
-        var fechaIni = $('#start-date').val();
-        var fechaFin = $('#end-date').val();
-        console.log(fechaIni + fechaFin);
-     var request = $.ajax({
-        url: "<?=base_url()?>index.php/graficos_control/graficosDatos",
-        type: "POST",
-        data: {'tokenUCA' : cct, 'id' : <?php echo $idSub ?>, 'fechaIni' : fechaIni, 'fechaFin' : fechaFin},
-        dataType: "json"
-      });
-      request.done(function(msg, status, XHR) {
-        arreglo_completo = msg;
-        source.localdata = arreglo_completo;
-        $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
-        //console.log(msg);
-      });
-      request.fail(function(XHR, textStatus, response) {
-        alert( "Request failed: " + textStatus );
-        //console.log(XHR, textStatus, response);
-      });
-
-//     }
-
-      
-//      alert('<?//=base_url()?>index.php/graficos_control/graficosDatos');
-//      $.post('<?//=base_url()?>index.php/graficos_control/graficosDatos',
-//      { 'id':'1', 
-//        'fechaIni':'20/01/2013', 
-//        'fechaFin':'30/09/2013' },
-//      // when the Web server responds to the request
-//      function(result) {
-//          alert('olakease');
-//          $('#olakease').html(result);
-//      }
-//    );
+      if(validaFecha($('#start-date').val(), $('#end-date').val()))
+          {
+            $('#loaderimg').show();    
+            var cct = $.cookie('cookieUCA');
+            var fechaIni = $('#start-date').val();
+            var fechaFin = $('#end-date').val();
+            //console.log(fechaIni + fechaFin);
+            //console.log("<?php echo $tipo ?>");
+             var request = $.ajax({
+                url: "<?=base_url()?>index.php/graficos_control/graficosDatos",
+                type: "POST",
+                data: {'tokenUCA' : cct, 'id' : <?php echo $idSub ?>, 'fechaIni' : fechaIni, 'fechaFin' : fechaFin, 'tipo' : "<?php echo $tipo ?>"},
+                dataType: "json"
+              });
+              request.done(function(msg, status, XHR) {
+                arreglo_completo = msg;
+                source.localdata = arreglo_completo;
+                $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+                $('#loaderimg').hide();
+                //console.log(msg);
+              });
+              request.fail(function(XHR, textStatus, response) {
+                  $('#loaderimg').hide();
+                alert( "Request failed: " + textStatus );
+                //console.log(XHR, textStatus, response);
+              });
+          }
+      else
+          {
+              alert("Ingresar Fechas validas");
+          }
+        
 }
-//});
-  
-  
   
   </script>
   
   <script type="text/javascript" charset="utf-8">
-			$(function()
-            {
-				$('.date-pick').datePicker({startDate:'01/01/1996'})
-				$('#start-date').bind(
-					'dpClosed',
-					function(e, selectedDates)
-					{
-						var d = selectedDates[0];
-						if (d) {
-							d = new Date(d);
-							$('#end-date').dpSetStartDate(d.addDays(1).asString());
-						}
-					}
-				);
-				$('#end-date').bind(
-					'dpClosed',
-					function(e, selectedDates)
-					{
-						var d = selectedDates[0];
-						if (d) {
-							d = new Date(d);
-							$('#start-date').dpSetEndDate(d.addDays(-1).asString());
-						}
-					}
-				);
-            });
-		</script>
+    $(function()
+    {
+            $('.date-pick').datePicker({startDate:'01/01/1996'})
+            $('#start-date').bind(
+                    'dpClosed',
+                    function(e, selectedDates)
+                    {
+                            var d = selectedDates[0];
+                            if (d) {
+                                    d = new Date(d);
+                                    $('#end-date').dpSetStartDate(d.addDays(1).asString());
+                            }
+                    }
+            );
+            $('#end-date').bind(
+                    'dpClosed',
+                    function(e, selectedDates)
+                    {
+                            var d = selectedDates[0];
+                            if (d) {
+                                    d = new Date(d);
+                                    $('#start-date').dpSetEndDate(d.addDays(-1).asString());
+                            }
+                    }
+            );
+    });
+  </script>
 
  <h2 style="margin: 5px 5px 0px 20px;">GRAFICOS</h2>
-<div style="margin-left: 300px;">
+<div style="margin-left: 200px;">
     <div style="float:left;">Fecha de inicio<br>
-    <input name="start-date" id="start-date" class="date-pick" value="fecha de inicio" /></div>
-    <div>Fecha de finalizacion<br>
-    <input name="end-date" id="end-date" class="date-pick" value="ola ke ase" /></div>
-    Fase:
-    <?php if ($tipo == 'arm'){
-        echo '<input type="checkbox" name="fase1">1
-            <input type="checkbox" name="fase2">2
-            <input type="checkbox" name="fase3">3';
-    }
-    if ($tipo == 'pri'){
-        echo '<input type="radio" name="fase" value="1">1
-            <input type="radio" name="fase" value="2">2
-            <input type="radio" name="fase" value="3">3';
-    }
-    ?>
-<button onClick="traerDatos();" name="pressmeDatos">Cargar Datos</button>
+    <input name="start-date" id="start-date" class="date-pick" value="Fecha de inicio" /></div>
+    <div style="float:left;">Fecha de finalizacion<br>
+    <input name="end-date" id="end-date" class="date-pick" value="Fecha fin" /></div>
+    <div style="float:left; height:100%; vertical-align: bottom; margin-left:15px;">
+        Fase: <br>
+        <?php if ($tipo == 'pri'){
+            echo '<input type="checkbox" name="fase1">1
+                <input type="checkbox" name="fase2">2
+                <input type="checkbox" name="fase3">3';
+        }
+        if ($tipo == 'arm'){
+            echo '<input type="radio" name="fase" value="1">1
+                <input type="radio" name="fase" value="2">2
+                <input type="radio" name="fase" value="3">3';
+        }
+        ?>
+    
+        <button onClick="traerDatos();" name="pressmeDatos">Cargar Datos</button>
+    </div>
+<img id="loaderimg" style="height: 40px; width: 40px; margin-left:15px;" src="<?=base_url()?>css/images/ajax-loader2.gif"/>
 </div>
  
-<div id="chartContainer" style="height: 300px; width: 100%;">
+<div id="chartContainer" style="height: 300px; width: 100%; clear:both;">
   </div>
 <div id='jqxWidget'>
         

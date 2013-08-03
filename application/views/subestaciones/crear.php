@@ -1,3 +1,5 @@
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="<?=base_url()?>js/maps2.js"></script>
 <h2>Create a news item</h2>
 <div id="map-canvas" class="map-create"></div>
 <?php echo validation_errors(); ?>
