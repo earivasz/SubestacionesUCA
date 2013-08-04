@@ -57,7 +57,7 @@ class Subestaciones extends CI_Controller {
 //                echo $trans['url'];
 //            endforeach;
             //ENDTESTING
-            echo "DETALLE";
+            //echo "DETALLE";
             $this->load->view('templates/header');
             $this->load->view('subestaciones/detalle', $data);
             $this->load->view('templates/footer');
@@ -97,10 +97,12 @@ class Subestaciones extends CI_Controller {
             $this->load->view('templates/footer');
         }
         
-        public function graficos($id)
+        public function graficos($id, $tipo)
         {
             $data['subest'] = $this->subest_model->get_subest($id);
             $data['idSub'] = $id;
+            $data['tipo'] = $tipo;
+            
             $this->load->view('templates/header');	
             $this->load->view('subestaciones/graficos', $data);
             $this->load->view('templates/footer');

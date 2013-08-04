@@ -1,3 +1,5 @@
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="<?=base_url()?>js/maps2.js"></script>
 <script>
     var neighborhoods = [
     <?php 
@@ -50,7 +52,7 @@
         <?php
             foreach($transformadores as $trans):
                 echo '<div class ="transformador">';
-                echo $trans['noSerie'] . '<br>';
+                echo 'Numero de serie: ' . $trans['noSerie'] . '<br>';
                 echo $trans['capacidad'] . '<br>';
                 echo $trans['fabricante'] . '<br>';
                 echo $trans['enfriamiento'] . '<br>';
@@ -65,6 +67,10 @@
                 echo '</div>';
             endforeach;
         ?>
+        
+        <div>
+            
+        </div>
         
         <?php
             foreach($fotos as $foto):

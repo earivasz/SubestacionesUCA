@@ -29,13 +29,13 @@ class Login extends CI_Controller
                 $this->load->view('Login/login',$data);
                 break;
             case '1':
-                redirect(base_url()."subestaciones");
+                redirect(base_url()."index.php/subestaciones");
                 break;
             case '2':
-                redirect(base_url()."subestaciones");
+                redirect(base_url()."index.php/subestaciones");
                 break;    
             case '3':
-                redirect(base_url()."subestaciones");
+                redirect(base_url()."index.php/subestaciones");
                 break;
             default:        
                 $data['titulo'] = 'Login con roles de usuario en codeigniter';

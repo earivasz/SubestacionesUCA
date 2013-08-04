@@ -543,7 +543,7 @@
  .jqx-grid-load
 {
     padding-right: 0px;
-    background-image: url(../resources/loader.gif);
+    background-image: url(images/loader.gif);
     background-position: 50% 50%;
     background-repeat: no-repeat;  
     z-index: 9999;
