@@ -65,6 +65,7 @@
                 echo $trans['pararrayos'] . '<br>';
                 echo $trans['cuchillas'] . '<br>';
                 echo '</div>';
+                echo 'olakease';
             endforeach;
         ?>
         
@@ -83,3 +84,4 @@
         <br><br>
             
 
+        
