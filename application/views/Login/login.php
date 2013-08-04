@@ -91,7 +91,7 @@
             <div class="grid_8 push_2" id="formulario_login">
                 
                 <div class="grid_6 push_1" id="campos_login">
-                    <?=form_open(base_url().'login/new_user')?>
+                    <?=form_open(base_url().'index.php/login/new_user')?>
                     <label for="username">Nombre de usuario:</label>
                     <?=form_input($username)?><p><?=form_error('username')?></p>
                     <label for="password">Introduce tu password:</label>
@@ -100,7 +100,7 @@
                     <?=form_submit($submit)?>
                     <?=form_close()?>
                     <br />
-                    <a href="<?php echo base_url('login/guest_login');?>">Iniciar como invitado</a>
+                    <a href="<?php echo base_url('index.php/login/guest_login');?>">Iniciar como invitado</a>
                 </div>
             </div>
         </div>
