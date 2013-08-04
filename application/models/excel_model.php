@@ -10,53 +10,7 @@ class Excel_model extends CI_Model {
         $this->load->library('excel');
         require_once BASEPATH . 'libraries/excel_reader2.php';
     }
-
-    /* public function cargas()
-      {
-      $this->db->trans_begin();
-      $lastTab = $this->correl_get();
-      $tname 	  = $_FILES['file']['tmp_name'];
-      $name	  = $_FILES['file']['name'];
-      $this->tabla_insert($lastTab, $name, 1);
-      if ($this->db->trans_status() === FALSE)
-      {
-      $this->db->trans_rollback();
-      return FALSE;
-      }
-      $dato = new Spreadsheet_Excel_Reader($tname);
-      for ($i = 3; $i <= $dato->rowcount($sheet_index=0); $i++) {
-
-      if($dato->val($i,2) != ''){
-      for ($j = 1; $j <= $dato->colcount($sheet_index=0); $j++) {
-      if($j==1){
-      $value = utf8_decode($dato->val($i,$j));
-      }else{
-      $value .= '/|\\'.utf8_decode($dato->val($i,$j));
-      }
-      }
-      $this->datac_insert($value, $lastTab, $i);
-      if ($this->db->trans_status() === FALSE)
-      {
-      $this->db->trans_rollback();
-      return FALSE;
-      }
-      }
-
-      }
-
-      if ($this->db->trans_status() === FALSE)
-      {
-      $this->db->trans_rollback();
-      return FALSE;
-      }
-      else
-      {
-      $this->db->trans_commit();
-      return TRUE;
-      }
-      }
-     */
-
+    
     public function dato_i_v($tipo, $idFase) {
         try {
             $batch = array();
@@ -92,12 +46,12 @@ class Excel_model extends CI_Model {
                     unset($rowData[0][0]);
                     //echo $row . implode("/|\\", $rowData[0]);
                     //echo '<br /><br />';
-                    $idTiempo = $this->tiempo_insert($tiempo);
+                    $idTiempo = $this->tiempo_insert($tiempo, $tipo);
                     array_push($batch, $this->dato_i_v_insert($lastTab, $idTiempo, $idFase, $row, implode("/|\\", $rowData[0]), $tipo));
                 }
             }
-            print_r($batch);
-            echo '<br />';
+            //print_r($batch);
+            //echo '<br />';
             if ($tipo == 2) {
                 $this->db->insert_batch('datoI', $batch);
             } elseif ($tipo == 3) {
@@ -115,7 +69,7 @@ class Excel_model extends CI_Model {
                 return TRUE;
             }
         } catch (Exception $e) {
-            die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
+            //die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
             $this->db->trans_rollback();
             return FALSE;
         }
@@ -166,7 +120,7 @@ class Excel_model extends CI_Model {
             'accesorio' => utf8_encode($paramsC[8]),
             'notasCargas' => utf8_encode($paramsC[9])
         );
-        print_r($data);
+        //print_r($data);
         $this->db->insert('datoc', $data);
     }
 
@@ -212,15 +166,38 @@ class Excel_model extends CI_Model {
         return $data;
     }
 
-    private function tiempo_insert($tiempo) {
-        $time = strtotime($tiempo);
-        $timeF = date('Y/m/d H:m:s', $time);
-        $data = array(
+    private function tiempo_insert($tiempo, $tipo) {
+        $time = explode(' ', $tiempo);
+        //echo $tiempo . '    ';
+        //print_r($time);
+        if (strpos($time[0],'-') !== false) {
+            $fecha = explode('-',$time[0]);
+        }elseif(strpos($time[0],'/') !== false){
+            $fecha = explode('/',$time[0]);
+        }elseif(strpos($time[0],'.') !== false){
+            $fecha = explode('.',$time[0]);
+        }
+        switch($tipo){
+            case '4':
+                $newFec = $fecha[2].'-'.$fecha[1].'-'.$fecha[0].' '.$time[1];
+                break;
+            default :
+                $newFec = $fecha[2].'-'.$fecha[0].'-'.$fecha[1].' '.$time[1];
+                break;
+        }
+        $timeN = strtotime($newFec);
+        echo $newFec . '  :  ' . $timeN . '<br/>';
+        //$timeF = date('Y-m-d H:m:s', $timeN);
+        $query = "INSERT INTO tiempo (idTiempo, fechaHora) VALUES (NULL, CONVERT_TZ(FROM_UNIXTIME(?),'+00:00', '+01:00'));";
+        
+        $this->db->query($query, array($timeN,'?'));
+        return $this->db->insert_id();
+        /*$data = array(
             'idTiempo' => NULL,
-            'fechaHora' => $timeF
+            'fechaHora' => 'FROM_UNIXTIME('.$timeN.')'
         );
         $this->db->insert('tiempo', $data);
-        return $this->db->insert_id();
+        return $this->db->insert_id();*/
     }
 
     public function cargas() {
@@ -253,8 +230,8 @@ class Excel_model extends CI_Model {
             //  Read a row of data into an array
             $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
             if (!empty($rowData[0][0])) {
-                print_r(implode("/|\\", $rowData[0]));
-                echo '<br />';
+                //print_r(implode("/|\\", $rowData[0]));
+                //echo '<br />';
                 $this->datac_insert(implode("/|\\", $rowData[0]), $lastTab, $row);
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();

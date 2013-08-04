@@ -27,34 +27,35 @@ class Archivos extends CI_Controller {
         
         public function subir_cargas()
         {
-            //$this->form_validation->set_rules('file', 'Archivo de cargas', 'required');
-            /*$this->form_validation->set_rules('coordY', 'Coordenada Y', 'required');
-            $this->form_validation->set_rules('numSub', 'Numero Subestacion', 'required');*/
-            /* if ($this->form_validation->run() === FALSE)
-            {
-                $tname 	  = $_FILES['file']['tmp_name'];
-                echo $tname;
-                $idSub = $this->input->post('subest');
-                $idTipo = $this->input->post('tipo');
-                echo 'subestacion: '.$this->input->post('subest');
-                echo 'Tipo: '.$this->input->post('tipo');
-                $this->mod_archivos($idSub,$idTipo);
-            }
-            else
-            {*/
-                $tipo = $this->input->post('tipo');
-                $fase = $this->input->post('fase');
-                if($tipo == 1){
+            $tipo = $this->input->post('tipo');
+            $fase = $this->input->post('fase');
+            $sub = $this->input->post('subest');
+            if($tipo == 1){
+                $this->form_validation->set_rules('file', 'Archivo de cargas', 'required');
+                $this->form_validation->set_message('required', 'El campo "%s" es requerido');
+                if ($this->form_validation->run() === FALSE)
+                {
+                    $this->mod_archivos($sub, $tipo);
+
+                }else{
                     $result = $this->excel_model->cargas();
+                    $this->mod_archivos($sub, $tipo);
+                }
+            }else{
+                $this->form_validation->set_rules('file', 'Archivo de cargas', 'required');
+                $this->form_validation->set_rules('fase', 'Fase', 'required');
+                $this->form_validation->set_message('required', 'El campo "%s" es requerido');
+                if ($this->form_validation->run() === FALSE)
+                {
+                    $this->mod_archivos($sub, $tipo);
                 }else{
                     $result = $this->excel_model->dato_i_v($tipo,$fase);
+                    $this->mod_archivos($sub, $tipo);
                 }
-                if($result){
-                    echo 'exito';
-                }else{
-                    echo 'fracaso';
-                }
-            //}
+            }
+            
+                
+            
         }
 }
 ?>

@@ -55,15 +55,12 @@ class Login extends CI_Controller
     
     public function new_user()
     {
-        //echo $this->input->post('token') . '<br />';
-        //echo $this->session->userdata('token');
-        //if($this->input->post('token') && $this->input->post('token') == $this->session->userdata('token'))
-        //{
+
             $this->form_validation->set_rules('username', 'nombre de usuario', 'required|trim|min_length[2]|max_length[150]|xss_clean');
             $this->form_validation->set_rules('password', 'password', 'required|trim|min_length[5]|max_length[150]|xss_clean');
  
             //lanzamos mensajes de error si es que los hay
-            $this->form_validation->set_message('required', 'El %s es requerido');
+            $this->form_validation->set_message('required', 'El campo %s es requerido');
             $this->form_validation->set_message('min_length', 'El %s debe tener al menos %s carácteres');
             $this->form_validation->set_message('max_length', 'El %s debe tener al menos %s carácteres');
             if($this->form_validation->run() == FALSE)
@@ -92,12 +89,6 @@ class Login extends CI_Controller
                         break;
                 }
             }
-        //}else{
-            //redirect(base_url().'login');
-        //    echo $this->input->post('token') . '<br />';
-        //    echo $this->session->userdata('token'). "<br />";
-        //    echo 'AQUI QUEDA';
-        //}
     }
  
     public function logout_ci()

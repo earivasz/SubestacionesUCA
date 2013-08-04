@@ -25,11 +25,3 @@
             <div class="menu_item"><a href="<?php echo base_url("login/logout_ci"); ?>">Salir</a></div>
         </div>
         <div id="separacion_contenido"></div>
-        
- <?php 
-    function logout_ci()
-    {
-        $this->session->sess_destroy();
-        $this->index();
-    }
- ?>
