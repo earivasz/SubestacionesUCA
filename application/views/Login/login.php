@@ -8,16 +8,25 @@
          <style type="text/css">
              h1{
                  font-size: 22px;
-                 text-align: center;
+                 text-align: left;
                  margin: 20px 0px;
              }
+             h2{
+                    text-align: center;
+                    background-color:#80be09;
+                    color: white;
+                    
+                     
+            }
              #login{
                  background: #fefefe;
                  min-height: 500px;
+                 width: 100%;
              }
              #formulario_login{
                  font-size: 14px;
-                 border: 8px solid #112233;                 
+                 border: 0px solid #112233; 
+                 
              }
              label{
                  display: block;
@@ -35,26 +44,54 @@
                  color: #fff;
              }
              #campos_login{
-                 margin: 50px 0px;
+                 margin: 50px 20px;
+                 
              }
              p{
                  color: #f00;
                  font-weight: bold;
              }
+             
+             colores{
+                 background-color: #000000;
+             }
+             
+             
+            
          </style>
     </head>
     <body>
+       <table width="100%" class="colores">
+           <tr> 
+               <td>
     <?php
     $username = array('name' => 'username', 'placeholder' => 'nombre de usuario');
     $password = array('name' => 'password',    'placeholder' => 'introduce tu password');
     $submit = array('name' => 'submit', 'value' => 'Iniciar sesión', 'title' => 'Iniciar sesión');
     ?>
-    <div class="container_12">
-        <h1>Formulario de login con varios perfiles de usuario</h1>
+     
+    <tr><td align='center'>
+    <div id="titulo" class="titulo">
+       
+       <img height="15%" width="25%" src= "../../img/uca.jpg" />
+    </div>
+    </td></tr>
+    
+    <br>    
+    <br>    
+    
+    <tr><td align="center">
+    <div id="prueba" class="prueba">
+        <h2>SISTEMA DE MONITOREO DE CALIDAD DE ENERGÍA UCA</h2>
+    </div>
+    </td></tr>
+    
+    <tr><td align="center">
         <div class="grid_12" id="login">
             <div class="grid_8 push_2" id="formulario_login">
+                
                 <div class="grid_6 push_1" id="campos_login">
-                    <?=form_open(base_url().'index.php/login/new_user')?>
+                    <?=form_open(base_url().'login/new_user')?>
                     <label for="username">Nombre de usuario:</label>
                     <?=form_input($username)?><p><?=form_error('username')?></p>
                     <label for="password">Introduce tu password:</label>
@@ -67,6 +104,17 @@
                 </div>
             </div>
         </div>
+    </td></tr>
+    
+    <tr><td align="center">
+    <div id="footer"> Universidad Centroamericana "José Simeón Cañas"
+        <br>
+        2013 
     </div>
+        </td></tr>
+    
+           </tr>
+               </td>
+       </table>
     </body>
 </html>
