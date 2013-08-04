@@ -20,7 +20,7 @@
             <div class="menu_item"><a href="www.bing.com">Inicio</a></div>
             <div class="menu_item"><a href="www.bing.com">Subestaciones</a></div>
             <div class="menu_item"><a href="www.bing.com">Usuarios</a></div>
-            <div class="menu_item"><a href="<?php echo base_url("login/logout_ci"); ?>">Salir</a></div>
+            <div class="menu_item"><a href="<?php echo base_url("index.php/login/logout_ci"); ?>">Salir</a></div>
         </div>
         <div id="separacion_contenido"></div>
         
