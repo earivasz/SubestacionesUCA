@@ -40,14 +40,25 @@ class Archivos extends CI_Controller {
                 redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
             }
         } else {
-            //validar fase trambien 
-            if (($tname == '' && $name == '') || $fase == '') {
+            //validar fase trambien
+            if ($tipo==4){
+                if ($tname == '' && $name == '') {
+                $this->session->set_flashdata('msj', 'Debe completar los campos obligatorios');
+                redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
+                } else {
+                    $result = $this->excel_model->dato_i_v($tipo, $fase);
+                    redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
+                }
+            }else{
+                if (($tname == '' && $name == '') || $fase == '') {
                 $this->session->set_flashdata('msj', 'Debe completar los campos obligatorios');
                 redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
             } else {
                 $result = $this->excel_model->dato_i_v($tipo, $fase);
                 redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
             }
+            }
+            
         }
     }
 
