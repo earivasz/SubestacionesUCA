@@ -22,15 +22,29 @@ if ($msj) {
 
     };
 </script>
-
+<div align="center">
+ <hr  align="left"><h2 align="center">ARCHIVO PRINCIPAL Y CARGAS</h2>
+ 
 <?php echo validation_errors(); ?>
 <?php $hidden = array('subest' => $subest, 'tipo' => $tipo); ?>
 <?php echo form_open_multipart('archivos/subir_cargas', 'id="archivo"', $hidden) ?>
-<label for="file">Seleccionar archivo</label>
-<input type="file" name="file"><br />
-
-<label for="notas">Notas</label>
-<textarea name="notas"></textarea><br />
-
-<input type="submit" name="submit_me" id="submitArch" value="Subir Cargas" />
+ 
+<table>
+    <tr><td align="left">
+<label for="file">Seleccionar archivo:</label>
+    </td><td>
+<input align="center" type="file" name="file"><br />
+    </td></tr><tr><td>
+<br>
+    <tr><td align="left">
+<label for="notas">Notas:</label>
+ </td><td>
+<textarea align="center" name="notas"></textarea><br />
+<br>  
+<input align="center" type="submit" name="submit_me" id="submitArch" value="Subir Cargas" />
+    
 <?php echo form_close(); ?>
+    
+ </table>
+</div>
+

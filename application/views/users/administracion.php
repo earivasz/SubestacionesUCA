@@ -87,29 +87,38 @@ if ($msj) {
         $("#isMod").val('False');
     }
 </script>
-<h2>MANTENIMIENTO USUARIOS</h2>
-<div id='jqxWidget'>
+<h2 align="center">MANTENIMIENTO USUARIOS</h2>
 
-    <div style="width:100%; height: 600px;" id="jqxgrid"></div>
-    <br>
-    <div id="formUsers">
+    <div align="left" id="formUsers">
+        
+        <br> 
+      
+       <table width="100%" align="center" id="tabla_usuario" border="0">
+            
         <?php
+        echo '<tr><td width=40%">';
         echo form_open('login/crear_user');
+        echo '</td><td width="10%"></td><td width="50%">';
         echo form_input(array('name' => 'isMod', 'type' => 'hidden', 'id' => 'isMod', 'value' => 'False'));
-        echo '<br/>';
-        echo form_label('Usuario', 'usuario');
+        echo '</td><td></td></tr><tr align="right"><td>';
+        echo form_label('Usuario:', 'usuario');
+        echo '</td></td><td><td align="left">';
         echo form_input(array('name' => 'usuario', 'type' => 'text', 'id' => 'usuario'));
-        echo '<br/>';
-        echo form_label('Nombre', 'nomUser');
+        echo '</td><td></td></tr><tr  align="right"><td>';
+        echo form_label('Nombre:', 'nomUser');
+        echo '</td></td><td><td align="left">';
         echo form_input(array('name' => 'nomUser', 'type' => 'text', 'id' => 'nomUser'));
-        echo '<br/>';
-        echo form_label('Apellido', 'apel');
+        echo '</td><td></td></tr><tr  align="right"><td>';
+        echo form_label('Apellido:', 'apel');
+        echo '</td></td><td><td align="left">';
         echo form_input(array('name' => 'apel', 'type' => 'text', 'id' => 'apel'));
-        echo '<br/>';
-        echo form_label('Correo', 'correo');
+       echo '</td><td></td></tr><tr  align="right"><td>';
+        echo form_label('Correo:', 'correo');
+        echo '</td></td><td><td align="left">';
         echo form_input(array('name' => 'correo', 'type' => 'text', 'id' => 'correo'));
-        echo '<br/>';
-        echo form_label('Estado', 'estado');
+        echo '</td><td></td></tr><tr  align="right"><td>';
+        echo form_label('Estado:', 'estado');
+        echo '</td></td><td><td align="left">';
         $options = array(
             '' => 'Seleccione una opcion',
             'A' => 'ACTIVO',
@@ -117,18 +126,35 @@ if ($msj) {
             'I' => 'INACTIVO'
         );
         echo form_dropdown('estado', $options, '', 'id="estado"');
-        echo '<br/>';
-        echo form_label('Perfil', 'perfil');
+        echo '</td><td></td></tr><tr align="right"><td>';
+        echo form_label('Perfil:', 'perfil');
+        echo '</td></td><td><td align="left">';
         echo '<select name="perfil" id="perfil">';
         echo '<option value="">Seleccione una opcion</option>';
         foreach ($perfiles as $perfil):
             echo '<option value="' . $perfil['idPerfil'] . '">' . $perfil['tipoPerfil'] . '</option>';
         endforeach;
-        echo '</select> <br />';
+        echo '</select> </td><td></td></tr><tr><td colspan="3">&nbsp;</td></tr><tr align="left"><td  colspan="2"></td><td>';
         echo form_button('crear', 'Crear', 'id="crear" onclick="javascript:crear_user();"');
         echo form_submit('save', 'Guardar', 'save');
+        echo '</td></tr>';
         echo validation_errors();
         echo form_close();
         ?>
+        
+       <tr><td align="center" colspan="3">
+               <h3>&nbsp; </h3>   </td></tr>
+        <tr><td align="center" colspan="3">
+                 <hr>  </td></tr>
+           <tr><td align="center" colspan="3">
+           <h2>LISTA DE USUARIOS</h2>   </td></tr>
+   <tr><td  colspan="3">
+   <div align="center" id='jqxWidget'>
+               
+    <div align="center" style="width:100%; height: 600px;" id="jqxgrid"></div>
+    <br>
     </div>
+    </td></tr>
+   </table>
+
 </div>
