@@ -5,6 +5,7 @@
         <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/960.css" media="screen" />
          <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/text.css" media="screen" />
          <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/reset.css" media="screen" />
+         <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/style.css" media="screen" />
          <style type="text/css">
              h1{
                  font-size: 22px;
@@ -13,15 +14,16 @@
              }
              h2{
                     text-align: center;
-                    background-color:#80be09;
+                    
                     color: white;
                     
                      
             }
              #login{
-                 background: #fefefe;
-                 min-height: 500px;
-                 width: 100%;
+                 background: #333333;
+                 min-height: 300px;
+                 width: 40%;
+                  
              }
              #formulario_login{
                  font-size: 14px;
@@ -31,7 +33,7 @@
              label{
                  display: block;
                  font-size: 16px;
-                 color: #333333;
+                 color: #fff;
                  font-weight: bold;
              }
              input[type=text],input[type=password]{
@@ -44,8 +46,7 @@
                  color: #fff;
              }
              #campos_login{
-                 margin: 50px 20px;
-                 
+                 margin: 50px 20px;                 
              }
              p{
                  color: #f00;
@@ -92,6 +93,7 @@
                 
                 <div class="grid_6 push_1" id="campos_login">
                     <?=form_open(base_url().'index.php/login/new_user')?>
+                    <br>
                     <label for="username">Nombre de usuario:</label>
                     <?=form_input($username)?><p><?=form_error('username')?></p>
                     <label for="password">Introduce tu password:</label>
@@ -107,7 +109,7 @@
     </td></tr>
     
     <tr><td align="center">
-    <div id="footer"> Universidad Centroamericana "José Simeón Cañas"
+    <div id="footer"> Universidad Centroamericana "José Simeon Cañas"
         <br>
         2013 
     </div>
