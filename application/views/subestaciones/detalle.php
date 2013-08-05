@@ -111,7 +111,7 @@
             echo "<tr>";
            foreach($transformadores as $trans):
                 echo "<td class=\"detalles\">".iif(empty($trans['capacidad']),"&nbsp;",$trans['capacidad']). "</td>";
-            endforeach; 
+            endforeach;
             echo "</tr>";
             
              echo "<tr>";
