@@ -16,32 +16,28 @@
 
 <script  type="text/javascript" charset="utf-8">
     var chart;
-    var arreglo_completo = new Array();
-    var arreglo_headers = new Array();
-    var arrColumnasGrid = new Array();
+    var arreglo_completo;
+    var arreglo_headersPri;
+    var arreglo_headersArm;
+    var arrColumnasGrid;
     var myGrid;
     var source;
     var tipo;
-    <?php
-    
-    //la generacion de columnas en el grid debe ser dinamica, asi como la generaciond e puntos en la grafica,
-    //el tipo de grafica dependera del valor que venga como parametro en la llamda de la pagina.
-    
-    //el siguiente numero va a ser dinamico, por el momento es de prueba y estatico
-    $numColumnas = 45;
-    //esta variable tambien sera dinamica, dependiendo del tipo de tabla que este viendo seran los headers
-    $headers = Array();
-    for ($y=1;$y<46;$y++){
-        array_push($headers, 'col' . $y);
-    }
-    ?>
+
   window.onload = function () {
     tipo = '<?php echo $tipo; ?>';
-    arreglo_headers = <?php echo json_encode($headers); ?>;
+    arreglo_headersPri = ['Fecha y hora',
+        'Voltaje 1 [V]','Corriente 1 [A]','%THD V1','%THD I1','Potencia Aparente 1 [VA]','Potencia Activa 1 [W]','Potencia reactiva 1 [VAR]','Factor de potencia 1',
+        'Voltaje 2 [V]','Corriente 2 [A]','%THD V2','%THD I2','Potencia Aparente 2 [VA]','Potencia Activa 2 [W]','Potencia reactiva 2 [VAR]','Factor de potencia 2',
+        'Voltaje 3 [V]','Corriente 3 [A]','%THD V3','%THD I3','Potencia Aparente 3 [VA]','Potencia Activa 3 [W]','Potencia reactiva 3 [VAR]','Factor de potencia 3'];
+    arreglo_headersArm = ['Fecha y hora','fundamental',
+        '2 armonico','3 armonico','4 armonico','5 armonico','6 armonico','7 armonico','8 armonico','9 armonico','10 armonico',
+        '11 armonico','12 armonico','13 armonico','14 armonico','15 armonico','16 armonico','17 armonico','18 armonico','19 armonico','20 armonico',
+        '21 armonico','22 armonico','23 armonico','24 armonico','25 armonico','26 armonico','27 armonico','28 armonico','29 armonico','30 armonico',
+        '31 armonico','32 armonico','33 armonico','34 armonico','35 armonico','36 armonico','37 armonico','38 armonico','39 armonico','40 armonico'];
     $('#loaderimg').hide();
-    if(tipo == 'armi' || tipo == 'armv'){
-        $('input[name="fase"]')[0].checked = true;
-    }
+    $("#graficosPredefinidos").children().prop('disabled',true);
+    $('input[name="fase"]')[0].checked = true;
     $('#cboxfase1').attr('checked', true);
     $('#cboxfase2').attr('checked', true);
     $('#cboxfase3').attr('checked', true);
@@ -110,65 +106,60 @@
       axisX:{
         labelAngle: 30,
       },
-      data: [//array of dataSeries              
-        { //dataSeries object
-
-         /*** Change type "column" to "bar", "area", "line" or "pie"***/
-         type: "column",
-         color: "#4F81BC",
-         dataPoints: []
-       }
+      data: [
+        {   type: "column", 
+            color: "#4F81BC", 
+            dataPoints: [] }
        ]
      });
     chart.render();
     //******************FIN CARGA DE GRAFICO
     
-    
     //******************CARGA DE GRID
     arreglo_completo = null;
-    
     var theme = getDemoTheme();
             
-            var widthGrid = 900;
-            if(tipo == 'pri')
-                widthGrid = 750;
-            
-            source =
-            {
-                localdata: arreglo_completo,
-                datatype: "array"
-            };
-            var dataAdapter = new $.jqx.dataAdapter(source);
-            $("#jqxgrid").jqxGrid(
-            {
-                width: widthGrid,
-                source: dataAdapter,
-                columns: [
-                  { text: 'Datos', datafield: '0', width: 900, height : 400, cellsalign: 'left' }
-                  ]
-            });
-            
-            //registrando el evento de seleccion de una fila si estoy en las armonicas
-            if(tipo == 'armi' || tipo == 'armv'){
-                $("#jqxgrid").bind('rowselect', function (event) {
-                    //console.log('seleccione la fila');
-                    var row = event.args.rowindex;
-                    var datarow = $("#jqxgrid").jqxGrid('getrowdata', row);
-                    recargarGrafico('armonicas', datarow);
-                });
-            }
+    var widthGrid = 900;
+    if(tipo == 'pri')
+        widthGrid = 750;
 
-            $("#jqxlistbox").jqxListBox({ source: [{ label: 'Datos', value: '0', checked: true }], width: 145, height: 325, theme: theme, checkboxes: true });
-            $("#jqxlistbox").on('checkChange', function (event) {
-                if (event.args.checked) {
-                    $("#jqxgrid").jqxGrid('showcolumn', event.args.value);
-                }
-                else {
-                    $("#jqxgrid").jqxGrid('hidecolumn', event.args.value);
-                }
-            });
+    source =
+    {
+        localdata: arreglo_completo,
+        datatype: "array"
+    };
+    var dataAdapter = new $.jqx.dataAdapter(source);
+    $("#jqxgrid").jqxGrid(
+    {
+        width: widthGrid,
+        source: dataAdapter,
+        columns: [
+          { text: 'Datos', datafield: '0', width: 900, height : 400, cellsalign: 'left' }
+          ]
+    });
+
+    //registrando el evento de seleccion de una fila si estoy en las armonicas
+    if(tipo == 'armi' || tipo == 'armv'){
+        $("#jqxgrid").bind('rowselect', function (event) {
+            //console.log('seleccione la fila');
+            var row = event.args.rowindex;
+            var datarow = $("#jqxgrid").jqxGrid('getrowdata', row);
+            recargarGrafico('armonicas', datarow);
+        });
+    }
     
-    
+    //iniciando el listBox si estoy en la tabla principal
+    if(tipo == 'pri'){
+        $("#jqxlistbox").jqxListBox({ source: [{ label: 'Datos', value: '0', checked: true }], width: 145, height: 325, theme: theme, checkboxes: true });
+        $("#jqxlistbox").on('checkChange', function (event) {
+            if (event.args.checked) {
+                $("#jqxgrid").jqxGrid('showcolumn', event.args.value);
+            }
+            else {
+                $("#jqxgrid").jqxGrid('hidecolumn', event.args.value);
+            }
+        });
+    }
     
   };
   
@@ -184,7 +175,6 @@
           else
               arrayCol.push(displayValue);
       }
-      //console.log(arrayCol);
       return arrayCol;
   }
   
@@ -250,6 +240,12 @@
           }
   };
   
+  var limpiarGrafico = function(){
+            chart.options.data = [{type: "column", color: "#4F81BC", dataPoints: []}];
+            chart.options.title.text = 'Graficos';
+            chart.render();
+  }
+  
   var graficaPri = function(){
       //obtengo las columnas que estan marcadas en el listBox para enviarselas a recargarGrafico()
       var itemsChecked = $("#jqxlistbox").jqxListBox('getCheckedItems');
@@ -257,8 +253,40 @@
       for(gp=0;gp<itemsChecked.length;gp++){
           arrColsGraf.push(itemsChecked[gp]['value']);
       }
-      //console.log(arrColsGraf);
+      console.log(arrColsGraf);
       recargarGrafico('principal', arrColsGraf);
+  }
+  
+  var graficaPredef = function(tipoGrafico){
+      //obtengo la fase que quieren graficar
+    var fase = obtieneFase();
+    var colg = 0;
+      //grafico
+    if(tipoGrafico == 'vt')
+        colg = 1;
+    else{
+      if(tipoGrafico == 'it')
+        colg = 2;
+      else{
+        if(tipoGrafico == 'fpt')
+          colg = 8;
+        else{
+            if(tipoGrafico == 'thdit')
+              colg = 4;
+        }
+      }
+    }
+    if(fase == '1')
+        colg = colg + 0;
+    else{
+        if(fase == '2')
+            colg = colg + 8;
+        else{
+            if(fase == '3')
+                colg = colg + 16;
+        }
+    }
+    recargarGrafico('principal', [+colg]);
   }
   
   var obtieneFase = function(){
@@ -287,6 +315,7 @@
                   source.localdata = arreglo_completo;
                   $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
                   $("#jqxgrid").jqxGrid('autoresizecolumns');
+                  limpiarGrafico();
                   $('#loaderimg').hide();
                 });
                 request.fail(function(XHR, textStatus, response) {
@@ -320,6 +349,8 @@
                   source.localdata = arreglo_completo;
                   $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
                   $("#jqxgrid").jqxGrid('autoresizecolumns');
+                  limpiarGrafico();
+                  $("#graficosPredefinidos").children().prop('disabled',false);
                   $('#loaderimg').hide();
                 });
                 request.fail(function(XHR, textStatus, response) {
@@ -338,14 +369,26 @@
 var setColumnas = function(){
     arrColumnasGrid = new Array();
     var itemColumna = {};
-            for(cc=0;cc<arreglo_headers.length;cc++){
+    if(tipo == 'pri'){
+            for(cc=0;cc<arreglo_headersPri.length;cc++){
                 itemColumna = {
-                    text: arreglo_headers[cc],
+                    text: arreglo_headersPri[cc],
                     datafield : cc,
                     width : 80
                 }
                 arrColumnasGrid.push(itemColumna);
             }
+    }
+    if(tipo == 'armi' || tipo == 'armv'){
+            for(cc=0;cc<arreglo_headersArm.length;cc++){
+                itemColumna = {
+                    text: arreglo_headersArm[cc],
+                    datafield : cc,
+                    width : 80
+                }
+                arrColumnasGrid.push(itemColumna);
+            }
+    }
 }
 
 var setListaCB = function(f1, f2, f3){
@@ -354,7 +397,7 @@ var setListaCB = function(f1, f2, f3){
     if(f1){
             for(dd=1;dd<9;dd++){
                 itemListSource = {
-                    label: arreglo_headers[dd],
+                    label: arreglo_headersPri[dd],
                     value : dd+'',
                     checked : true
                 }
@@ -364,7 +407,7 @@ var setListaCB = function(f1, f2, f3){
     if(f2){
             for(dd=9;dd<17;dd++){
                 itemListSource = {
-                    label: arreglo_headers[dd],
+                    label: arreglo_headersPri[dd],
                     value : dd+'',
                     checked : true
                 }
@@ -374,7 +417,7 @@ var setListaCB = function(f1, f2, f3){
     if(f3){
             for(dd=17;dd<25;dd++){
                 itemListSource = {
-                    label: arreglo_headers[dd],
+                    label: arreglo_headersPri[dd],
                     value : dd+'',
                     checked : true
                 }
@@ -415,7 +458,7 @@ var setListaCB = function(f1, f2, f3){
     });
   </script>
 
- <h2 style="margin: 5px 5px 0px 20px;">GRAFICOS</h2>
+  <div style="float: left;"><h2 style="margin: 5px 5px 0px 20px;">GRAFICOS</h2></div>
 <div style="margin-left: 200px;">
     <div style="float:left;">Fecha de inicio<br>
     <input name="start-date" id="start-date" class="date-pick" value="Fecha de inicio" /></div>
@@ -430,8 +473,22 @@ var setListaCB = function(f1, f2, f3){
         }
         ?>
     
-        <button onClick="traerDatos();" name="pressmeDatos">Cargar Datos</button>
-    </div>
+        <button onClick="traerDatos();" style="width: 155px; height: 35px; margin-top:10px;" name="pressmeDatos">Cargar Datos</button>
+    </div><br>
+    <?php if ($tipo == 'pri'){
+        echo '<div id="graficosPredefinidos" style="clear: both; margin-top:25px; margin-bottom: 5px;">
+            Graficos Predefinidos:<br>
+            <button style="width: 125px; height: 35px;" onClick="graficaPredef(\'vt\')" name="graficarPri">Grafico V-t</button>
+            <button style="width: 125px; height: 35px;" onClick="graficaPredef(\'it\')" name="graficarPri">Grafico I-t</button>
+            <button style="width: 125px; height: 35px;" onClick="graficaPredef(\'fpt\')" name="graficarPri">Grafico Fp.-t</button>
+            <button style="width: 125px; height: 35px;" onClick="graficaPredef(\'thdit\')" name="graficarPri">Grafico THD I-t</button>
+            Fase:
+            <input type="radio" name="fase" value="1">1
+            <input type="radio" name="fase" value="2">2
+            <input type="radio" name="fase" value="3">3
+        </div>';
+    }
+        ?>
 <img id="loaderimg" style="height: 40px; width: 40px; margin-left:15px;" src="<?=base_url()?>css/images/ajax-loader2.gif"/>
 </div>
  
@@ -447,9 +504,10 @@ var setListaCB = function(f1, f2, f3){
                 <input type="checkbox" name="fase1" id="cboxfase1">1
                 <input type="checkbox" name="fase2" id="cboxfase2">2
                 <input type="checkbox" name="fase3" id="cboxfase3">3
-                </div>';
+                </div>
+                <div id="jqxlistbox"></div>
+                <button style="width: 147px; height: 25px;" onClick="graficaPri()" name="graficarPri">Graficar</button>';
         }
         ?>
-        <div id="jqxlistbox"></div>
-        <button style="width: 145px; height: 25px;" onClick="graficaPri()" name="graficarPri">Graficar</button>
+        
     </div>
