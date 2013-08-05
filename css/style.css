@@ -99,7 +99,7 @@ a:hover{
     padding: 0;
     height: 500px;
     width:230px;
-    background-color:aqua;
+    background-color:#202020;
     margin-left:670px;
 }
 
@@ -155,8 +155,42 @@ input.dp-applied {
 
 /*FIN ESTILOS PARA LA PAGINA DE GRAFICOS*/
 
-
-.transformador{
-    float:left;
+div.info{
+    alignment-adjust: center;
+    width:100% ;
+    text-align: center;
     
+}
+
+.subtitles{
+    color: #0099FF;
+}
+
+.botones{
+    alignment-adjust: center; 
+}
+
+.tablas{
+    alignment-adjust: center;
+    width: 100%
+}
+.tablasAux{
+    width: 95%
+}
+
+.prueba{
+    text-align: middle;
+    font-size: 22px;
+   height: 50%;     
+                 margin: 20px 0px;
+}
+
+.titulo{
+                 text-align: left;
+                 height: 50%;
+             }
+             
+td.detalles {
+    width: 150px;
+    alignment-adjust: middle;
 }
