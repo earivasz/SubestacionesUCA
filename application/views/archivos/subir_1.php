@@ -1,25 +1,30 @@
+<script type="text/javascript">
+    window.onload = function() {
 <?php
-    $tiempo ='4/22/13 11:31';
-    $time = explode(' ', $tiempo);
-    if (strpos($time[0],'-') !== false) {
-        $fecha = explode('-',$time[0]);
-    }elseif(strpos($time[0],'/') !== false){
-        $fecha = explode('/',$time[0]);
-    }elseif(strpos($time[0],'.') !== false){
-        $fecha = explode('.',$time[0]);
-    }
-    if(count($time)>2){
-        $newFec = $fecha[2] . '-' . $fecha[1] . '-' . $fecha[0] . ' ' . $time[1]. $time[2];
-    }else{
-        $newFec = $fecha[2].'-'.$fecha[0].'-'.$fecha[1].' '.$time[1];
-    }
-    $timeN = strtotime($newFec);
-    echo $newFec . ' : '.$timeN;
+$msj = $this->session->flashdata('msj');
+if ($msj) {
+    ?>
+            showMsg('modal_msj', 'aceptar', '<?php echo $msj; ?>');
+    <?php
+}
 ?>
+        $("#archivo").submit(function(e) {
+            var self = this;
+            //e.preventDefault();
+            $('#submitArch').attr('disabled', 'disabled');
+            showMsg('modal_msj', 'loading', 'Un momento mientras el archivo esta siendo cargado')
+            //self.submit();
+            return true; //is superfluous, but I put it here as a fallback
+        });
 
+        //MUESTRO MENSAJE SI HA SIDO SETEADO UN FLASHDATA
+
+
+    };
+</script>
 <?php echo validation_errors(); ?>
 <?php $hidden = array('subest' => $subest, 'tipo' => $tipo);?>
-<?php echo form_open_multipart('archivos/subir_cargas','',$hidden) ?>
+<?php echo form_open_multipart('archivos/subir_cargas','id="archivo"',$hidden) ?>
 <label for="file">Seleccionar archivo</label>
 <input type="file" name="file"><br />
 <label for="fase">Fase</label>
@@ -33,4 +38,4 @@
 <label for="notas">Notas</label>
 <textarea name="notas"></textarea><br />
 
-<input type="submit" name="submit" value="Subir Cargas" />
+<input type="submit" id="submitArch" name="submit" value="Subir Cargas" />

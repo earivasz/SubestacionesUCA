@@ -22,14 +22,13 @@ class Excel_model extends CI_Model {
             $this->tabla_insert($lastTab, $name, $tipo);
             if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
+                $this->session->set_flashdata('msj', 'No se pudo obtener los datos necesarios.');
                 return FALSE;
             }
             //$dato = new Spreadsheet_Excel_Reader($tname);
-
             $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
             $objReader = PHPExcel_IOFactory::createReader($inputFileType);
             $objPHPExcel = $objReader->load($inputFileName);
-
 
             $sheet = $objPHPExcel->getSheet(0);
             $highestRow = $sheet->getHighestRow();
@@ -59,17 +58,20 @@ class Excel_model extends CI_Model {
             } else {
                 $this->db->insert_batch('datoP', $batch);
             }
-            echo 'FIN';
+            //echo 'FIN';
 
             if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
+                $this->session->set_flashdata('msj', 'No se pudo cargar su archivo en la base de datos.');
                 return FALSE;
             } else {
                 $this->db->trans_commit();
+                $this->session->set_flashdata('msj', 'Su archivo fue cargado con exito.');
                 return TRUE;
             }
         } catch (Exception $e) {
             //die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
+            $this->session->set_flashdata('msj', 'No se pudo abrir el archivo.');
             $this->db->trans_rollback();
             return FALSE;
         }
@@ -186,7 +188,7 @@ class Excel_model extends CI_Model {
                 break;
         }
         $timeN = strtotime($newFec);
-        echo $newFec . '  :  ' . $timeN . '<br/>';
+        //echo $newFec . '  :  ' . $timeN . '<br/>';
         //$timeF = date('Y-m-d H:m:s', $timeN);
         $query = "INSERT INTO tiempo (idTiempo, fechaHora) VALUES (NULL, CONVERT_TZ(FROM_UNIXTIME(?),'+00:00', '+01:00'));";
         
@@ -209,6 +211,7 @@ class Excel_model extends CI_Model {
         $this->tabla_insert($lastTab, $name, 1);
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
+            $this->session->set_flashdata('msj', 'No se pudo obtener la informacion necesaria.');
             return FALSE;
         }
         //$dato = new Spreadsheet_Excel_Reader($tname);
@@ -217,8 +220,8 @@ class Excel_model extends CI_Model {
             $objReader = PHPExcel_IOFactory::createReader($inputFileType);
             $objPHPExcel = $objReader->load($inputFileName);
         } catch (Exception $e) {
-            die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
             $this->db->trans_rollback();
+            $this->session->set_flashdata('msj', 'No se pudo abrir el archivo.');
             return FALSE;
         }
         $sheet = $objPHPExcel->getSheet(0);
@@ -235,6 +238,7 @@ class Excel_model extends CI_Model {
                 $this->datac_insert(implode("/|\\", $rowData[0]), $lastTab, $row);
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
+                    $this->session->set_flashdata('msj', 'No se pudo insertar los datos en la base de datos.');
                     return FALSE;
                 }
             }
@@ -242,9 +246,11 @@ class Excel_model extends CI_Model {
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
+            $this->session->set_flashdata('msj', 'Se encontraron problemas para cargar el archivo.');
             return FALSE;
         } else {
             $this->db->trans_commit();
+            $this->session->set_flashdata('msj', 'Su archivo fue cargado exitosamente.');
             return TRUE;
         }
     }

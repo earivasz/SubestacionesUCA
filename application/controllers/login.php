@@ -173,7 +173,7 @@ class Login extends CI_Controller
                 );
                 $result = $this->login_model->create_user($data);
             }
-            redirect(base_url()."admin/usuarios");
+            redirect(base_url()."index.php/admin/usuarios");
         }
     
     }
