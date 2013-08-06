@@ -17,7 +17,7 @@
         <div id="titulo">Monitoreo Subestaciones UCA</div>
         <div id="separacion_arriba"></div>
         <div id="menu">
-            <div class="menu_item"><a href="www.bing.com">Inicio</a></div>
+            <div class="menu_item"><a href="<?=base_url()?>index.php/subestaciones">Inicio</a></div>
             <div class="menu_item"><a href="www.bing.com">Subestaciones</a></div>
             <div class="menu_item"><a href="www.bing.com">Usuarios</a></div>
             <div class="menu_item"><a href="<?php echo base_url("index.php/login/logout_ci"); ?>">Salir</a></div>

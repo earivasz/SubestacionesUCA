@@ -10,6 +10,17 @@ a {
     color:#ffffff;
 }
 
+button {
+    border-style: none;
+    border-width: 0px;
+    /*background-color: #E8F2FF;*/
+    color: #000000;
+}
+
+button:hover{
+    background-color: #6DAFFF;
+}
+
 a:hover{
     text-decoration:none;}
 
