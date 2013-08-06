@@ -183,18 +183,12 @@ div.info{
 }
 
 .tablas{
-    alignment-adjust: center;
-    width: 100%
+    margin: 0px 0px 0px 0px;
+    width: 100%;
+    text-align: center;
 }
 .tablasAux{
     width: 95%
-}
-
-.prueba{
-    text-align: middle;
-    font-size: 22px;
-   height: 50%;     
-                 margin: 20px 0px;
 }
 
 .titulo{
@@ -202,11 +196,6 @@ div.info{
                  height: 50%;
              }
              
-td.detalles {
-    width: 150px;
-    alignment-adjust: middle;
-}
-
 .subir{
     align: "center";
 }
@@ -223,13 +212,31 @@ td.detalles {
     text-align: center;
 }
 
-.transformador{
-    float:left;
+.hor-minimalist-b
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	background: #fff;
+	margin: 45px;
+	width: 480px;
+	border-collapse: collapse;
+	text-align: left;
 }
-
-.transformador .celda{
-    border-width: 1px;
-    border-style: solid;
-    border-color: #ffffff;
-    
+.hor-minimalist-b th
+{
+	font-size: 14px;
+	font-weight: normal;
+	color: #039;
+	padding: 10px 8px;
+	border-bottom: 2px solid #6678b1;
+}
+.hor-minimalist-b td
+{
+	border-bottom: 1px solid #ccc;
+	color: #669;
+	padding: 6px 8px;
+}
+.hor-minimalist-b tbody tr:hover td
+{
+	color: #009;
 }

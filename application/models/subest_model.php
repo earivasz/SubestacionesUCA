@@ -21,7 +21,7 @@ class Subest_model extends CI_Model {
         
         public function get_transformadores($id)
         {
-            $query = $this->db->get_where('transformador',array('idSubestacion' => $id));
+            $query = $this->db->get_where('transformador',array('idSubestacion' => $id, 'activoTrans' => '1'));
             return $query->result_array();
         }
         

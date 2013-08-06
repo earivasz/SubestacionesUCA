@@ -4,6 +4,7 @@
 <script>
      $(document).ready( function(){
          $('#slideshowHolder').jqFancyTransitions({ width: 300, height: 200, navigation: true });
+         setTimeout(drop_modificar(), 1000);
 });
     var neighborhoods = [
     <?php 
@@ -34,7 +35,6 @@
             
     ?>
     ];
-    setTimeout(drop_modificar(), 1000);
     
 </script>
 <h2 align="center">DETALLE SUBESTACIÓN</h2>
@@ -75,16 +75,11 @@
        
             
        </div>
-
-       
-      <div id="tablas" class="tablas"> 
-      <hr> <h2 align="center">TRANSFORMADORES</h2> 
-      <table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr align="center">
-          <td width="25%">
-      <table width=\"15%\"  border=\"1\" cellspacing=\"5\" cellpadding=\"10\" align="right">
-      <tr>
-          <tr><td>Nº de Transformador:</td></tr>
+<hr> <h2 align="center">TRANSFORMADORES</h2> 
+      <div class="tablas"> 
+      
+      <table  class="hor-minimalist-b" style="float:left; width:200px; margin-left:50px; margin-right: 0px; margin-top: 0px;" >
+          <tr><th>Nº de Transformador:</th></tr>
           <tr><td>N° de serie:</td></tr>
           <tr><td>Capacidad [KVA]:</td></tr>
           <tr><td>Fabricante (marca):</td></tr>
@@ -97,11 +92,8 @@
           <tr><td>Aterrizamiento:</td></tr>
           <tr><td>Pararrayos:</td></tr>
           <tr><td>Cuchillas</td></tr>
-      </tr>
       </table>
-      </td>
-          <td align="center" width="75%">
-      <table width=\"80%\"  border=\"1\" cellspacing=\"5\" cellpadding=\"10\" align="left">  
+      <table class="hor-minimalist-b" style="margin-left:0px;  margin-top: 0px; width:600px;">
            
         <?php
                 
@@ -109,104 +101,90 @@
         return ($condition ? $true : $false);
         }
 
-        echo '<div class ="transformador">';
          $cont2 = 1;
             echo "<tr>";
            foreach($transformadores as $trans):
-                    echo "<td class=\"detalles\">Transformador $cont2 </td>";
+                    echo "<th>Transformador $cont2 </th>";
                 $cont2+=1;
             endforeach; 
             echo "</tr>";
             
             echo "<tr>";
            foreach($transformadores as $trans):
-                echo "<td class=\"detalles\">" . iif(empty($trans['noSerie']),"&nbsp;",$trans['noSerie']). "</td>";
+                echo "<td>" . iif(empty($trans['noSerie']),"--",$trans['noSerie']). "</td>";
             endforeach; 
             echo "</tr>";
             
             echo "<tr>";
            foreach($transformadores as $trans):
-                echo "<td class=\"detalles\">".iif(empty($trans['capacidad']),"&nbsp;",$trans['capacidad']). "</td>";
+                echo "<td>".iif(empty($trans['capacidad']),"--",$trans['capacidad']). "</td>";
             endforeach;
             echo "</tr>";
             
              echo "<tr>";
            foreach($transformadores as $trans):
-                echo "<td class=\"detalles\">".iif(empty($trans['fabricante']),"&nbsp;",$trans['fabricante']). "</td>";
+                echo "<td>".iif(empty($trans['fabricante']),"--",$trans['fabricante']). "</td>";
             endforeach; 
             echo "</tr>";
             
              echo "<tr>";
            foreach($transformadores as $trans):
-                echo "<td class=\"detalles\">".iif(empty($trans['enfriamiento']),"&nbsp;",$trans['enfriamiento']). "</td>";
+                echo "<td>".iif(empty($trans['enfriamiento']),"--",$trans['enfriamiento']). "</td>";
             endforeach; 
             echo "</tr>";
             
              echo "<tr>";
            foreach($transformadores as $trans):
-                echo "<td class=\"detalles\">".iif(empty($trans['impedancia']),"&nbsp;",$trans['impedancia']). "</td>";
+                echo "<td>".iif(empty($trans['impedancia']),"--",$trans['impedancia']). "</td>";
             endforeach; 
             echo "</tr>";
             
              echo "<tr>";
            foreach($transformadores as $trans):
-                echo "<td class=\"detalles\">".iif(empty($trans['vPrimaria']),"&nbsp;",$trans['vPrimaria']). "</td>";
+                echo "<td>".iif(empty($trans['vPrimaria']),"--",$trans['vPrimaria']). "</td>";
             endforeach; 
             echo "</tr>";
             
              echo "<tr>";
            foreach($transformadores as $trans):
-                echo "<td class=\"detalles\">".iif(empty($trans['vSecundario']),"&nbsp;",$trans['vSecundario']). "</td>";
+                echo "<td>".iif(empty($trans['vSecundario']),"--",$trans['vSecundario']). "</td>";
             endforeach; 
             echo "</tr>";
             
              echo "<tr>";
            foreach($transformadores as $trans):
-                echo "<td class=\"detalles\">". iif(empty($trans['rTrnasformacion']),"&nbsp;",$trans['rTransformacion']). "</td>";
+                echo "<td>". iif(empty($trans['rTrnasformacion']),"--",$trans['rTransformacion']). "</td>";
             endforeach; 
             echo "</tr>";
             
              echo "<tr>";
            foreach($transformadores as $trans):
-                echo "<td class=\"detalles\">".iif(empty($trans['polaridad']),"&nbsp;",$trans['polaridad']). "</td>";
+                echo "<td>".iif(empty($trans['polaridad']),"--",$trans['polaridad']). "</td>";
             endforeach; 
             echo "</tr>";
             
              echo "<tr>";
            foreach($transformadores as $trans):
-                echo "<td class=\"detalles\">".iif(empty($trans['aterrizamiento']),"&nbsp;",$trans['aterrizamiento']). "</td>";
+                echo "<td>".iif(empty($trans['aterrizamiento']),"--",($trans['aterrizamiento']== '1') ? 'si' : 'no'). "</td>";
             endforeach; 
             echo "</tr>";
         
             echo "<tr>";
            foreach($transformadores as $trans):
-                echo "<td class=\"detalles\">".iif(empty($trans['pararrayos']),"&nbsp;",$trans['pararrayos']). "</td>";
+                echo "<td>".iif(empty($trans['pararrayos']),"--",($trans['pararrayos'] == '1') ? 'si': 'no'). "</td>";
             endforeach; 
             echo "</tr>";
             
             echo "<tr>";
            foreach($transformadores as $trans):
-                echo "<td class=\"detalles\">".iif(empty($trans['cuchillas']),"&nbsp;",$trans['cuchillas']). "</td>";
+                echo "<td>".iif(empty($trans['cuchillas']),"--",($trans['cuchillas'] == '1') ? 'si' : 'no'). "</td>";
             endforeach; 
             echo "</tr>";
-        echo '</div>';
         
          ?>
         </table>
-        </div>
-         </td></tr></table>
-      
-      <div style="width:100%; margin-left:40px;">
-          <div class="transformador">
-              <span class="celda">N de Transformador</span><br>
-              <span class="celda">N de Transformador</span><br>
-              <span class="celda">N de Transformador</span><br>
-              <span class="celda">N de Transformador</span><br>
-          </div>
-          <div class="transformador">a</div>
-          <div class="transformador">a</div>
-          <div class="transformador">a</div>
       </div>
+
 
 
         

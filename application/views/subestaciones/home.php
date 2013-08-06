@@ -32,6 +32,6 @@
         <br/>
         <br>
         <!--<a  id="verSub" href="index.php/subestaciones/detalle/1">Ver subestacion</a>-->
-        <a  id="verSub" href="<?php echo base_url("subestaciones/detalle/#"); ?>">Ver subestacion</a>
+        <a  id="verSub" href="<?php echo base_url("index.php/subestaciones/detalle/#"); ?>">Ver subestacion</a>
     </div>
 </div>
