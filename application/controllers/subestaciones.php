@@ -47,17 +47,7 @@ class Subestaciones extends CI_Controller {
             $data['subest'] = $this->subest_model->get_subest($id);
             $data['transformadores'] = $this->subest_model->get_transformadores($id);
             $data['fotos'] = $this->subest_model->get_fotosSubest($id);
-            
-            //TESTING
-//            foreach($data['transformadores'] as $trans):
-//                echo $trans['noSerie'];
-//            endforeach;
-            
-//            foreach($data['fotos'] as $trans):
-//                echo $trans['url'];
-//            endforeach;
-            //ENDTESTING
-            //echo "DETALLE";
+            $data['subestId'] = $id;
             $this->load->view('templates/header');
             $this->load->view('subestaciones/detalle', $data);
             $this->load->view('templates/footer');

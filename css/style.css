@@ -170,15 +170,16 @@ div.info{
     alignment-adjust: center;
     width:100% ;
     text-align: center;
-    
+}
+
+.botDetalle{
+    width:175px;
+    height:35px;
+    margin-top:10px;
 }
 
 .subtitles{
     color: #0099FF;
-}
-
-.botones{
-    alignment-adjust: center; 
 }
 
 .tablas{
@@ -208,4 +209,27 @@ td.detalles {
 
 .subir{
     align: "center";
+}
+
+.ft-prev{
+    background-color: #000000;
+    width:50px;
+    text-align: center;
+}
+
+.ft-next{
+    background-color: #000000;
+    width:50px;
+    text-align: center;
+}
+
+.transformador{
+    float:left;
+}
+
+.transformador .celda{
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ffffff;
+    
 }

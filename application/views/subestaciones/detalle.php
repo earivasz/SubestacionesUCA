@@ -1,6 +1,10 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script src="<?=base_url()?>js/maps2.js"></script>
+<script type="text/javascript" src="<?=base_url()?>js/jqFancyTransitions.1.8.min.js"></script>
 <script>
+     $(document).ready( function(){
+         $('#slideshowHolder').jqFancyTransitions({ width: 300, height: 200, navigation: true });
+});
     var neighborhoods = [
     <?php 
     $contSubEst = count($subest);
@@ -35,31 +39,43 @@
 </script>
 <h2 align="center">DETALLE SUBESTACIÓN</h2>
 <div id="map-canvas" class="map-create"></div>
-
-   
-    
-       <br>  
-       <div id="info" class="info">
-       <h2 class="subtitles" align="center">INFORMACIÓN GENERAL</h2>
-            <?php 
-                echo "<b>";
-                echo  'Número de subestación: '. $numSub . "<br>";
-                echo 'Localización de la subestación: ' . $localizacion . "<br>";
-                echo 'Capacidad de la subestación: '. $capacidad . "<br>";
-                echo 'Conexión de la subestación: '. $conexion . "<br>";   
+<br>
+<h2 class="subtitles" align="center">INFORMACIÓN GENERAL</h2>
+       <div style="width:100%; height:230px;">
+           <div style="float:left; width:300px; margin-left:20px;">
+               <?php 
+                echo "";
+                echo  'Número de subestación:<b> '. $numSub . "</b><br>";
+                echo 'Localización de la subestación:<b> ' . $localizacion . "</b><br>";
+                echo 'Capacidad de la subestación:<b> '. $capacidad . "</b><br>";
+                echo 'Conexión de la subestación:<b> '. $conexion . "</b><br>";   
                 echo "</b>";
             ?>
+           </div>
+           <div style="float:left; width: 350px;">
+               <div id='slideshowHolder'>
+               <?php
+                    foreach($fotos as $foto):
+                        echo '<img src ="' . $foto['url'] . '" />';
+                    endforeach;
+                ?>
+                <img src='http://blog.frau-klein.org/wp-content/uploads/dexter.png' />
+                <img src='http://rocknrollghost.com/wp-content/uploads/2010/10/dexter.jpeg'  />
+                <img src='http://www.hollywoodreporter.com/sites/default/files/imagecache/blog_post_349_width/2013/05/dexter_season_8_p_2013.jpg' />
+               </div>
+           </div>
+           <div style="float:left; width:200px;">
+               <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href='<?=base_url()?>index.php/subestaciones/graficos/<?=$subestId?>/pri'">Tabla Principal</button><br>
+               <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href='<?=base_url()?>index.php/subestaciones/graficos/<?=$subestId?>/armi'">Armónicos de Corriente</button><br>
+               <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href='<?=base_url()?>index.php/subestaciones/graficos/<?=$subestId?>/armv'">Armónicos de Voltaje</button><br>
+               <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href='<?=base_url()?>index.php/subestaciones/cargas/<?=$subestId?>'">Cargas de subestacion</button><br>
+               
+           </div>
+           
+       
+            
        </div>
-        <br>
-        <br>
-        <div id="botones" class="botones">
-            <center>
-        <INPUT TYPE = "Submit" Name = "Submit1" VALUE = "Tabla Principal">
-        <INPUT TYPE = "Submit" Name = "Submit1" VALUE = "Armónicos">
-        <INPUT TYPE = "Submit" Name = "Submit1" VALUE = "Gráficos">
-            </center>
-        </div>
-        <br>
+
        
       <div id="tablas" class="tablas"> 
       <hr> <h2 align="center">TRANSFORMADORES</h2> 
@@ -179,20 +195,19 @@
         </table>
         </div>
          </td></tr></table>
-        <br>
-    
-        <div id="imagenes" class="tablas">
-        <hr  align="left"> <h2 align="center">GALERÍA DE FOTOS</h2>       
-        <?php
-            foreach($fotos as $foto):
-                echo '<div class ="foto">';
-                echo '<img src ="' . $foto['url'] . '" /><br>';
-                echo '</div>';
-            endforeach;
-        ?>
-        </div>
-        
-        <br><br>
+      
+      <div style="width:100%; margin-left:40px;">
+          <div class="transformador">
+              <span class="celda">N de Transformador</span><br>
+              <span class="celda">N de Transformador</span><br>
+              <span class="celda">N de Transformador</span><br>
+              <span class="celda">N de Transformador</span><br>
+          </div>
+          <div class="transformador">a</div>
+          <div class="transformador">a</div>
+          <div class="transformador">a</div>
+      </div>
+
 
         
 
