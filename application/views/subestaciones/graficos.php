@@ -35,8 +35,8 @@
         '11 armonico','12 armonico','13 armonico','14 armonico','15 armonico','16 armonico','17 armonico','18 armonico','19 armonico','20 armonico',
         '21 armonico','22 armonico','23 armonico','24 armonico','25 armonico','26 armonico','27 armonico','28 armonico','29 armonico','30 armonico',
         '31 armonico','32 armonico','33 armonico','34 armonico','35 armonico','36 armonico','37 armonico','38 armonico','39 armonico','40 armonico'];
-    $('#loaderimg').hide();
     $("#graficosPredefinidos").children().prop('disabled',true);
+    $("#filtrosPri").children().prop('disabled',true);
     $('input[name="fase"]')[0].checked = true;
     $('#cboxfase1').attr('checked', true);
     $('#cboxfase2').attr('checked', true);
@@ -294,11 +294,12 @@
   }
   
   var traerDatos = function(){
+      $("#botbotTraerDatos").prop('disabled',true);
       if(tipo == 'armi' || tipo == 'armv'){
         var fase = obtieneFase();
         if(validaFecha($('#start-date').val(), $('#end-date').val()) && fase != undefined)
             {
-              $('#loaderimg').show();    
+              showMsg('modal_msj', 'loading', 'Un momento mientras se cargan los datos');
               var cct = $.cookie('cookieUCA');
               var fechaIni = $('#start-date').val();
               var fechaFin = $('#end-date').val();
@@ -316,22 +317,22 @@
                   $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
                   $("#jqxgrid").jqxGrid('autoresizecolumns');
                   limpiarGrafico();
-                  $('#loaderimg').hide();
+                  close_modal();
                 });
                 request.fail(function(XHR, textStatus, response) {
-                  $('#loaderimg').hide();
-                  alert( "Fallo peticion a servidor: " + textStatus );
+                  close_modal();
+                  showMsg('modal_msj', 'aceptar', 'Ocurrio un error obteniendo los datos, asegurese que su conexion a internet este activa y vuelva a intentarlo');
                 });
             }
         else
             {
-                alert("Ingresar Fechas validas");
+                showMsg('modal_msj', 'aceptar', 'Debe ingresar fechas validas');
             }
       }
       if(tipo == 'pri'){//AQUI NO VALIDO LA FASE
         if(validaFecha($('#start-date').val(), $('#end-date').val()))
-            {
-              $('#loaderimg').show();    
+            { 
+              showMsg('modal_msj', 'loading', 'Un momento mientras se cargan los datos');
               var cct = $.cookie('cookieUCA');
               var fechaIni = $('#start-date').val();
               var fechaFin = $('#end-date').val();
@@ -351,19 +352,20 @@
                   $("#jqxgrid").jqxGrid('autoresizecolumns');
                   limpiarGrafico();
                   $("#graficosPredefinidos").children().prop('disabled',false);
-                  $('#loaderimg').hide();
+                  $("#filtrosPri").children().prop('disabled',false);
+                  close_modal();
                 });
                 request.fail(function(XHR, textStatus, response) {
-                  $('#loaderimg').hide();
-                  alert( "Fallo peticion a servidor: " + textStatus );
+                  close_modal();
+                  showMsg('modal_msj', 'aceptar', 'Ocurrio un error obteniendo los datos, asegurese que su conexion a internet este activa y vuelva a intentarlo');
                 });
             }
         else
             {
-                alert("Ingresar Fechas validas");
+                showMsg('modal_msj', 'aceptar', 'Debe ingresar fechas validas');
             }
       }
-        
+      $("#botbotTraerDatos").prop('disabled',false);
 }
 
 var setColumnas = function(){
@@ -458,23 +460,23 @@ var setListaCB = function(f1, f2, f3){
     });
   </script>
 
-  <div style="float: left;"><h2 style="margin: 5px 5px 0px 20px;">GRAFICOS</h2></div>
-<div style="margin-left: 200px;">
-    <div style="float:left;">Fecha de inicio<br>
+  <div style="width: 100%; text-align:center;"><h2 style="margin: 5px 5px 20px 20px;">GRAFICOS</h2></div>
+<div style="text-align: center; width: 100%; margin-bottom: 20px;">
+    <div style="float:left; margin-left: 175px;">Fecha de inicio<br>
     <input name="start-date" id="start-date" class="date-pick" value="Fecha de inicio" /></div>
     <div style="float:left;">Fecha de finalizacion<br>
     <input name="end-date" id="end-date" class="date-pick" value="Fecha fin" /></div>
     <div style="float:left; height:100%; vertical-align: bottom; margin-left:15px;">
         <?php if ($tipo == 'armi' || $tipo == 'armv'){
-            echo 'Fase: <br>
+            echo 'Fase:
                 <input type="radio" name="fase" value="1">1
                 <input type="radio" name="fase" value="2">2
                 <input type="radio" name="fase" value="3">3';
         }
         ?>
     
-        <button onClick="traerDatos();" style="width: 155px; height: 35px; margin-top:10px;" name="pressmeDatos">Cargar Datos</button>
-    </div><br>
+        <button id="botTraerDatos" onClick="traerDatos();" style="width: 155px; height: 35px; margin-top:10px; margin-left:10px;" name="pressmeDatos">Cargar Datos</button>
+    </div><br><br>
     <?php if ($tipo == 'pri'){
         echo '<div id="graficosPredefinidos" style="clear: both; margin-top:25px; margin-bottom: 5px;">
             Graficos Predefinidos:<br>
@@ -489,17 +491,17 @@ var setListaCB = function(f1, f2, f3){
         </div>';
     }
         ?>
-<img id="loaderimg" style="height: 40px; width: 40px; margin-left:15px;" src="<?=base_url()?>css/images/ajax-loader2.gif"/>
 </div>
  
 <div id="chartContainer" style="height: 400px; width: 100%;  clear:both;">
   </div>
+<div style="height: 40px; font-size: 30px; text-align: center; width:100%;">Datos de tabla</div>
 <div id='jqxWidget' style="height: 400px;">
         
         <div style="height: 400px;  float:left;" id="jqxgrid"></div>
         <?php 
         if ($tipo == 'pri'){
-            echo '<div style="height:50px;">
+            echo '<div id="filtrosPri" style="height:50px;">
                 Fase: <br>
                 <input type="checkbox" name="fase1" id="cboxfase1">1
                 <input type="checkbox" name="fase2" id="cboxfase2">2

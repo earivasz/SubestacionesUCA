@@ -255,7 +255,7 @@
   .jqx-grid-column-filterbutton
  {
     border: none;
-    background-image: url('../resources/filter_dark.png');
+    background-image: url('images/filter_dark.png');
     background-repeat: no-repeat;
     background-position: center;
  }

@@ -65,6 +65,12 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
+        public function get_cargas($idSubest){
+            $query = $this->db->query("select edificio, tipoCarga, cantidad, corriente, voltaje, fase, fp, especificacion, accesorio, notasCargas 
+                from subestuca.datoc where idSubestacion = " . $idSubest . " limit 0,10000;");
+            return $query->result_array();
+        }
+        
         public function mod_subest($id)
         {    
             if($this->input->post('localizacion')==''){

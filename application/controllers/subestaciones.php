@@ -88,6 +88,16 @@ class Subestaciones extends CI_Controller {
             }
         }
         
+        public function cargas($id)
+        {
+            $data['cargas'] = $this->subest_model->get_cargas($id);
+            $data['subest'] = $this->subest_model->get_subest($id);
+            $data['idSub'] = $id;
+            $this->load->view('templates/header');	
+            $this->load->view('subestaciones/cargas', $data);
+            $this->load->view('templates/footer');
+        }
+        
         public function modificar($id)
         {
             $data['subest'] = $this->subest_model->get_subest($id);
