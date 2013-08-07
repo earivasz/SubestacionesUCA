@@ -4,7 +4,19 @@
 <script>
      $(document).ready( function(){
          $('#slideshowHolder').jqFancyTransitions({ width: 300, height: 200, navigation: true });
-         setTimeout(drop_modificar(), 1000);
+         //$("#cssmenu .active").removeClass(".active");
+         //$('#cssmenu ul li[id=cssmenu1]')("refresh");
+         //$('#cssmenu ul li[id=cssmenu2]').addClass("active");
+         $('#cssmenu ul li[id=cssmenu2] ul').append('<li><a href="<?php echo base_url() . 'index.php/subestaciones/modificar/' . $subestId ?>"><span>Modificar</span></a></li>');
+         $('#cssmenu ul li[id=cssmenu2] ul').append('<li><a href="#"><span>Galeria</span></a></li>');
+         //cargas tipo = 1
+         $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $subestId . '/1' ?>"><span>Cargas de subestacion</span></a></li>');
+         //principal tipo = 4
+         $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $subestId . '/4' ?>"><span>Tabla principal</span></a></li>');
+         //voltaje tipo = 3
+         $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $subestId . '/3' ?>"><span>Tabla armonicas (Voltaje)</span></a></li>');
+         //corriente tipo = 2
+         $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $subestId . '/2' ?>"><span>Tabla armonicas (Corriente)</span></a></li>');
 });
     var neighborhoods = [
     <?php 
@@ -35,6 +47,7 @@
             
     ?>
     ];
+    setTimeout(drop_modificar(), 1000);
     
 </script>
 <h2 align="center">DETALLE SUBESTACIÓN</h2>

@@ -43,7 +43,9 @@ class Login_model extends CI_Model {
                 'is_logued_in'=>TRUE,
                 'id_usuario'=>$user->idUser,
                 'perfil'=>$user->idPerfil,
-                'username'=>$user->usuario
+                'username'=>$user->usuario,
+                'nomUser'=>$user->nomUser,
+                'apel'=>$user->apel
                 );        
                 $this->session->set_userdata($data);
                 return 0;  

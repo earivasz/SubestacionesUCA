@@ -2,9 +2,6 @@
     <html lang="es">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/960.css" media="screen" />
-         <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/text.css" media="screen" />
-         <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/reset.css" media="screen" />
          <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/style.css" media="screen" />
          <style type="text/css">
              h1{
@@ -71,14 +68,7 @@
     $password = array('name' => 'password',    'placeholder' => 'introduce tu password');
     $submit = array('name' => 'submit', 'value' => 'Iniciar sesión', 'title' => 'Iniciar sesión');
     ?>
-     
-    <tr><td align='center'>
-    <div id="titulo" class="titulo">
-       
-       <img height="15%" width="25%" src= "../../img/uca.jpg" />
-    </div>
-    </td></tr>
-    
+   
     <br>    
     <br>    
     

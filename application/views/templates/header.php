@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <title></title>
     <link href="<?=base_url()?>css/style.css" rel="stylesheet" type="text/css" />
+    <link href="<?=base_url()?>css/styles_menu.css" rel="stylesheet" type="text/css" />
     <link href="<?=base_url()?>css/jqx.base.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/datePicker.css" />
     <script src="<?=base_url()?>js/jquery-2.0.2.min.js"></script>
@@ -16,10 +17,28 @@
     <div id="principal" class="centro">
         <div id="titulo">Monitoreo Subestaciones UCA</div>
         <div id="separacion_arriba"></div>
-        <div id="menu">
-            <div class="menu_item"><a href="<?=base_url()?>index.php/subestaciones">Inicio</a></div>
-            <div class="menu_item"><a href="www.bing.com">Subestaciones</a></div>
-            <div class="menu_item"><a href="www.bing.com">Usuarios</a></div>
-            <div class="menu_item"><a href="<?php echo base_url("index.php/login/logout_ci"); ?>">Salir</a></div>
+        <div id='cssmenu'>
+            <ul>
+               <li id="cssmenu1"><a href="<?=base_url()?>index.php/subestaciones"><span>Inicio</span></a></li>
+               <?php 
+                if($this->session->userdata('perfil') == '1'){
+                    echo '
+                <li id="cssmenu2" class="has-sub "><a href="#"><span>Subestaciones</span></a>
+                    <ul>
+                       <li><a href="#"><span>Crear</span></a></li>
+                    </ul>
+                 </li>
+                 <li id="cssmenu3"><a href="' . base_url() . 'index.php/admin/usuarios"><span>Usuarios</span></a></li>
+                 <li id="cssmenu4" class="has-sub "><a href="#"><span>Archivos</span></a>
+                    <ul>
+                       <li><a href="#"><span>Mantenimiento</span></a></li>
+                    </ul>
+                </li>';
+                }
+            ?>
+               
+               <li><a href="<?php echo base_url("index.php/login/logout_ci"); ?>"><span>Salir</span></a></li>
+               <li class="nombreUsuario" style="<?php echo ($this->session->userdata('perfil') == '1') ? 'left:100px;' : 'left:450px;' ?>"><span>Usuario: <?php echo $this->session->userdata('nomUser') . ' ' . $this->session->userdata('apel') ?></span></li>
+            </ul>
         </div>
         <div id="separacion_contenido"></div>
