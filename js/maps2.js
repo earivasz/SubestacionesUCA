@@ -91,12 +91,14 @@ google.maps.event.addDomListener(window, 'load', initialize);
 function placeMarker(location) {
   if ( newMarker ) {
     newMarker.setPosition(location);
+    //alert(newMarker.position.jb + '  '+newMarker.position.kb);
   } else {
     newMarker = new google.maps.Marker({
       position: location,
       map: map
     });
+
   }
-  $('#coordX').val(newMarker.position.jb);
-  $('#coordY').val(newMarker.position.kb);
+    $('#coordX').val(location.lb);
+    $('#coordY').val(location.mb);
 }
