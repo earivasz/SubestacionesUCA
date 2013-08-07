@@ -80,12 +80,12 @@ class Subestaciones extends CI_Controller {
                     //$response = true;
                     if($response){
                         //$this->session->set_flashdata('msj', 'Exito');
-                        return json_encode('ok');
+                        echo json_encode('ok');
                         //$this->session->set_flashdata('msj', 'Exito');
                         //$this->load->view('subestaciones/exito');
                     }else{
                         //$this->session->set_flashdata('msj', 'Error');
-                        return json_encode('error');
+                        echo json_encode('error');
                         //$this->load->view('subestaciones/errordb');
                     }
             //}
