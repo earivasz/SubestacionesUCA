@@ -14,33 +14,29 @@
         var coordY = $('#coordY').val();
         var numSub = $('#numSub').val();
         var msj = '';
-        if (coordX == '' || coordY == '') {
+        if (coordX === '' || coordY === '') {
             msj = msj + '<li>Debe seleccionar un punto en el mapa.</li>';
         }
-        if (numSub == '') {
+        if (numSub === '') {
             msj = msj + '<li>Debe completar el campo Numero Subestacion</li>';
         }
-        if (msj != '') {
+        if (msj !== '') {
             showMsg('modal_msj', 'aceptar', 'Debe completar la siguiente informacion: <br /><ul>' + msj + '</ul>');
+            return false;
         } else {
-            $('#map-canvas').slideUp();
-            $('#sub-form').slideUp('slow', function() {
-                $('#trans-form').slideDown('slow',function (){
-                    $('#but-trans').slideDown('slow');
-                });
-            });
+            return true;
         }
     }
 
     function addTrans() {
         numTrans++;
-        var div = '<div id="trans_'+ numTrans +'" class="border-box">' +
+        var div = '<div id="trans_' + numTrans + '" class="border-box">' +
                 '<div class="params-tra-left">' +
                 '<div class="lbl-left">' +
                 '<label for="noSerie">Numero de serie</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="noSerie_'+ numTrans +'" name="noSerie" />' +
+                '<input type="input" id="noSerie_' + numTrans + '" name="noSerie" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="params-tra-right">' +
@@ -48,7 +44,7 @@
                 '<label for="capaTra">Capacidad</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="capaTra_'+ numTrans +'" name="capaTra">' +
+                '<input type="input" id="capaTra_' + numTrans + '" name="capaTra">' +
                 '</div>' +
                 '</div>' +
                 '<div class="limpiar">' + '</div>' +
@@ -57,7 +53,7 @@
                 '<label for="fabricante">Fabricante</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="fabricante_'+ numTrans +'" name="fabricante" />' +
+                '<input type="input" id="fabricante_' + numTrans + '" name="fabricante" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="params-tra-right">' +
@@ -65,7 +61,7 @@
                 '<label for="enfriamento">Enfriamento</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="enfriamento_'+ numTrans +'" name="enfriamento" />' +
+                '<input type="input" id="enfriamento_' + numTrans + '" name="enfriamento" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="limpiar">' + '</div>' +
@@ -74,7 +70,7 @@
                 '<label for="impedancia">Impedancia</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="impedancia_'+ numTrans +'" name="impedancia" />' +
+                '<input type="input" id="impedancia_' + numTrans + '" name="impedancia" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="params-tra-right">' +
@@ -82,7 +78,7 @@
                 '<label for="vPrimaria">Voltaje primario</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="vPrimaria_'+ numTrans +'" name="vPrimaria" />' +
+                '<input type="input" id="vPrimaria_' + numTrans + '" name="vPrimaria" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="limpiar">' + '</div>' +
@@ -91,7 +87,7 @@
                 '<label for="vSecundario">Voltaje secundario</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="vSecundario_'+ numTrans +'" name="vSecundario" />' +
+                '<input type="input" id="vSecundario_' + numTrans + '" name="vSecundario" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="params-tra-right">' +
@@ -99,7 +95,7 @@
                 '<label for="rTrans">Resistencia transformador</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="rTrans_'+ numTrans +'" name="rTrans" />' +
+                '<input type="input" id="rTrans_' + numTrans + '" name="rTrans" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="limpiar">' + '</div>' +
@@ -108,7 +104,7 @@
                 '<label for="polaridad">Polaridad</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="polaridad_'+ numTrans +'" name="polaridad" />' +
+                '<input type="input" id="polaridad_' + numTrans + '" name="polaridad" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="params-tra-right">' +
@@ -116,7 +112,7 @@
                 '<label for="aterriza">Aterrizamiento</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="aterriza_'+ numTrans +'" name="aterriza" />' +
+                '<input type="input" id="aterriza_' + numTrans + '" name="aterriza" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="limpiar">' + '</div>' +
@@ -125,7 +121,7 @@
                 '<label for="pararrayos">Pararrayos</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="pararrayos_'+ numTrans +'" name="pararrayos" />' +
+                '<input type="input" id="pararrayos_' + numTrans + '" name="pararrayos" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="params-tra-right">' +
@@ -133,24 +129,80 @@
                 '<label for="cuchillas">Cuchillas</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="cuchillas_'+ numTrans +'" name="cuchillas" />' +
+                '<input type="input" id="cuchillas_' + numTrans + '" name="cuchillas" />' +
                 '</div>' +
                 '</div>' +
-                '<div class="limpiar">' + '</div>'+
-                '<input type="button" value="Eliminar" onclick="javascript:removeTrans(this);" id="remove_'+numTrans+'"/>'+
-                '</div>' ;
-                if(numTrans <= 4){
-                    $('#transformadores').append(div);
-                }else{
-                    numTrans--;
-                    showMsg('modal_msj','aceptar','No se pueden agregar mas de 4 transformadores')
-                }
-            
+                '<div class="limpiar">' + '</div>' +
+                '<input type="button" value="Eliminar" onclick="javascript:removeTrans(this);" id="remove_' + numTrans + '"/>' +
+                '</div>';
+        if (numTrans <= 4) {
+            $('#transformadores').append(div);
+        } else {
+            numTrans--;
+            showMsg('modal_msj', 'aceptar', 'No se pueden agregar mas de 4 transformadores')
+        }
+
     }
-    
-    function removeTrans(boton){
-        $("#"+boton.id).parent().remove();
+
+    function removeTrans(boton) {
+        $("#" + boton.id).parent().remove();
         numTrans--;
+    }
+
+    function prevStep() {
+        $('#but-trans').slideUp('slow', function() {
+            $('#trans-form').slideUp('slow', function() {
+                $('#map-canvas').slideDown('slow', function() {
+                    $('#sub-form').slideDown('slow');
+                });
+            });
+        });
+    }
+
+    function nextStep() {
+        if (validSub()) {
+            $('#map-canvas').slideUp();
+            $('#sub-form').slideUp('slow', function() {
+                $('#trans-form').slideDown('slow', function() {
+                    $('#but-trans').slideDown('slow');
+                });
+            });
+        }
+    }
+
+    function finalizaSub() {
+        showMsg('modal_msj', 'loading', 'Un momento mientras se almacenan los datos');
+        if (validSub()) {
+            var coordX = $('#coordX').val();
+            var coordY = $('#coordY').val();
+            var numSub = $('#numSub').val();
+            var localizacion = $('#localizacion').val();
+            var capacidad = $('#capacidad').val();
+            var conexion = $('#conexion').val();
+            var sub = coordX + '/|\\' + coordY + '/|\\' + numSub + '/|\\' + localizacion + '/|\\' + capacidad + '/|\\' + conexion;
+            //alert(sub);
+            //console.log(sub.split('/|\\'));
+            var cct = $.cookie('cookieUCA');
+            //alert(cct);
+            var request = $.ajax({
+                url: "<?= base_url() ?>index.php/subestaciones/crear_sub",
+                type: "POST",
+                data: {'tokenUCA': cct, 'subData': sub},
+                dataType: "json"
+            });
+            request.done(function(msg, status, XHR) {
+                var msj = '<?php echo $this->session->flashdata('msj');?>';
+                close_modal();
+                showMsg('modal_msj', 'aceptar', msj);
+            });
+            request.fail(function(XHR, textStatus, response) {
+                console.log(XHR);
+                console.log(textStatus);
+                console.log(response);
+                close_modal();
+                showMsg('modal_msj', 'aceptar', 'Ocurrio un error obteniendo los datos, asegurese que su conexion a internet este activa y vuelva a intentarlo');
+            });
+        }
     }
 
 </script>
@@ -207,13 +259,10 @@
 </style>
 <h2>Create a news item</h2>
 <div id="map-canvas" class="map-create"></div>
-<?php echo validation_errors(); ?>
-
-<?php echo form_open('subestaciones/crear') ?>
 <div id="sub-form">
     <input type="hidden" name="coordX" id="coordX"/>
     <input type="hidden" name="coordY" id="coordY"/>
-    <div style="text-align:center;width: 100%;">
+    <div style="text-align:center;width: 100%;" id="sub-params">
         <div class="params">
             <div class="lbl-left">
                 <label for="numSub">Numero Subestacion</label>
@@ -255,10 +304,10 @@
         <div class="prev-step">
         </div>
         <div class="finish-step">
-            <input type="button" id="fin-sub" value="Finalizar" onclick="javascript:addTrans();"/>
+            <input type="button" id="fin-sub" value="Finalizar" onclick="javascript:finalizaSub();"/>
         </div>
         <div class="next-step">
-            <input type="button" id="next-sub" value="Siguiente >" onclick="javascript:validSub();"/> 
+            <input type="button" id="next-sub" value="Siguiente >" onclick="javascript:nextStep();"/> 
         </div>
     </div>
 </div>
@@ -368,19 +417,17 @@
             </div>
             <div class="limpiar"></div>
         </div>
-        
+
     </div>
     <div class="params" id="but-trans">
         <div class="prev-step">
-            <input type="button" id="prev-sub" value="< Anterior" onclick="javascript:addTrans();"/>
+            <input type="button" id="prev-sub" value="< Anterior" onclick="javascript:prevStep();"/>
         </div>
         <div class="finish-step">
             <input type="button" id="add-trans" value="Agregar Transformador" onclick="javascript:addTrans();"/>
         </div>
         <div class="next-step">
-            <input type="button" id="fin-trans" value="Finalizar" onclick="javascript:validSub();"/> 
+            <input type="button" id="fin-trans" value="Finalizar" onclick="javascript:finalizar();"/> 
         </div>
     </div>
 </div>
-
-</form>

@@ -53,14 +53,20 @@ class Subestaciones extends CI_Controller {
             $this->load->view('templates/footer');
 	}
         
-        public function crear()
+        public function crear_form(){
+            $this->load->view('templates/header');	
+            $this->load->view('subestaciones/crear');
+            $this->load->view('templates/footer');
+        }
+        
+        public function crear_sub()
         {
-            $this->form_validation->set_rules('coordX', 'Coordenada X', 'required');
+            /*$this->form_validation->set_rules('coordX', 'Coordenada X', 'required');
             $this->form_validation->set_rules('coordY', 'Coordenada Y', 'required');
             $this->form_validation->set_rules('numSub', 'Numero Subestacion', 'required');
-            $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
+            $this->form_validation->set_message('required', 'El campo %s es obligatorio.');*/
 
-            if ($this->form_validation->run() === FALSE)
+            /*if ($this->form_validation->run() === FALSE)
             {
                     $this->load->view('templates/header');	
                     $this->load->view('subestaciones/crear');
@@ -68,14 +74,20 @@ class Subestaciones extends CI_Controller {
 
             }
             else
-            {
+            {*/
                     $response = $this->subest_model->set_subest();
+                    //$response = true;
                     if($response){
-                        $this->load->view('subestaciones/exito');
+                        //$this->session->set_flashdata('msj', 'Exito');
+                        return json_encode('ok');
+                        //$this->session->set_flashdata('msj', 'Exito');
+                        //$this->load->view('subestaciones/exito');
                     }else{
-                        $this->load->view('subestaciones/errordb');
+                        //$this->session->set_flashdata('msj', 'Error');
+                        return json_encode('error');
+                        //$this->load->view('subestaciones/errordb');
                     }
-            }
+            //}
         }
         
         public function cargas($id)

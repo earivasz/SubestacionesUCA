@@ -110,29 +110,33 @@ class Subest_model extends CI_Model {
         
         public function set_subest()
         {    
-            if($this->input->post('localizacion')==''){
+            $subData = $this->input->post('subData'); 
+            $subArray = explode('/|\\',$subData);
+            //echo $subData.'<br/>';
+            //print_r($subArray);
+            if($subArray[3]==''){
                 $localizacion = null;
             }else{
-                $localizacion = $this->input->post('localizacion');
+                $localizacion = $subArray[3];
             }
             
-            if($this->input->post('capacidad')==''){
+            if($subArray[4]==''){
                 $capacidad = null;
             }else{
-                $capacidad = $this->input->post('capacidad');
+                $capacidad = $subArray[4];
             }
             
             
-            if($this->input->post('conexion')==''){
+            if($subArray[5]==''){
                 $conexion = null;
             }else{
-                $conexion = $this->input->post('conexion');
+                $conexion = $subArray[5];
             }
             
             $data = array(
-              'coordX' => $this->input->post('coordX'),
-                'coordY' => $this->input->post('coordY'),
-                'numSubestacion' => $this->input->post('numSub'),
+              'coordX' => $subArray[0],
+                'coordY' => $subArray[1],
+                'numSubestacion' => $subArray[2],
                 'localizacion' => $localizacion,
                 'capacidad' => $capacidad,
                 'conexion' => $conexion,

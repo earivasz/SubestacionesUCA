@@ -21,6 +21,17 @@ button:hover{
     background-color: #6DAFFF;
 }
 
+input[type="button"] {
+    border-style: none;
+    border-width: 0px;
+    /*background-color: #E8F2FF;*/
+    color: #000000;
+}
+
+input[type="button"]:hover{
+    background-color: #6DAFFF;
+}
+
 a:hover{
     text-decoration:none;}
 
