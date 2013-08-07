@@ -35,7 +35,7 @@
 
         $("#jqxgrid").jqxGrid(
                 {
-                    width: 670,
+                    width: 770,
                     source: source,
                     showfilterrow: true,
                     pageable: true,
@@ -48,7 +48,7 @@
                         {text: 'Correo', datafield: 'correo', width: 80, cellsalign: 'right', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
                         {text: 'Estado', datafield: 'estado', width: 90, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
                         {text: 'Ultimo ingreso', datafield: 'ultimoIngreso', width: 175, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
-                        {text: 'Perfil', datafield: 'idPerfil', width: 25, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'}
+                        {text: 'Perfil', datafield: 'idPerfil', width: 55, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'}
                     ]
                 });
 
@@ -87,18 +87,26 @@ if ($msj) {
         $("#isMod").val('False');
     }
 </script>
-<h2 align="center">MANTENIMIENTO USUARIOS</h2>
+<!--<h2 align="center">MANTENIMIENTO USUARIOS</h2>-->
 
     <div align="left" id="formUsers">
         
-        <br> 
       
        <table width="100%" align="center" id="tabla_usuario" border="0">
+           <td align="center" colspan="3">
+           <h2>LISTA DE USUARIOS</h2>   </td></tr>
+   <tr><td  colspan="3">
+   <div align="center" id='jqxWidget'>
+               
+    <div align="center" style="width:100%; height: 700px;" id="jqxgrid"></div>
+    <h2>DATOS DE USUARIOS</h2>
+    </div>
+    </td>
             
         <?php
         echo '<tr><td width=40%">';
         echo form_open('login/crear_user');
-        echo '</td><td width="10%"></td><td width="50%">';
+        echo '</td><td width="5%"></td><td width="55%">';
         echo form_input(array('name' => 'isMod', 'type' => 'hidden', 'id' => 'isMod', 'value' => 'False'));
         echo '</td><td></td></tr><tr align="right"><td>';
         echo form_label('Usuario:', 'usuario');
@@ -142,19 +150,7 @@ if ($msj) {
         echo form_close();
         ?>
         
-       <tr><td align="center" colspan="3">
-               <h3>&nbsp; </h3>   </td></tr>
-        <tr><td align="center" colspan="3">
-                 <hr>  </td></tr>
-           <tr><td align="center" colspan="3">
-           <h2>LISTA DE USUARIOS</h2>   </td></tr>
-   <tr><td  colspan="3">
-   <div align="center" id='jqxWidget'>
-               
-    <div align="center" style="width:100%; height: 600px;" id="jqxgrid"></div>
-    <br>
-    </div>
-    </td></tr>
+        
    </table>
 
 </div>

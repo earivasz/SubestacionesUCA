@@ -38,12 +38,13 @@
              }
              input[type=text],input[type=password]{
                  padding: 10px 6px;
-                 width: 400px;
+                 width: 80%;
              }
              input[type=submit]{
                  padding: 5px 40px;
                  background: #61399d;
                  color: #fff;
+                 width: 50%;
              }
              #campos_login{
                  margin: 50px 20px;                 

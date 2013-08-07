@@ -42,6 +42,7 @@ $route['subestaciones'] = 'subestaciones';
 //$route['news/create'] = 'news/create';
 //$route['subestaciones/(:any)'] = 'subestaciones/index';
 $route['subestaciones/detalle/(:num)'] = 'subestaciones/detalle/$1';
+$route['subestaciones/cargas/(:num)'] = 'subestaciones/cargas/$1';
 $route['subestaciones/graficos/(:num)/(:any)'] = 'subestaciones/graficos/$1/$2';
 $route['graficos_control/graficosDatos'] = 'graficos_control/graficosDatos';
 $route['subestaciones/crear'] = 'subestaciones/crear';

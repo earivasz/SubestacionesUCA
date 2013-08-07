@@ -12,15 +12,16 @@ function showMsg(id, tipo, msj){
     switch(tipo){
         case 'aceptar':
             $('#'+id).empty();
-            $('#'+id).html('<p>' + msj + '</p><input type="button" onclick="javascript:close_modal();" value="Aceptar" />');
+            $('#'+id).html('<p>' + msj + '</p><input type="button" onclick="javascript:close_modal();" value="Aceptar" /><br>');
             break;
         case 'loading':
             $('#'+id).empty();
-            $('#'+id).html('<p>' + msj + '</p>');
+            $('#'+id).html('<div style="margin: 10px 10px 10px 10px; height:50px;"><img style="width: 50px; height: 50px; float: left; margin-right: 15px;" src="' + base_url.replace('index.php/', '') + 'css/images/ajax-loader-circle.gif" /><div style="height: 50px;"><div style="display:block; height: 15px;"></div>' + msj + '</div></div>');
             break;
+            
     }
     $.blockUI({ 
-        fadeIn: 1000,
+        fadeIn: 300,
         message: $('#'+id)
     }); 
 }

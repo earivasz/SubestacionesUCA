@@ -21,7 +21,7 @@ class Subest_model extends CI_Model {
         
         public function get_transformadores($id)
         {
-            $query = $this->db->get_where('transformador',array('idSubestacion' => $id));
+            $query = $this->db->get_where('transformador',array('idSubestacion' => $id, 'activoTrans' => '1'));
             return $query->result_array();
         }
         
@@ -62,6 +62,12 @@ class Subest_model extends CI_Model {
                 AND STR_TO_DATE('" . $fechaFin . "', '%d/%m/%Y') 
                 AND v.idFase = " . $fase . 
                 " LIMIT 0, 10000;");
+            return $query->result_array();
+        }
+        
+        public function get_cargas($idSubest){
+            $query = $this->db->query("select edificio, tipoCarga, cantidad, corriente, voltaje, fase, fp, especificacion, accesorio, notasCargas 
+                from subestuca.datoc where idSubestacion = " . $idSubest . " limit 0,10000;");
             return $query->result_array();
         }
         
