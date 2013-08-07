@@ -34,7 +34,7 @@ class Subest_model extends CI_Model {
         public function get_tablaPrincipal($idSubest, $fechaInicio, $fechaFin)
         {
             //tengo que filtrar por fecha, el filtrador por fase se hace en la vista
-            $query = $this->db->query("select t.fechaHora, p.datop from subestuca.datop p inner join subestuca.tiempo t on p.idTiempo = t.idTiempo 
+            $query = $this->db->query("select DATE_FORMAT(t.fechaHora, '%d/%m/%Y %H:%i:%s') as fechaHora, p.datop from subestuca.datop p inner join subestuca.tiempo t on p.idTiempo = t.idTiempo 
                 where idSubestacion = " . $idSubest .  
                 " AND t.fechaHora BETWEEN STR_TO_DATE('" . $fechaInicio . "', '%d/%m/%Y') 
                 AND STR_TO_DATE('" . $fechaFin . "', '%d/%m/%Y')
@@ -44,7 +44,7 @@ class Subest_model extends CI_Model {
         
         public function get_tablaArmI($idSubest, $fechaInicio, $fechaFin, $fase)
         {
-            $query = $this->db->query("select t.fechaHora, i.datoi from subestuca.datoi i inner join subestuca.tiempo t on i.idTiempo = t.idTiempo 
+            $query = $this->db->query("select DATE_FORMAT(t.fechaHora, '%d/%m/%Y %H:%i:%s') as fechaHora, i.datoi from subestuca.datoi i inner join subestuca.tiempo t on i.idTiempo = t.idTiempo 
                 where idSubestacion = " . $idSubest .  
                 " AND t.fechaHora BETWEEN STR_TO_DATE('" . $fechaInicio . "', '%d/%m/%Y') 
                 AND STR_TO_DATE('" . $fechaFin . "', '%d/%m/%Y') 
@@ -56,7 +56,7 @@ class Subest_model extends CI_Model {
         public function get_tablaArmV($idSubest, $fechaInicio, $fechaFin, $fase)
         {
             //tengo que filtrar por fecha, el filtrador por fase se hace en la vista
-            $query = $this->db->query("select t.fechaHora, v.datov from subestuca.datov v inner join subestuca.tiempo t on v.idTiempo = t.idTiempo 
+            $query = $this->db->query("select DATE_FORMAT(t.fechaHora, '%d/%m/%Y %H:%i:%s') as fechaHora, v.datov from subestuca.datov v inner join subestuca.tiempo t on v.idTiempo = t.idTiempo 
                 where idSubestacion = " . $idSubest .  
                 " AND t.fechaHora BETWEEN STR_TO_DATE('" . $fechaInicio . "', '%d/%m/%Y') 
                 AND STR_TO_DATE('" . $fechaFin . "', '%d/%m/%Y') 

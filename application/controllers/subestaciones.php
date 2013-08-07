@@ -17,23 +17,24 @@ class Subestaciones extends CI_Controller {
             if (!$this->session->userdata('perfil')){
                 redirect(base_url());
             }else{
+                $data['perfil'] = $this->session->userdata('perfil');
                 switch ($this->session->userdata('perfil')) {
-                    case '1':
-                        $this->load->view('templates/header');
+                    case '1'://admin
+                        $this->load->view('templates/header', $data);
                         $this->load->view('subestaciones/home', $data);
                         $this->load->view('templates/footer');
                         break;
-                    case '2':
+                    case '2'://consultas
                         $this->load->view('templates/header');
                         $this->load->view('subestaciones/home', $data);
                         $this->load->view('templates/footer');
                         break;    
-                    case '3':
+                    case '3'://generico
                         $this->load->view('templates/header');
                         $this->load->view('subestaciones/home', $data);
                         $this->load->view('templates/footer');
                         break;
-                    default:        
+                    default:
                         $this->load->view('templates/header');
                         $this->load->view('template/no_auth');
                         $this->load->view('templates/footer');

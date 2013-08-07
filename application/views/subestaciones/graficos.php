@@ -144,7 +144,7 @@
             //console.log('seleccione la fila');
             var row = event.args.rowindex;
             var datarow = $("#jqxgrid").jqxGrid('getrowdata', row);
-            recargarGrafico('armonicas', datarow);
+            recargarGrafico('armonicas', datarow, '');
         });
     }
     
@@ -178,7 +178,7 @@
       return arrayCol;
   }
   
-  var recargarGrafico =function(tipoChart, datos){
+  var recargarGrafico =function(tipoChart, datos, titulo){
       if(tipoChart == 'armonicas')//cuando se selecciona una fila y se dibuja el grafico de barras
           {
               var long = datos.length;
@@ -192,7 +192,7 @@
                   if(num != datos[ss])
                       num = 0;
                   item = {
-                      'label' : 'columna' + ss,
+                      'label' : arreglo_headersArm[ss],
                       'y' : num
                   };
                   arrGrafico.push(item);
@@ -235,7 +235,10 @@
                 arrayData.push(item);
             }
             chart.options.data = arrayData;
-            chart.options.title.text = 'Datos filtrados';
+            if(titulo != '')
+                chart.options.title.text = titulo;
+            else
+                chart.options.title.text = 'Datos filtrados';
             chart.render();
           }
   };
@@ -254,39 +257,54 @@
           arrColsGraf.push(itemsChecked[gp]['value']);
       }
       console.log(arrColsGraf);
-      recargarGrafico('principal', arrColsGraf);
+      recargarGrafico('principal', arrColsGraf, '');
   }
   
   var graficaPredef = function(tipoGrafico){
       //obtengo la fase que quieren graficar
     var fase = obtieneFase();
     var colg = 0;
+    var titulo = '';
       //grafico
-    if(tipoGrafico == 'vt')
+    if(tipoGrafico == 'vt'){
         colg = 1;
+        titulo = 'Voltaje/tiempo';
+    }
     else{
-      if(tipoGrafico == 'it')
+      if(tipoGrafico == 'it'){
         colg = 2;
+        titulo = 'Corriente/tiempo';
+      }
       else{
-        if(tipoGrafico == 'fpt')
+        if(tipoGrafico == 'fpt'){
           colg = 8;
+          titulo = 'Factor de Potencia/tiempo';
+        }
         else{
-            if(tipoGrafico == 'thdit')
+            if(tipoGrafico == 'thdit'){
               colg = 4;
+              titulo = 'THD I/tiempo';
+            }
         }
       }
     }
-    if(fase == '1')
+    if(fase == '1'){
         colg = colg + 0;
+        titulo += ' Fase 1';
+    }
     else{
-        if(fase == '2')
+        if(fase == '2'){
             colg = colg + 8;
+            titulo += ' Fase 2';
+        }
         else{
-            if(fase == '3')
+            if(fase == '3'){
                 colg = colg + 16;
+                titulo += ' Fase 3';
+            }
         }
     }
-    recargarGrafico('principal', [+colg]);
+    recargarGrafico('principal', [+colg], titulo);
   }
   
   var obtieneFase = function(){
@@ -460,7 +478,7 @@ var setListaCB = function(f1, f2, f3){
     });
   </script>
 
-  <div style="width: 100%; text-align:center;"><h2 style="margin: 5px 5px 20px 20px;">GRAFICOS</h2></div>
+  <div style="width: 100%; text-align:center;"><h2 style="margin: 5px 5px 20px 20px;">GRAFICOS <?php echo (($tipo == 'pri') ? 'TABLA PRINCIPAL' : 'TABLA ARMONICOS ' . (($tipo == 'armi') ? '(CORRIENTE)' : '(VOLTAJE)')) . ', SUBESTACION ' . $subest[0]['numSubestacion'] . ', ' . $subest[0]['localizacion'];?></h2></div>
 <div style="text-align: center; width: 100%; margin-bottom: 20px;">
     <div style="float:left; margin-left: 175px;">Fecha de inicio<br>
     <input name="start-date" id="start-date" class="date-pick" value="Fecha de inicio" /></div>
