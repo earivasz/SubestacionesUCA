@@ -144,8 +144,13 @@ class Subest_model extends CI_Model {
             );
             
             $this->db->insert('subestacion', $data);
-            
-            return ($this->db->affected_rows() != 1) ? false : true;
+            $this->session->set_flashdata('msj', 'Exito');
+            //return ($this->db->affected_rows() != 1) ? false : true;
+            if ($this->db->affected_rows() != 1){
+                return 'No se pudo crear la subestacion';
+            }else{
+                return 'Subestacion creada con exito';
+            }
         }
         
 }

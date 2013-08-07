@@ -184,6 +184,7 @@
             //console.log(sub.split('/|\\'));
             var cct = $.cookie('cookieUCA');
             //alert(cct);
+            //'tokenUCA': cct, 
             var request = $.ajax({
                 url: "<?= base_url() ?>index.php/subestaciones/crear_sub",
                 type: "POST",
@@ -191,9 +192,9 @@
                 dataType: "json"
             });
             request.done(function(msg, status, XHR) {
-                var msj = '<?php echo $this->session->flashdata('msj');?>';
+                //var msj = '<?php echo $this->session->flashdata('msj');?>';
                 close_modal();
-                showMsg('modal_msj', 'aceptar', msj);
+                showMsg('modal_msj', 'aceptar', msg);
             });
             request.fail(function(XHR, textStatus, response) {
                 console.log(XHR);
@@ -259,6 +260,7 @@
 </style>
 <h2>Create a news item</h2>
 <div id="map-canvas" class="map-create"></div>
+<?php echo form_open();?>
 <div id="sub-form">
     <input type="hidden" name="coordX" id="coordX"/>
     <input type="hidden" name="coordY" id="coordY"/>
@@ -431,3 +433,4 @@
         </div>
     </div>
 </div>
+<?php echo form_close();?>
