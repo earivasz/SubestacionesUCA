@@ -17,8 +17,20 @@ function showMsg(id, tipo, msj){
         case 'loading':
             $('#'+id).empty();
             $('#'+id).html('<div style="margin: 10px 10px 10px 10px; height:50px;"><img style="width: 50px; height: 50px; float: left; margin-right: 15px;" src="' + base_url.replace('index.php/', '') + 'css/images/ajax-loader-circle.gif" /><div style="height: 50px;"><div style="display:block; height: 15px;"></div>' + msj + '</div></div>');
-            break;
-            
+            break;       
+    }
+    $.blockUI({ 
+        fadeIn: 300,
+        message: $('#'+id)
+    }); 
+}
+
+function showMsgRed(id, tipo, msj, url){
+    switch(tipo){
+        case 'aceptar':
+            $('#'+id).empty();
+            $('#'+id).html('<p>' + msj + '</p><input type="button" onclick="javascript:reloadSub(\''+ url +'\');" value="Aceptar" /><br>');
+            break;       
     }
     $.blockUI({ 
         fadeIn: 300,
@@ -29,7 +41,10 @@ function showMsg(id, tipo, msj){
 function close_modal(){
     $.unblockUI();
 }
-
+function reloadSub(url){
+    //close_modal();
+    window.location.href = url;
+}
 function fechaValida(s) {
    var bits = s.split('/');
    var d = new Date(bits[2] + '/' + bits[1] + '/' + bits[0]);

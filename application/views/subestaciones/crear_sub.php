@@ -2,10 +2,27 @@
 <script src="<?= base_url() ?>js/maps2.js"></script>
 <script type="text/javascript">
     var numTrans = 1;
-    $(document).ready(function() {
+    var numId = 1;
+    window.onload = function() {
         $('#trans-form').slideUp();
         $('#but-trans').slideUp();
-    });
+        <?php
+        $msj = $this->session->flashdata('msj');
+        if ($msj) {
+            ?>
+                    showMsg('modal_msj', 'aceptar', '<?php echo $msj; ?>');
+            <?php
+        }
+        ?>
+        /*$("#subForm").submit(function(e) {
+            var self = this;
+            //e.preventDefault();
+            //$('#submitArch').attr('disabled', 'disabled');
+            showMsg('modal_msj', 'loading', 'Un momento mientras el archivo esta siendo cargado')
+            //self.submit();
+            return true; //is superfluous, but I put it here as a fallback
+        });*/
+    };
     /**
      * Validar parametros de una subestacion
      */
@@ -24,19 +41,22 @@
             showMsg('modal_msj', 'aceptar', 'Debe completar la siguiente informacion: <br /><ul>' + msj + '</ul>');
             return false;
         } else {
+            showMsg('modal_msj', 'loading', 'Un momento mientras el archivo esta siendo cargado');
+            $("#subForm").submit();
             return true;
         }
     }
 
     function addTrans() {
         numTrans++;
-        var div = '<div id="trans_' + numTrans + '" class="border-box">' +
+        numId++;
+        var div = '<div id="trans_' + numId + '" class="border-box">' +
                 '<div class="params-tra-left">' +
                 '<div class="lbl-left">' +
                 '<label for="noSerie">Numero de serie</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="noSerie_' + numTrans + '" name="noSerie" />' +
+                '<input type="input" id="noSerie_' + numId + '" name="noSerie" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="params-tra-right">' +
@@ -44,7 +64,7 @@
                 '<label for="capaTra">Capacidad</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="capaTra_' + numTrans + '" name="capaTra">' +
+                '<input type="input" id="capaTra_' + numId + '" name="capaTra">' +
                 '</div>' +
                 '</div>' +
                 '<div class="limpiar">' + '</div>' +
@@ -53,7 +73,7 @@
                 '<label for="fabricante">Fabricante</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="fabricante_' + numTrans + '" name="fabricante" />' +
+                '<input type="input" id="fabricante_' + numId + '" name="fabricante" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="params-tra-right">' +
@@ -61,7 +81,7 @@
                 '<label for="enfriamento">Enfriamento</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="enfriamento_' + numTrans + '" name="enfriamento" />' +
+                '<input type="input" id="enfriamento_' + numId + '" name="enfriamento" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="limpiar">' + '</div>' +
@@ -70,7 +90,7 @@
                 '<label for="impedancia">Impedancia</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="impedancia_' + numTrans + '" name="impedancia" />' +
+                '<input type="input" id="impedancia_' + numId + '" name="impedancia" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="params-tra-right">' +
@@ -78,7 +98,7 @@
                 '<label for="vPrimaria">Voltaje primario</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="vPrimaria_' + numTrans + '" name="vPrimaria" />' +
+                '<input type="input" id="vPrimaria_' + numId + '" name="vPrimaria" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="limpiar">' + '</div>' +
@@ -87,7 +107,7 @@
                 '<label for="vSecundario">Voltaje secundario</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="vSecundario_' + numTrans + '" name="vSecundario" />' +
+                '<input type="input" id="vSecundario_' + numId + '" name="vSecundario" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="params-tra-right">' +
@@ -95,7 +115,7 @@
                 '<label for="rTrans">Resistencia transformador</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="rTrans_' + numTrans + '" name="rTrans" />' +
+                '<input type="input" id="rTrans_' + numId + '" name="rTrans" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="limpiar">' + '</div>' +
@@ -104,7 +124,7 @@
                 '<label for="polaridad">Polaridad</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="polaridad_' + numTrans + '" name="polaridad" />' +
+                '<input type="input" id="polaridad_' + numId + '" name="polaridad" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="params-tra-right">' +
@@ -112,7 +132,7 @@
                 '<label for="aterriza">Aterrizamiento</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="aterriza_' + numTrans + '" name="aterriza" />' +
+                '<input type="input" id="aterriza_' + numId + '" name="aterriza" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="limpiar">' + '</div>' +
@@ -121,7 +141,7 @@
                 '<label for="pararrayos">Pararrayos</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="pararrayos_' + numTrans + '" name="pararrayos" />' +
+                '<input type="input" id="pararrayos_' + numId + '" name="pararrayos" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="params-tra-right">' +
@@ -129,11 +149,11 @@
                 '<label for="cuchillas">Cuchillas</label>' +
                 '</div>' +
                 '<div class="in-right">' +
-                '<input type="input" id="cuchillas_' + numTrans + '" name="cuchillas" />' +
+                '<input type="input" id="cuchillas_' + numId + '" name="cuchillas" />' +
                 '</div>' +
                 '</div>' +
                 '<div class="limpiar">' + '</div>' +
-                '<input type="button" value="Eliminar" onclick="javascript:removeTrans(this);" id="remove_' + numTrans + '"/>' +
+                '<input type="button" value="Eliminar" onclick="javascript:removeTrans(this);" id="remove_' + numId + '"/>' +
                 '</div>';
         if (numTrans <= 4) {
             $('#transformadores').append(div);
@@ -170,29 +190,35 @@
         }
     }
 
+    function getParamsSub() {
+        var coordX = $('#coordX').val();
+        var coordY = $('#coordY').val();
+        var numSub = $('#numSub').val();
+        var localizacion = $('#localizacion').val();
+        var capacidad = $('#capacidad').val();
+        var conexion = $('#conexion').val();
+        var sub = coordX + '/|\\' + coordY + '/|\\' + numSub + '/|\\' + localizacion + '/|\\' + capacidad + '/|\\' + conexion;
+        return sub;
+    }
+
     function finalizaSub() {
         showMsg('modal_msj', 'loading', 'Un momento mientras se almacenan los datos');
         if (validSub()) {
-            var coordX = $('#coordX').val();
-            var coordY = $('#coordY').val();
-            var numSub = $('#numSub').val();
-            var localizacion = $('#localizacion').val();
-            var capacidad = $('#capacidad').val();
-            var conexion = $('#conexion').val();
-            var sub = coordX + '/|\\' + coordY + '/|\\' + numSub + '/|\\' + localizacion + '/|\\' + capacidad + '/|\\' + conexion;
+
+            var sub = getParamsSub();
             //alert(sub);
             //console.log(sub.split('/|\\'));
             var cct = $.cookie('cookieUCA');
             //alert(cct);
             //'tokenUCA': cct, 
             var request = $.ajax({
-                url: "<?= base_url() ?>index.php/subestaciones/crear_sub",
+                url: "<?= base_url() ?>index.php/subestaciones/crear",
                 type: "POST",
-                data: {'tokenUCA': cct, 'subData': sub},
+                data: {'tokenUCA': cct, 'subData': sub, 'tipo': '1'},
                 dataType: "json"
             });
             request.done(function(msg, status, XHR) {
-                //var msj = '<?php echo $this->session->flashdata('msj');?>';
+                //var msj = '<?php echo $this->session->flashdata('msj'); ?>';
                 close_modal();
                 showMsg('modal_msj', 'aceptar', msg);
             });
@@ -206,6 +232,59 @@
         }
     }
 
+    function validTrans() {
+        var dataT = '';
+        var numParams = 0;
+        $('div[id^="trans_"]').each(function() {
+            var idDiv = $(this).attr('id');
+            numParams = 0;
+            $('#' + idDiv + ' :input[type="input"]').each(function() {
+                //var idI = $(this).attr('id');
+                var valor = $(this).val();
+                if (dataT === '') {
+                    dataT = valor + '/|\\';
+                } else {
+                    dataT = dataT + valor + '/|\\';
+                }
+                if (valor !== '') {
+                    numParams++;
+                }
+                //dataT = dataT + $(this).val() + '/|\\';
+            });
+            dataT = dataT.slice(0, -3);
+            dataT = dataT + '|||';
+            if (numParams === 0) {
+                showMsg('modal_msj', 'aceptar', 'Debe completar al menos un campo de cada transformador.');
+                return false;
+            }
+        });
+        dataT = dataT.slice(0, -3);
+        var sub = getParamsSub();
+        var cct = $.cookie('cookieUCA');
+        //alert(cct);
+        //'tokenUCA': cct, 
+        console.log(sub)
+        console.log(dataT);
+        var request = $.ajax({
+            url: "<?= base_url() ?>index.php/subestaciones/crear",
+            type: "POST",
+            data: {'tokenUCA': cct, 'subD': sub, 'transD': dataT, 'tipo': '2'},
+            dataType: "json"
+        });
+        request.done(function(msg, status, XHR) {
+            //var msj = '<?php echo $this->session->flashdata('msj'); ?>';
+            close_modal();
+            showMsgRed('modal_msj', 'aceptar', msg, 'crear');
+
+        });
+        request.fail(function(XHR, textStatus, response) {
+            console.log(XHR);
+            console.log(textStatus);
+            console.log(response);
+            close_modal();
+            showMsg('modal_msj', 'aceptar', 'Ocurrio un error obteniendo los datos, asegurese que su conexion a internet este activa y vuelva a intentarlo');
+        });
+    }
 </script>
 <style>
     .params{
@@ -260,7 +339,7 @@
 </style>
 <h2>Create a news item</h2>
 <div id="map-canvas" class="map-create"></div>
-<?php echo form_open();?>
+<?php echo form_open('subestaciones/crear_sub','id=subForm'); ?>
 <div id="sub-form">
     <input type="hidden" name="coordX" id="coordX"/>
     <input type="hidden" name="coordY" id="coordY"/>
@@ -301,136 +380,18 @@
             </div>
         </div>
     </div>
+    <?php echo validation_errors(); ?>
     <div class="params">
 
         <div class="prev-step">
         </div>
         <div class="finish-step">
-            <input type="button" id="fin-sub" value="Finalizar" onclick="javascript:finalizaSub();"/>
+            
+            <input type="button" id="fin-sub" value="Finalizar" onclick="javascript:validSub();"/>
         </div>
         <div class="next-step">
-            <input type="button" id="next-sub" value="Siguiente >" onclick="javascript:nextStep();"/> 
+            <!--<input type="button" id="next-sub" value="Siguiente >" onclick="javascript:nextStep();"/>-->
         </div>
     </div>
 </div>
-<div id="trans-form">
-    <div id="transformadores">
-        <div id="trans_1" class="border-box">
-            <div class="params-tra-left">
-                <div class="lbl-left">
-                    <label for="noSerie">Numero de serie</label>
-                </div>
-                <div class="in-right">
-                    <input type="input" id="noSerie" name="noSerie" />
-                </div>
-            </div>
-            <div class="params-tra-right">
-                <div class="lbl-left">
-                    <label for="capaTra">Capacidad</label>
-                </div>
-                <div class="in-right">
-                    <input type="input" id="capaTra" name="capaTra">
-                </div>
-            </div>
-            <div class="limpiar"></div>
-            <div class="params-tra-left">
-                <div class="lbl-left">
-                    <label for="fabricante">Fabricante</label>
-                </div>
-                <div class="in-right">
-                    <input type="input" id="fabricante" name="fabricante" />
-                </div>
-            </div>
-            <div class="params-tra-right">
-                <div class="lbl-left">
-                    <label for="enfriamento">Enfriamento</label>
-                </div>
-                <div class="in-right">
-                    <input type="input" id="enfriamento" name="enfriamento" />
-                </div>
-            </div>
-            <div class="limpiar"></div>
-            <div class="params-tra-left">
-                <div class="lbl-left">
-                    <label for="impedancia">Impedancia</label>
-                </div>
-                <div class="in-right">
-                    <input type="input" id="impedancia" name="impedancia" />
-                </div>
-            </div>
-            <div class="params-tra-right">
-                <div class="lbl-left">
-                    <label for="vPrimaria">Voltaje primario</label>
-                </div>
-                <div class="in-right">
-                    <input type="input" id="vPrimaria" name="vPrimaria" />
-                </div>
-            </div>
-            <div class="limpiar"></div>
-            <div class="params-tra-left">
-                <div class="lbl-left">
-                    <label for="vSecundario">Voltaje secundario</label>
-                </div>
-                <div class="in-right">
-                    <input type="input" id="vSecundario" name="vSecundario" />
-                </div>
-            </div>
-            <div class="params-tra-right">
-                <div class="lbl-left">
-                    <label for="rTrans">Resistencia transformador</label>
-                </div>
-                <div class="in-right">
-                    <input type="input" id="rTrans" name="rTrans" />
-                </div>
-            </div>
-            <div class="limpiar"></div>
-            <div class="params-tra-left">
-                <div class="lbl-left">
-                    <label for="polaridad">Polaridad</label>
-                </div>
-                <div class="in-right">
-                    <input type="input" id="polaridad" name="polaridad" />
-                </div>
-            </div>
-            <div class="params-tra-right">
-                <div class="lbl-left">
-                    <label for="aterriza">Aterrizamiento</label>
-                </div>
-                <div class="in-right">
-                    <input type="input" id="aterriza" name="aterriza" />
-                </div>
-            </div>
-            <div class="limpiar"></div>
-            <div class="params-tra-left">
-                <div class="lbl-left">
-                    <label for="pararrayos">Pararrayos</label>
-                </div>
-                <div class="in-right">
-                    <input type="input" id="pararrayos" name="pararrayos" />
-                </div>
-            </div>
-            <div class="params-tra-right">
-                <div class="lbl-left">
-                    <label for="cuchillas">Cuchillas</label>
-                </div>
-                <div class="in-right">
-                    <input type="input" id="cuchillas" name="cuchillas" />
-                </div>
-            </div>
-            <div class="limpiar"></div>
-        </div>
-
-    </div>
-    <div class="params" id="but-trans">
-        <div class="prev-step">
-            <input type="button" id="prev-sub" value="< Anterior" onclick="javascript:prevStep();"/>
-        </div>
-        <div class="finish-step">
-            <input type="button" id="add-trans" value="Agregar Transformador" onclick="javascript:addTrans();"/>
-        </div>
-        <div class="next-step">
-            <input type="button" id="fin-trans" value="Finalizar" onclick="javascript:finalizar();"/> 
-        </div>
-    </div>
-</div>
-<?php echo form_close();?>
+<?php echo form_close(); ?>

@@ -54,41 +54,80 @@ class Subestaciones extends CI_Controller {
             $this->load->view('templates/footer');
 	}
         
-        public function crear_form(){
-            $this->load->view('templates/header');	
-            $this->load->view('subestaciones/crear');
+        public function crear_trans($sub){
+            $data['subId'] = $sub;
+            $this->load->view('templates/header');
+            $this->load->view('subestaciones/crear_trans', $data);
             $this->load->view('templates/footer');
+        }
+        
+        public function set_trans($sub){
+            try{
+            $response=$this->subest_model->set_trans_sub();
+            //$response = true;
+            redirect(base_url().'index.php/subestaciones/crear_trans/'.$response);
+            }catch(Exception $e){
+                $this->session->set_flashdata('msj', 'Ocurrio un problema al momento de recibir su peticion');
+                redirect(base_url().'index.php/subestaciones/crear_trans/'.$sub);
+            }
+        }
+        
+        public function crear(){
+            /*switch($this->input->post('tipo')){
+                case '1':
+                    $response = $this->subest_model->set_subest();
+                    //$response = 'OK';
+                    echo json_encode($response);
+                    break;
+                case '2':
+                    $response = $this->subest_model->set_trans_sub();
+                    //$response = 'OK';
+                    echo json_encode($response);
+                    break;
+                default:
+                    print_r(explode('/|\\','13.679627104248063/|\\-89.23582255840302/|\\666/|\\/|\\/|\\'));
+                    $prueba = explode('|||','666/|\\/|\\/|\\/|\\/|\\/|\\/|\\/|\\/|\\/|\\/|\\');
+                    print_r($prueba);
+                    
+                    foreach ($prueba as $item) {
+                        $transArray = explode('/|\\',$item);
+                        print_r($transArray);
+                    }*/
+                    $this->load->view('templates/header');	
+                    $this->load->view('subestaciones/crear_sub');
+                    $this->load->view('templates/footer');
+                    /*break;
+            }*/
         }
         
         public function crear_sub()
         {
-            /*$this->form_validation->set_rules('coordX', 'Coordenada X', 'required');
+            $this->form_validation->set_rules('coordX', 'Coordenada X', 'required');
             $this->form_validation->set_rules('coordY', 'Coordenada Y', 'required');
             $this->form_validation->set_rules('numSub', 'Numero Subestacion', 'required');
-            $this->form_validation->set_message('required', 'El campo %s es obligatorio.');*/
+            $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
 
-            /*if ($this->form_validation->run() === FALSE)
+            if ($this->form_validation->run() === FALSE)
             {
-                    $this->load->view('templates/header');	
-                    $this->load->view('subestaciones/crear');
-                    $this->load->view('templates/footer');
+                    //$this->session->set_flashdata('msj', 'Hace falta uno o mas campos obligatorios');
+                    $this->crear();
 
             }
             else
-            {*/
+            {
                     $response = $this->subest_model->set_subest();
                     //$response = true;
-                    //if($response){
-                        //$this->session->set_flashdata('msj', 'Exito');
-                        echo json_encode($response);
-                        //$this->session->set_flashdata('msj', 'Exito');
-                        //$this->load->view('subestaciones/exito');
-                    //}else{
-                        //$this->session->set_flashdata('msj', 'Error');
+                    if($response){
+                        $this->session->set_flashdata('msj', 'Exito');
+                        
+                    }else{
+                        $this->session->set_flashdata('msj', 'Error');
+                        //$this->crear();
                         //echo json_encode('error');
                         //$this->load->view('subestaciones/errordb');
-                    //}
-            //}
+                    }
+                    redirect(base_url().'index.php/subestaciones/crear');
+            }
         }
         
         public function cargas($id)
@@ -146,6 +185,11 @@ class Subestaciones extends CI_Controller {
                         echo 'waaaashinton';
                     }
             }
+        }
+        
+        public function set_trans_sub(){
+            $response = $this->subest_model->set_trans_sub();
+            echo json_encode($response);
         }
 }
 ?>

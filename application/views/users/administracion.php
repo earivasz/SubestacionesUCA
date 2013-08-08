@@ -46,9 +46,9 @@
                         {text: 'Nombre', datafield: 'nomUser', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
                         {text: 'Apellido', datafield: 'apel', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
                         {text: 'Correo', datafield: 'correo', width: 80, cellsalign: 'right', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
-                        {text: 'Estado', datafield: 'estado', width: 90, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                        {text: 'Estado', datafield: 'nomEstado', width: 90, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
                         {text: 'Ultimo ingreso', datafield: 'ultimoIngreso', width: 175, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
-                        {text: 'Perfil', datafield: 'idPerfil', width: 55, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'}
+                        {text: 'Perfil', datafield: 'tipoPerfil', width: 125, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'}
                     ]
                 });
 

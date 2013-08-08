@@ -63,7 +63,9 @@ class Login_model extends CI_Model {
     }
 
     public function get_users(){
-        $usuarios = $this->db->get('user');
+        $query = 'SELECT user.* , CASE when estado = "B" then "BLOQUEADO" when estado = "A" then "ACTIVO" when estado = "I" THEN "INACTIVO" END as nomEstado, perfil.tipoPerfil  FROM USER inner join PERFIL ON user.idPerfil = perfil.idPerfil;';
+        $usuarios = $this->db->query($query);
+        //$usuarios = $this->db->get('user');
         return $usuarios->result_array();
     }
     
