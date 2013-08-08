@@ -25,6 +25,11 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
+        public function get_fotos($id){
+            $query = $this->db->get_where('foto',array('idSubestacion' => $id));
+            return $query->result_array();
+        }
+        
         public function get_fotosSubest($id)
         {
             $query = $this->db->get_where('foto',array('idSubestacion' => $id));
@@ -69,6 +74,22 @@ class Subest_model extends CI_Model {
             $query = $this->db->query("select edificio, tipoCarga, cantidad, corriente, voltaje, fase, fp, especificacion, accesorio, notasCargas 
                 from subestuca.datoc where idSubestacion = " . $idSubest . " limit 0,10000;");
             return $query->result_array();
+        }
+        
+        public function borrar_fotos($idSub, $arrFotos){
+            $cont = 0;
+            $fs = '';
+            foreach ($arrFotos as $fotocorrel) {
+                if($cont == 0)
+                    $fs = "correlFoto = " . $fotocorrel;
+                else
+                    $fs = $fs . " OR correlFoto = " . $fotocorrel;
+                $cont++;
+            }
+            $queryString = "delete from subestuca.foto where idSubestacion = " . $idSub . " and (" . $fs . ")";
+            //print_r($queryString);
+            $this->db->query($queryString);
+            return ($this->db->affected_rows() < 1) ? false : true;
         }
         
         public function mod_subest($id)

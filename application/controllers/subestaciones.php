@@ -61,6 +61,15 @@ class Subestaciones extends CI_Controller {
             $this->load->view('templates/footer');
         }
         
+        public function galeria($id){
+            $data['idSubest'] = $id;
+            $data['fotos'] = $this->subest_model->get_fotos($id);
+            $data['subest'] = $this->subest_model->get_subest($id);
+            $this->load->view('templates/header');
+            $this->load->view('subestaciones/galeria', $data);
+            $this->load->view('templates/footer');
+        }
+        
         public function set_trans($sub){
             try{
             $response=$this->subest_model->set_trans_sub();
@@ -158,6 +167,16 @@ class Subestaciones extends CI_Controller {
             $this->load->view('templates/header');	
             $this->load->view('subestaciones/graficos', $data);
             $this->load->view('templates/footer');
+        }
+        
+        public function borrar_fotos(){
+            
+            $response = $this->subest_model->borrar_fotos($this->input->post('idSub'), $this->input->post('arrFotos'));
+            if($response){
+                echo 'exito';
+            }else{
+                echo 'fracaso';
+            }
         }
         
         public function mod_sub()
