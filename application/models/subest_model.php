@@ -90,6 +90,15 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
+        public function galeria($id){
+            $data['idSubest'] = $id;
+            $data['fotos'] = $this->subest_model->get_fotos($id);
+            $data['subest'] = $this->subest_model->get_subest($id);
+            $this->load->view('templates/header');
+            $this->load->view('subestaciones/galeria', $data);
+            $this->load->view('templates/footer');
+        }
+        
         public function borrar_fotos($idSub, $arrFotos){
             $cont = 0;
             $fs = '';
