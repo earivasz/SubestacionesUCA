@@ -54,50 +54,35 @@ class Subestaciones extends CI_Controller {
             $this->load->view('templates/footer');
 	}
         
-        public function crear_trans($sub){
-            $data['subId'] = $sub;
+        public function crear_trans(){
+            $data['subs'] = $this->subest_model->get_subestaciones();
+            $data['trans'] = $this->subest_model->getAll_trans();
             $this->load->view('templates/header');
             $this->load->view('subestaciones/crear_trans', $data);
             $this->load->view('templates/footer');
         }
         
-        public function set_trans($sub){
+        public function set_trans(){
             try{
-            $response=$this->subest_model->set_trans_sub();
-            //$response = true;
-            redirect(base_url().'index.php/subestaciones/crear_trans/'.$response);
+                
+                if($this->input->post('isMod')=='True'){
+                    $response = $this->subest_model->update_trans();
+                }else{
+                    $response=$this->subest_model->set_trans_sub();
+                }
+
+                redirect(base_url().'index.php/subestaciones/crear_trans');
             }catch(Exception $e){
                 $this->session->set_flashdata('msj', 'Ocurrio un problema al momento de recibir su peticion');
-                redirect(base_url().'index.php/subestaciones/crear_trans/'.$sub);
+                redirect(base_url().'index.php/subestaciones/crear_trans');
             }
         }
         
         public function crear(){
-            /*switch($this->input->post('tipo')){
-                case '1':
-                    $response = $this->subest_model->set_subest();
-                    //$response = 'OK';
-                    echo json_encode($response);
-                    break;
-                case '2':
-                    $response = $this->subest_model->set_trans_sub();
-                    //$response = 'OK';
-                    echo json_encode($response);
-                    break;
-                default:
-                    print_r(explode('/|\\','13.679627104248063/|\\-89.23582255840302/|\\666/|\\/|\\/|\\'));
-                    $prueba = explode('|||','666/|\\/|\\/|\\/|\\/|\\/|\\/|\\/|\\/|\\/|\\/|\\');
-                    print_r($prueba);
-                    
-                    foreach ($prueba as $item) {
-                        $transArray = explode('/|\\',$item);
-                        print_r($transArray);
-                    }*/
-                    $this->load->view('templates/header');	
-                    $this->load->view('subestaciones/crear_sub');
-                    $this->load->view('templates/footer');
-                    /*break;
-            }*/
+            $data['subs'] = $this->subest_model->getAll_subestaciones();
+            $this->load->view('templates/header');	
+            $this->load->view('subestaciones/crear_sub',$data);
+            $this->load->view('templates/footer');
         }
         
         public function crear_sub()
@@ -115,7 +100,11 @@ class Subestaciones extends CI_Controller {
             }
             else
             {
-                    $response = $this->subest_model->set_subest();
+                    if($this->input->post('isMod')=='True'){
+                        $response = $this->subest_model->mod_subest($this->input->post('idSub'));
+                    }else{
+                        $response = $this->subest_model->set_subest();
+                    }
                     //$response = true;
                     if($response){
                         $this->session->set_flashdata('msj', 'Exito');
@@ -176,13 +165,12 @@ class Subestaciones extends CI_Controller {
             else
             {
                     $response = $this->subest_model->mod_subest($this->input->post('idSub'));
-                    echo $id;
                     if($response){
                         //$this->load->view('subestaciones/exito');
-                        echo 'eeeeeeexito';
+                        $this->session->set_flashdata('msj', 'Exito');
                     }else{
                         //$this->load->view('subestaciones/errordb');
-                        echo 'waaaashinton';
+                        $this->session->set_flashdata('msj', 'Error');
                     }
             }
         }
