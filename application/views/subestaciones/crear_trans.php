@@ -1,7 +1,82 @@
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxscrollbar.js"></script>
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxmenu.js"></script>
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxgrid.js"></script>
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxgrid.selection.js"></script> 
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxgrid.columnsresize.js"></script> 
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxgrid.pager.js"></script>
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxgrid.filter.js"></script>
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxdata.js"></script> 
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxcheckbox.js"></script> 
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxlistbox.js"></script> 
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxdropdownlist.js"></script>
+<script type="text/javascript" src="<?= base_url() ?>jqwidgets/gettheme.js"></script>
 <script type="text/javascript">
     var numTrans = 1;
     var numId= 1;
     window.onload = function() {
+        arreglo_completo = <?php echo json_encode($trans); ?>;
+        //AQUI IBA EL CODIGO DEL GRID ANTERIOR
+        console.log(arreglo_completo);
+        //var theme = getDemoTheme();
+        
+        var source ={
+            localdata: arreglo_completo,
+            datatype: "array"
+        };
+
+        $("#jqxgrid").jqxGrid({
+            width: 770,
+            source: source,
+            showfilterrow: true,
+            pageable: true,
+            autoheight: true,
+            filterable: true,
+            columns: [
+                {text: 'Subestacion', datafield: 'idSubestacion', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Numero de serie', datafield: 'noSerie', width: 235, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Capacidad', datafield: 'capacidad', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Fabricante', datafield: 'fabricante', width: 255, cellsalign: 'right', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Enfriamiento', datafield: 'enfriamiento', width: 80, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Impedancia', datafield: 'impedancia', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Voltaje primaria', datafield: 'vPrimaria', width: 235, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Voltaje secundario', datafield: 'vSecundario', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Transformacion', datafield: 'rTransformacion', width: 255, cellsalign: 'right', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Polaridad', datafield: 'polaridad', width: 80, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Aterrizamiento', datafield: 'aterrizamiento', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Pararrayos', datafield: 'pararrayos', width: 235, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Cuchillas', datafield: 'cuchillas', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Estado', datafield: 'activoTrans', width: 80, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'}
+            ]
+        });
+
+        $("#jqxgrid").bind('rowselect', function(event) {
+            var row = event.args.rowindex;
+            var datarow = $("#jqxgrid").jqxGrid('getrowdata', row);
+            //$("#idSub").prop('disabled', true);
+            $("#idSub").val(datarow.idSubestacion);
+            $("#noSerie").val(datarow.noSerie);
+            $("#capaTra").val(datarow.capacidad);
+            $("#fabricante").val(datarow.fabricante);
+            $("#impedancia").val(datarow.impedancia);
+            $("#vPrimaria").val(datarow.vPrimaria);
+            $("#vSecundario").val(datarow.vSecundario);
+            $("#rTrans").val(datarow.rTransformacion);
+            $("#polaridad").val(datarow.polaridad);
+            $("#aterriza").val(datarow.aterrizamiento);
+            $("#pararrayos").val(datarow.pararrayos);
+            $("#cuchillas").val(datarow.cuchillas);
+            $("#correl").val(datarow.correlTransformador);
+            if(datarow.activoTrans === '1'){
+                $('#activo').prop('checked',true);
+            }else{
+                $('#activo').prop('checked',false);
+            }
+            $("#activo").val(datarow.activo);
+            $("#isMod").val('True');
+        });
+        
         <?php
         $msj = $this->session->flashdata('msj');
         if ($msj) {
@@ -11,227 +86,7 @@
         }
         ?>    
                 
-        /**$("#transForm").submit(function(e) {
-            var self = this;
-            //e.preventDefault();
-            //$('#submitArch').attr('disabled', 'disabled');
-            console.log('entro');
-            if(validTrans()){
-                showMsg('modal_msj', 'loading', 'Un momento mientras el archivo esta siendo cargado');    
-                //self.submit();
-                console.log('true');
-                return true; //is superfluous, but I put it here as a fallback
-            }else{
-                return false;
-            }
-        });*/
     };
-    /**
-     * Validar parametros de una subestacion
-     */
-    function validSub() {
-        var coordX = $('#coordX').val();
-        var coordY = $('#coordY').val();
-        var numSub = $('#numSub').val();
-        var msj = '';
-        if (coordX === '' || coordY === '') {
-            msj = msj + '<li>Debe seleccionar un punto en el mapa.</li>';
-        }
-        if (numSub === '') {
-            msj = msj + '<li>Debe completar el campo Numero Subestacion</li>';
-        }
-        if (msj !== '') {
-            showMsg('modal_msj', 'aceptar', 'Debe completar la siguiente informacion: <br /><ul>' + msj + '</ul>');
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    function addTrans() {
-        numTrans++;
-        numId++;
-        var div = '<div id="trans_' + numId + '" class="border-box">' +
-                '<div class="params-tra-left">' +
-                '<div class="lbl-left">' +
-                '<label for="noSerie">Numero de serie</label>' +
-                '</div>' +
-                '<div class="in-right">' +
-                '<input type="input" id="noSerie_' + numId + '" name="noSerie" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="params-tra-right">' +
-                '<div class="lbl-left">' +
-                '<label for="capaTra">Capacidad</label>' +
-                '</div>' +
-                '<div class="in-right">' +
-                '<input type="input" id="capaTra_' + numId + '" name="capaTra">' +
-                '</div>' +
-                '</div>' +
-                '<div class="limpiar">' + '</div>' +
-                '<div class="params-tra-left">' +
-                '<div class="lbl-left">' +
-                '<label for="fabricante">Fabricante</label>' +
-                '</div>' +
-                '<div class="in-right">' +
-                '<input type="input" id="fabricante_' + numId + '" name="fabricante" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="params-tra-right">' +
-                '<div class="lbl-left">' +
-                '<label for="enfriamento">Enfriamento</label>' +
-                '</div>' +
-                '<div class="in-right">' +
-                '<input type="input" id="enfriamento_' + numId + '" name="enfriamento" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="limpiar">' + '</div>' +
-                '<div class="params-tra-left">' +
-                '<div class="lbl-left">' +
-                '<label for="impedancia">Impedancia</label>' +
-                '</div>' +
-                '<div class="in-right">' +
-                '<input type="input" id="impedancia_' + numId + '" name="impedancia" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="params-tra-right">' +
-                '<div class="lbl-left">' +
-                '<label for="vPrimaria">Voltaje primario</label>' +
-                '</div>' +
-                '<div class="in-right">' +
-                '<input type="input" id="vPrimaria_' + numId + '" name="vPrimaria" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="limpiar">' + '</div>' +
-                '<div class="params-tra-left">' +
-                '<div class="lbl-left">' +
-                '<label for="vSecundario">Voltaje secundario</label>' +
-                '</div>' +
-                '<div class="in-right">' +
-                '<input type="input" id="vSecundario_' + numId + '" name="vSecundario" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="params-tra-right">' +
-                '<div class="lbl-left">' +
-                '<label for="rTrans">Resistencia transformador</label>' +
-                '</div>' +
-                '<div class="in-right">' +
-                '<input type="input" id="rTrans_' + numId + '" name="rTrans" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="limpiar">' + '</div>' +
-                '<div class="params-tra-left">' +
-                '<div class="lbl-left">' +
-                '<label for="polaridad">Polaridad</label>' +
-                '</div>' +
-                '<div class="in-right">' +
-                '<input type="input" id="polaridad_' + numId + '" name="polaridad" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="params-tra-right">' +
-                '<div class="lbl-left">' +
-                '<label for="aterriza">Aterrizamiento</label>' +
-                '</div>' +
-                '<div class="in-right">' +
-                '<input type="input" id="aterriza_' + numId + '" name="aterriza" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="limpiar">' + '</div>' +
-                '<div class="params-tra-left">' +
-                '<div class="lbl-left">' +
-                '<label for="pararrayos">Pararrayos</label>' +
-                '</div>' +
-                '<div class="in-right">' +
-                '<input type="input" id="pararrayos_' + numId + '" name="pararrayos" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="params-tra-right">' +
-                '<div class="lbl-left">' +
-                '<label for="cuchillas">Cuchillas</label>' +
-                '</div>' +
-                '<div class="in-right">' +
-                '<input type="input" id="cuchillas_' + numId + '" name="cuchillas" />' +
-                '</div>' +
-                '</div>' +
-                '<div class="limpiar">' + '</div>' +
-                '<input type="button" value="Eliminar" onclick="javascript:removeTrans(this);" id="remove_' + numId + '"/>' +
-                '</div>';
-        if (numTrans <= 4) {
-            $('#transformadores').append(div);
-        } else {
-            numTrans--;
-            showMsg('modal_msj', 'aceptar', 'No se pueden agregar mas de 4 transformadores')
-        }
-
-    }
-
-    function removeTrans(boton) {
-        $("#" + boton.id).parent().remove();
-        numTrans--;
-    }
-
-    function prevStep() {
-        $('#but-trans').slideUp('slow', function() {
-            $('#trans-form').slideUp('slow', function() {
-                $('#map-canvas').slideDown('slow', function() {
-                    $('#sub-form').slideDown('slow');
-                });
-            });
-        });
-    }
-
-    function nextStep() {
-        if (validSub()) {
-            $('#map-canvas').slideUp();
-            $('#sub-form').slideUp('slow', function() {
-                $('#trans-form').slideDown('slow', function() {
-                    $('#but-trans').slideDown('slow');
-                });
-            });
-        }
-    }
-
-    function getParamsSub(){
-            var coordX = $('#coordX').val();
-            var coordY = $('#coordY').val();
-            var numSub = $('#numSub').val();
-            var localizacion = $('#localizacion').val();
-            var capacidad = $('#capacidad').val();
-            var conexion = $('#conexion').val();
-            var sub = coordX + '/|\\' + coordY + '/|\\' + numSub + '/|\\' + localizacion + '/|\\' + capacidad + '/|\\' + conexion;
-            return sub;
-    }
-
-    function finalizaSub() {
-        showMsg('modal_msj', 'loading', 'Un momento mientras se almacenan los datos');
-        if (validSub()) {
-            
-            var sub = getParamsSub();
-            //alert(sub);
-            //console.log(sub.split('/|\\'));
-            var cct = $.cookie('cookieUCA');
-            //alert(cct);
-            //'tokenUCA': cct, 
-            var request = $.ajax({
-                url: "<?= base_url() ?>index.php/subestaciones/crear",
-                type: "POST",
-                data: {'tokenUCA': cct, 'subData': sub, 'tipo': '1'},
-                dataType: "json"
-            });
-            request.done(function(msg, status, XHR) {
-                //var msj = '<?php echo $this->session->flashdata('msj');?>';
-                close_modal();
-                showMsg('modal_msj', 'aceptar', msg);
-            });
-            request.fail(function(XHR, textStatus, response) {
-                console.log(XHR);
-                console.log(textStatus);
-                console.log(response);
-                close_modal();
-                showMsg('modal_msj', 'aceptar', 'Ocurrio un error obteniendo los datos, asegurese que su conexion a internet este activa y vuelva a intentarlo');
-            });
-        }
-    }
 
     function validTrans(){
         var numParams = 0;
@@ -244,9 +99,12 @@
                     numParams++;
                 }
             });
-            if(numParams===0){
-                alert('entre');
-                showMsg('modal_msj', 'aceptar', 'Debe completar al menos un campo de cada transformador.');
+            if(numParams===0 || $("#idSub").val()=== ''){
+                if($("#idSub").val()=== ''){
+                    showMsg('modal_msj', 'aceptar', 'Debe seleccionar una subestacion para poder crear un transformador.');
+                }else{
+                    showMsg('modal_msj', 'aceptar', 'Debe completar al menos un campo para crear un transformador.');
+                }
                 return false;
             }else{
                 showMsg('modal_msj', 'loading', 'Un momento mientras el archivo esta siendo cargado');
@@ -255,6 +113,33 @@
             }
         });
         
+    }
+    
+    function crear_trans() {
+        //$("#idSub").prop('disabled', false);
+        $("#idSub").val('');
+        $("#noSerie").val('');
+        $("#capaTra").val('');
+        $("#fabricante").val('');
+        $("#impedancia").val('');
+        $("#vPrimaria").val('');
+        $("#vSecundario").val('');
+        $("#rTrans").val('');
+        $("#polaridad").val('');
+        $("#aterriza").val('');
+        $("#pararrayos").val('');
+        $("#cuchillas").val('');
+        $("#isMod").val('False');
+        $('#activo').prop('checked',true);
+        $("#activo").val('1');
+    }
+    
+    function setCheck(){
+        if($('#activo').val() === '1'){
+            $('#activo').val('0');
+        }else{
+            $('#activo').val('1');
+        }
     }
 </script>
 <style>
@@ -308,14 +193,34 @@
     }
     .border-box{padding:14px 12px; border:1px solid #e9e9e9;}
 </style>
+
+<div align="center" id='jqxWidget'>         
+    <h2>TRANSFORMADORES</h2>
+    <div align="center" style="width:100%;" id="jqxgrid"></div>
+</div>
+<br/>
 <?php
-    echo form_open('subestaciones/set_trans/'.$subId,'id=transForm');
+    echo form_open('subestaciones/set_trans','id=transForm');
 ?>
+<input type="hidden" name="isMod" id="isMod" value="False"/>
+<input type="hidden" name="correl" id="correl" value="False"/>
 <div id="trans-form">
-    <div id="transformadores">
-        <input type="hidden" value="<?php echo $subId?>" name="idSub" id="idSub"/>
+    <div id="transformadores">      
         <div id="trans_1" class="border-box">
             <div class="params-tra-left">
+                <div class="lbl-left">
+                    <label for="idSub">Subestacion</label>
+                </div>
+                <div class="in-right">
+                    <select name="idSub" id="idSub">
+                        <option value="">----Seleccione una subestacion----</option>
+                        <?php foreach ($subs as $subest_item): ?>
+                        <option value="<?php echo $subest_item['idSubestacion'] ?>"><?php echo $subest_item['localizacion'] ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
+            <div class="params-tra-right">
                 <div class="lbl-left">
                     <label for="noSerie">Numero de serie</label>
                 </div>
@@ -323,7 +228,8 @@
                     <input type="input" id="noSerie" name="noSerie" />
                 </div>
             </div>
-            <div class="params-tra-right">
+            <div class="limpiar"></div>
+            <div class="params-tra-left">
                 <div class="lbl-left">
                     <label for="capaTra">Capacidad</label>
                 </div>
@@ -331,8 +237,7 @@
                     <input type="input" id="capaTra" name="capaTra">
                 </div>
             </div>
-            <div class="limpiar"></div>
-            <div class="params-tra-left">
+            <div class="params-tra-right">
                 <div class="lbl-left">
                     <label for="fabricante">Fabricante</label>
                 </div>
@@ -340,7 +245,8 @@
                     <input type="input" id="fabricante" name="fabricante" />
                 </div>
             </div>
-            <div class="params-tra-right">
+            <div class="limpiar"></div>
+            <div class="params-tra-left">
                 <div class="lbl-left">
                     <label for="enfriamento">Enfriamento</label>
                 </div>
@@ -348,8 +254,7 @@
                     <input type="input" id="enfriamento" name="enfriamento" />
                 </div>
             </div>
-            <div class="limpiar"></div>
-            <div class="params-tra-left">
+            <div class="params-tra-right">
                 <div class="lbl-left">
                     <label for="impedancia">Impedancia</label>
                 </div>
@@ -357,7 +262,8 @@
                     <input type="input" id="impedancia" name="impedancia" />
                 </div>
             </div>
-            <div class="params-tra-right">
+            <div class="limpiar"></div>
+            <div class="params-tra-left">
                 <div class="lbl-left">
                     <label for="vPrimaria">Voltaje primario</label>
                 </div>
@@ -365,8 +271,8 @@
                     <input type="input" id="vPrimaria" name="vPrimaria" />
                 </div>
             </div>
-            <div class="limpiar"></div>
-            <div class="params-tra-left">
+            
+            <div class="params-tra-right">
                 <div class="lbl-left">
                     <label for="vSecundario">Voltaje secundario</label>
                 </div>
@@ -374,7 +280,8 @@
                     <input type="input" id="vSecundario" name="vSecundario" />
                 </div>
             </div>
-            <div class="params-tra-right">
+            <div class="limpiar"></div>
+            <div class="params-tra-left">
                 <div class="lbl-left">
                     <label for="rTrans">Resistencia transformador</label>
                 </div>
@@ -382,8 +289,8 @@
                     <input type="input" id="rTrans" name="rTrans" />
                 </div>
             </div>
-            <div class="limpiar"></div>
-            <div class="params-tra-left">
+            
+            <div class="params-tra-right">
                 <div class="lbl-left">
                     <label for="polaridad">Polaridad</label>
                 </div>
@@ -391,7 +298,8 @@
                     <input type="input" id="polaridad" name="polaridad" />
                 </div>
             </div>
-            <div class="params-tra-right">
+            <div class="limpiar"></div>
+            <div class="params-tra-left">
                 <div class="lbl-left">
                     <label for="aterriza">Aterrizamiento</label>
                 </div>
@@ -399,8 +307,8 @@
                     <input type="input" id="aterriza" name="aterriza" />
                 </div>
             </div>
-            <div class="limpiar"></div>
-            <div class="params-tra-left">
+            
+            <div class="params-tra-right">
                 <div class="lbl-left">
                     <label for="pararrayos">Pararrayos</label>
                 </div>
@@ -408,7 +316,8 @@
                     <input type="input" id="pararrayos" name="pararrayos" />
                 </div>
             </div>
-            <div class="params-tra-right">
+            <div class="limpiar"></div>
+            <div class="params-tra-left">
                 <div class="lbl-left">
                     <label for="cuchillas">Cuchillas</label>
                 </div>
@@ -416,6 +325,15 @@
                     <input type="input" id="cuchillas" name="cuchillas" />
                 </div>
             </div>
+            <div class="params-tra-right">
+                <div class="lbl-left">
+                    <label for="activo">Activo</label>
+                </div>
+                <div class="in-right">
+                    <input type="checkbox" name="activo" id="activo" value="1" checked="checked" onclick="javascript:setCheck();">
+                </div>
+            </div>
+            
             <div class="limpiar"></div>
         </div>
 
@@ -425,6 +343,7 @@
             <!--<input type="button" id="prev-sub" value="< Anterior" onclick="javascript:prevStep();"/>-->
         </div>
         <div class="finish-step">
+            <input type="button" id="crear-sub" value="Crear" onclick="javascript:crear_trans();"/>
             <input type="button" id="add-trans" value="Guardar" onclick="javascript:validTrans();"/>
         </div>
         <div class="next-step">

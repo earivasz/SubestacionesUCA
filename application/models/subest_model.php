@@ -12,6 +12,20 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
+        public function getAll_trans()
+        {
+            $query = $this->db->get('transformador');
+            return $query->result_array();
+        }
+        
+        public function getAll_subestaciones()
+        {
+            //SELECT *, CASE WHEN activo = 1 THEN "ACTIVO" WHEN activo = 0 THEN "INACTIVO" END AS nomEstado FROM SUBESTACION;
+            $query = 'SELECT *, CASE WHEN activo = 1 THEN "ACTIVO" WHEN activo = 0 THEN "INACTIVO" END AS nomEstado FROM SUBESTACION;';
+            $subs = $this->db->query($query);
+            return $subs->result_array();
+        }
+        
         public function get_subest($id)
         {
             $query = $this->db->get_where('subestacion',array('idSubestacion' => $id));
@@ -137,6 +151,7 @@ class Subest_model extends CI_Model {
             $localizacion = $this->input->post('localizacion'); 
             $capacidad = $this->input->post('capacidad');
             $conexion = $this->input->post('conexion');
+            $activo = $this->input->post('activo');
             if($localizacion==''){
                 $localizacion = null;
             }
@@ -150,116 +165,72 @@ class Subest_model extends CI_Model {
             }
             
             $data = array(
-              'coordX' => $coordX,
+                'coordX' => $coordX,
                 'coordY' => $coordY,
                 'numSubestacion' => $noSub,
                 'localizacion' => $localizacion,
                 'capacidad' => $capacidad,
                 'conexion' => $conexion,
-                'activo' => 1
+                'activo' => $activo
             );
             
             $this->db->insert('subestacion', $data);
-            $this->session->set_flashdata('msj', 'Exito');
             return ($this->db->affected_rows() != 1) ? false : true;
         }
         
         public function set_trans_sub(){
-            /*$subD = $this->input->post('subD');
-            $transD = $this->input->post('transD');
-            $this->db->trans_begin();
-            $subArray = explode('/|\\',$subD);
-            $transA = explode('|||',$transD);
-            //empieza insert de la subestacion
-            print_r($subArray);
-            print_r($transA);
-            if($subArray[3]==''){
-                $localizacion = null;
-            }else{
-                $localizacion = $subArray[3];
-            }
-            
-            if($subArray[4]==''){
-                $capacidad = null;
-            }else{
-                $capacidad = $subArray[4];
-            }
-            
-            
-            if($subArray[5]==''){
-                $conexion = null;
-            }else{
-                $conexion = $subArray[5];
-            }
-            
-            $data = array(
-              'coordX' => $subArray[0],
-                'coordY' => $subArray[1],
-                'numSubestacion' => $subArray[2],
-                'localizacion' => $localizacion,
-                'capacidad' => $capacidad,
-                'conexion' => $conexion,
-                'activo' => 1
-            );
-            
-            $this->db->insert('subestacion', $data);
-            if($this->db->affected_rows() != 1){
-                $this->db->trans_rollback();
-                return 'No se pudo crear la subestacion.';
-            }else{
-                $idSub = $this->db->insert_id();
-            }*/
-                $noSerie = $this->input->post('');
+                $noSerie = $this->input->post('noSerie');
                 if($noSerie==''){
                     $noSerie = null;
                 }
-                $capacidad = $this->input->post('');
+                $capacidad = $this->input->post('capaTra');
                 if($capacidad==''){
                     $capacidad = null;
                 }
-                $fabricante = $this->input->post('');
+                $fabricante = $this->input->post('fabricante');
                 if($fabricante==''){
                     $fabricante = null;
                 }
-                $enfriamiento = $this->input->post('');
+                $enfriamiento = $this->input->post('enfriamiento');
                 if($enfriamiento==''){
                     $enfriamiento = null;
                 }
-                $impedancia = $this->input->post('');
+                $impedancia = $this->input->post('impedancia');
                 if($impedancia==''){
                     $impedancia = null;
                 }
-                $vPrimaria = $this->input->post('');
+                $vPrimaria = $this->input->post('vPrimaria');
                 if($vPrimaria==''){
                     $vPrimaria = null;
                 }
-                $vSecundaria = $this->input->post('');
+                $vSecundaria = $this->input->post('vSecundario');
                 if($vSecundaria==''){
                     $vSecundaria = null;
                 }
-                $rTransformador = $this->input->post('');
+                $rTransformador = $this->input->post('rTrans');
                 if($rTransformador==''){
                     $rTransformador = null;
                 }
-                $polaridad = $this->input->post('');
+                $polaridad = $this->input->post('polaridad');
                 if($polaridad==''){
                     $polaridad = null;
                 }
-                $aterrizamiento = $this->input->post('');
+                $aterrizamiento = $this->input->post('aterriza');
                 if($aterrizamiento==''){
                     $aterrizamiento = null;
                 }
-                $pararrayos = $this->input->post('');
+                $pararrayos = $this->input->post('pararrayos');
                 if($pararrayos==''){
                     $pararrayos = null;
                 }
-                $cuchillas = $this->input->post('');
+                $cuchillas = $this->input->post('cuchillas');
                 if($cuchillas==''){
                     $cuchillas = null;
                 }
                 $idSub = $this->input->post('idSub');
                 $data = $this->correl_get($idSub);
-                if($data['num'] != '4'){
+                $num = $this->transCount($idSub);
+                if($num < 4){
                     $dataT = array(
                         'idSubestacion' => $idSub,
                         'correlTransformador'=> $data['last'],
@@ -274,7 +245,8 @@ class Subest_model extends CI_Model {
                         'polaridad' => $polaridad,
                         'aterrizamiento' => $aterrizamiento,
                         'pararrayos' => $pararrayos,
-                        'cuchillas' => $cuchillas
+                        'cuchillas' => $cuchillas,
+                        'activoTrans' => $this->input->post('activo')
                     );
                     $this->db->insert('transformador', $dataT);
                     if($this->db->affected_rows() != 1){
@@ -286,6 +258,95 @@ class Subest_model extends CI_Model {
                 }else{
                     $this->session->set_flashdata('msj', 'Maximo de transformadores alcanzado');
                 }
+                return $idSub;
+        }
+        
+        
+        public function update_trans(){
+                $noSerie = $this->input->post('noSerie');
+                if($noSerie==''){
+                    $noSerie = null;
+                }
+                $capacidad = $this->input->post('capaTra');
+                if($capacidad==''){
+                    $capacidad = null;
+                }
+                $fabricante = $this->input->post('fabricante');
+                if($fabricante==''){
+                    $fabricante = null;
+                }
+                $enfriamiento = $this->input->post('enfriamiento');
+                if($enfriamiento==''){
+                    $enfriamiento = null;
+                }
+                $impedancia = $this->input->post('impedancia');
+                if($impedancia==''){
+                    $impedancia = null;
+                }
+                $vPrimaria = $this->input->post('vPrimaria');
+                if($vPrimaria==''){
+                    $vPrimaria = null;
+                }
+                $vSecundaria = $this->input->post('vSecundario');
+                if($vSecundaria==''){
+                    $vSecundaria = null;
+                }
+                $rTransformador = $this->input->post('rTrans');
+                if($rTransformador==''){
+                    $rTransformador = null;
+                }
+                $polaridad = $this->input->post('polaridad');
+                if($polaridad==''){
+                    $polaridad = null;
+                }
+                $aterrizamiento = $this->input->post('aterriza');
+                if($aterrizamiento==''){
+                    $aterrizamiento = null;
+                }
+                $pararrayos = $this->input->post('pararrayos');
+                if($pararrayos==''){
+                    $pararrayos = null;
+                }
+                $cuchillas = $this->input->post('cuchillas');
+                if($cuchillas==''){
+                    $cuchillas = null;
+                }
+                $idSub = $this->input->post('idSub');
+                $correl = $this->input->post('correl');
+                    $dataT = array(
+                        'noSerie' => $noSerie,
+                        'capacidad' => $capacidad,
+                        'fabricante' => $fabricante,
+                        'enfriamiento' => $enfriamiento,
+                        'impedancia' => $impedancia,
+                        'vPrimaria' => $vPrimaria,
+                        'vSecundario' => $vSecundaria,
+                        'rTransformacion' => $rTransformador,
+                        'polaridad' => $polaridad,
+                        'aterrizamiento' => $aterrizamiento,
+                        'pararrayos' => $pararrayos,
+                        'cuchillas' => $cuchillas,
+                        'activoTrans' => $this->input->post('activo')
+                    );
+                    $this->db->trans_begin();
+                    $this->db->where('idSubestacion', $idSub);
+                    $this->db->where('correlTransformador', $correl);
+                    $this->db->update('transformador', $dataT);
+                    if($this->db->affected_rows() == 0){
+                        $this->db->trans_commit();
+                        $this->session->set_flashdata('msj', 'No pudo ser actualizado el transformador activo:'. $this->input->post('activo'));
+                    }else{
+                        $num = $this->transCount($idSub);
+                        if($num <= 4){
+                            $this->db->trans_commit();
+                            $this->session->set_flashdata('msj', 'Transformador actualizado con exito');
+                        }else{
+                            $this->db->trans_rollback();
+                            $this->session->set_flashdata('msj', 'Maximo de transformadores activos alcanzado');
+                        }
+                        
+                    }
+                    
                 return $idSub;
         }
         
@@ -303,6 +364,15 @@ class Subest_model extends CI_Model {
         $data['last'] = $last;
         $data['num'] = $num;
         return $data;
+    }
+    
+    private function transCount($idSub) {
+        $query = 'select count(transformador.correlTransformador) as num from transformador where transformador.idSubestacion = ? and transformador.activoTrans = 1;';
+        $lastCorrelSub = $this->db->query($query, array($idSub));
+        foreach ($lastCorrelSub->result() as $row) {
+            $num = $row->num;
+        }
+        return $num;
     }
 }
 ?>

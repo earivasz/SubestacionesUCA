@@ -97,7 +97,6 @@ function placeMarker(location) {
       position: location,
       map: map
     });
-
   }
     $('#coordX').val(location.lb);
     $('#coordY').val(location.mb);
