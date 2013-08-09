@@ -26,9 +26,75 @@ class Subestaciones extends CI_Controller {
             $data['idSubest'] = $id;
             $data['fotos'] = $this->subest_model->get_fotos($id);
             $data['subest'] = $this->subest_model->get_subest($id);
+            $data['ultimocorrel'] = $this->subest_model->get_latestCorrelFoto($id);
             $this->load->view('templates/header');
             $this->load->view('subestaciones/galeria', $data);
             $this->load->view('templates/footer');
+        }
+        
+        public function subir_archivo(){
+            $rutaGuardar = 'img/';
+            $numImagenes = count($_FILES['arrimg']['name']);
+            $ultCorr = $this->input->post('ultimocorrel');
+            $sub = $this->input->post('subest');
+            $arrimagenes = Array();
+            $allgood = 1;
+
+            $allowedExts = array("gif", "jpeg", "jpg", "png");
+            for($ar=0;$ar<$numImagenes;$ar++){//hago uno por uno
+                $temp = explode(".", $_FILES["arrimg"]["name"][$ar]);
+                $extension = end($temp);
+                 if ((($_FILES["arrimg"]["type"][$ar] == "image/gif")
+                 || ($_FILES["arrimg"]["type"][$ar] == "image/jpeg")
+                 || ($_FILES["arrimg"]["type"][$ar] == "image/jpg")
+                || ($_FILES["arrimg"]["type"][$ar] == "image/pjpeg")
+                || ($_FILES["arrimg"]["type"][$ar] == "image/x-png")
+                 || ($_FILES["arrimg"]["type"][$ar] == "image/png"))
+                 && ($_FILES["arrimg"]["size"][$ar] < 2000000)
+                 && in_array($extension, $allowedExts))
+                   {
+                       if ($_FILES["arrimg"]["error"][$ar] > 0)
+                         {
+                         //echo "Return Code: " . $_FILES["arrimg"]["error"][$ar] . "<br>";
+                           $allgood = 0;
+                         }
+                       else
+                         {
+//                         echo "Upload: " . $_FILES["arrimg"]["name"][$ar] . "<br>";
+//                         echo "Type: " . $_FILES["arrimg"]["type"][$ar] . "<br>";
+//                         echo "Size: " . ($_FILES["arrimg"]["size"][$ar] / 1024) . " kB<br>";
+//                         echo "Temp file: " . $_FILES["arrimg"]["tmp_name"][$ar] . "<br>";
+//                         if (file_exists($rutaGuardar . $_FILES["arrimg"]["name"][$ar]))
+//                           {
+//                           echo $_FILES["arrimg"]["name"][$ar] . " already exists. ";
+//                           }
+//                         else
+//                           {
+                           move_uploaded_file($_FILES["arrimg"]["tmp_name"][$ar],
+                           $rutaGuardar . $sub . '/' . $_FILES["arrimg"]["name"][$ar]);
+                           //echo "Stored in: " . $rutaGuardar . $_FILES["arrimg"]["name"][$ar];
+                           $ultCorr = $ultCorr + 1;
+                           $tta = Array('correl' => $ultCorr, 'url' => base_url() . 'img/' . $sub . '/' . $_FILES["arrimg"]["name"][$ar]);
+                           array_push($arrimagenes, $tta);
+                           //}
+                         }
+                   }
+                 else
+                   {
+                   //echo "Invalid file";
+                     $allgood = 0;
+                   }
+            }
+            //guardo en la base de datos
+            if($allgood == 1){
+                $allgood = $this->subest_model->crear_fotos($sub, $arrimagenes);
+                if(!$allgood)
+                    $this->session->set_flashdata('msj', 'Ocurrio un error al subir las imagenes al servidor');
+            }
+            else{
+                $this->session->set_flashdata('msj', 'Ocurrio un error al subir las imagenes al servidor');
+            }
+            redirect(base_url().'index.php/subestaciones/galeria/'. $sub);
         }
 
 

@@ -46,7 +46,12 @@ class Subest_model extends CI_Model {
         
         public function get_fotosSubest($id)
         {
-            $query = $this->db->get_where('foto',array('idSubestacion' => $id));
+            $query = $this->db->query('SELECT * FROM subestuca.foto where idSubestacion = ' . $id . ' order by correlFoto desc;');
+            return $query->result_array();
+        }
+        
+        public function get_latestCorrelFoto($id){
+            $query = $this->db->query('SELECT 0 as correlFoto union select correlFoto FROM subestuca.foto where idSubestacion = ' . $id . ' order by correlFoto desc limit 1;');
             return $query->result_array();
         }
         
@@ -113,6 +118,31 @@ class Subest_model extends CI_Model {
             //print_r($queryString);
             $this->db->query($queryString);
             return ($this->db->affected_rows() < 1) ? false : true;
+        }
+        
+        public function crear_fotos($idSub, $arrFotos){
+            $this->db->trans_begin();
+            $allgood = 1;
+            
+            foreach ($arrFotos as $imagen) {
+                $data = array(
+                    'idSubestacion' => $idSub,
+                    'correlFoto' => $imagen['correl'],
+                    'url' => $imagen['url'],
+                );
+                $this->db->insert('foto', $data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $allgood = 0;
+                }
+            }
+            
+            if($allgood == 1){
+                $this->db->trans_commit();
+                return true;
+            }
+            else
+                return false;
         }
         
         public function mod_subest($id)

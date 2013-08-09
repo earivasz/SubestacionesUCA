@@ -49,6 +49,7 @@ $route['subestaciones/crear_trans'] = 'subestaciones/crear_trans';
 $route['subestaciones/crear'] = 'subestaciones/crear';
 $route['subestaciones/crear_sub'] = 'subestaciones/crear_sub';
 $route['subestaciones/set_trans'] = 'subestaciones/set_trans';
+$route['subestaciones/subir_archivo'] = 'subestaciones/subir_archivo';
 $route['subestaciones/modificar/(:num)'] = 'subestaciones/modificar/$1';
 $route['subestaciones/galeria/(:num)'] = 'subestaciones/galeria/$1';
 $route['subestaciones/borrar_fotos'] = 'subestaciones/borrar_fotos';

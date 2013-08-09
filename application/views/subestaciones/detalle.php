@@ -8,7 +8,7 @@
          //$('#cssmenu ul li[id=cssmenu1]')("refresh");
          //$('#cssmenu ul li[id=cssmenu2]').addClass("active");
          $('#cssmenu ul li[id=cssmenu2] ul').append('<li><a href="<?php echo base_url() . 'index.php/subestaciones/modificar/' . $subestId ?>"><span>Modificar</span></a></li>');
-         $('#cssmenu ul li[id=cssmenu2] ul').append('<li><a href="#"><span>Galeria</span></a></li>');
+         $('#cssmenu ul li[id=cssmenu2] ul').append('<li><a href="<?php echo base_url() . 'index.php/subestaciones/galeria/' . $subestId ?>"><span>Galeria</span></a></li>');
          //cargas tipo = 1
          $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $subestId . '/1' ?>"><span>Cargas de subestacion</span></a></li>');
          //principal tipo = 4
@@ -72,9 +72,6 @@
                         echo '<img src ="' . $foto['url'] . '" />';
                     endforeach;
                 ?>
-                <img src='http://blog.frau-klein.org/wp-content/uploads/dexter.png' />
-                <img src='http://rocknrollghost.com/wp-content/uploads/2010/10/dexter.jpeg'  />
-                <img src='http://www.hollywoodreporter.com/sites/default/files/imagecache/blog_post_349_width/2013/05/dexter_season_8_p_2013.jpg' />
                </div>
            </div>
            <div style="float:left; width:200px;">
