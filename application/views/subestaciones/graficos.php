@@ -23,9 +23,13 @@
     var myGrid;
     var source;
     var tipo;
+    var multafp;
+    var multathdi;
 
   window.onload = function () {
     tipo = '<?php echo $tipo; ?>';
+    multafp = <?php echo $multafp[0]['valor']; ?>;
+    multathdi = <?php echo $multathdi[0]['valor']; ?>;
     arreglo_headersPri = ['Fecha y hora',
         'Voltaje 1 [V]','Corriente 1 [A]','%THD V1','%THD I1','Potencia Aparente 1 [VA]','Potencia Activa 1 [W]','Potencia reactiva 1 [VAR]','Factor de potencia 1',
         'Voltaje 2 [V]','Corriente 2 [A]','%THD V2','%THD I2','Potencia Aparente 2 [VA]','Potencia Activa 2 [W]','Potencia reactiva 2 [VAR]','Factor de potencia 2',
@@ -144,7 +148,7 @@
             //console.log('seleccione la fila');
             var row = event.args.rowindex;
             var datarow = $("#jqxgrid").jqxGrid('getrowdata', row);
-            recargarGrafico('armonicas', datarow, '');
+            recargarGrafico('armonicas', datarow, '', 0);
         });
     }
     
@@ -178,7 +182,7 @@
       return arrayCol;
   }
   
-  var recargarGrafico =function(tipoChart, datos, titulo){
+  var recargarGrafico =function(tipoChart, datos, titulo, linearoja){
       if(tipoChart == 'armonicas')//cuando se selecciona una fila y se dibuja el grafico de barras
           {
               var long = datos.length;
@@ -205,7 +209,7 @@
           {
             var arrayData = new Array();//Array donde van todas las columnas a graficar ya listas, tier 3
             var fechas = obtenerColumna('0');//arreglo de fechas
-            var filasAgraficar = datos.length;
+            var columnasAgraficar = datos.length;
             var longDatos = fechas.length;//numero de datos que van como datapoints (numero de filas)
             //variables a usar en cada iteracion del for
             var arrGrafico;//array de los datapoints, tier 1
@@ -213,7 +217,7 @@
             var num;
             var arrTempCol;
             //una iteracion por cada columna a graficar
-            for(ss=0;ss<filasAgraficar;ss++){//datos[ss] es el index de la columna en la que estoy, s2 es el index de la fila
+            for(ss=0;ss<columnasAgraficar;ss++){//datos[ss] es el index de la columna en la que estoy, s2 es el index de la fila
                 arrGrafico = new Array()
                 arrTempCol = obtenerColumna(+datos[ss]);
                 for(var s2=0;s2<longDatos;s2++){
@@ -234,6 +238,25 @@
                 };
                 arrayData.push(item);
             }
+            //comprobando si tengo que hacer una linea roja o no
+            if(linearoja > 0){
+                arrGrafico = new Array();
+                for(var s2=0;s2<longDatos;s2++){
+                  item = {
+                      'label' : 'multa',
+                      'y' : linearoja
+                  };
+                  arrGrafico.push(item);
+                }
+                item = {
+                    'type' : 'line',
+                    'showInLegend' : true,
+                    'legendText': 'Limite de multa',
+                    'dataPoints' : arrGrafico
+                };
+                arrayData.push(item);
+            }
+            //fin agregando linea roja
             chart.options.data = arrayData;
             if(titulo != '')
                 chart.options.title.text = titulo;
@@ -257,7 +280,7 @@
           arrColsGraf.push(itemsChecked[gp]['value']);
       }
       console.log(arrColsGraf);
-      recargarGrafico('principal', arrColsGraf, '');
+      recargarGrafico('principal', arrColsGraf, '', 0);
   }
   
   var graficaPredef = function(tipoGrafico){
@@ -265,6 +288,7 @@
     var fase = obtieneFase();
     var colg = 0;
     var titulo = '';
+    var linearoja = 0;
       //grafico
     if(tipoGrafico == 'vt'){
         colg = 1;
@@ -279,11 +303,13 @@
         if(tipoGrafico == 'fpt'){
           colg = 8;
           titulo = 'Factor de Potencia/tiempo';
+          linearoja = +multafp;
         }
         else{
             if(tipoGrafico == 'thdit'){
               colg = 4;
               titulo = 'THD I/tiempo';
+              linearoja = +multathdi;
             }
         }
       }
@@ -304,7 +330,7 @@
             }
         }
     }
-    recargarGrafico('principal', [+colg], titulo);
+    recargarGrafico('principal', [+colg], titulo, linearoja);
   }
   
   var obtieneFase = function(){
@@ -339,6 +365,7 @@
                 });
                 request.fail(function(XHR, textStatus, response) {
                   close_modal();
+                  console.log(response);
                   showMsg('modal_msj', 'aceptar', 'Ocurrio un error obteniendo los datos, asegurese que su conexion a internet este activa y vuelva a intentarlo');
                 });
             }

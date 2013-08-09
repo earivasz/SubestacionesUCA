@@ -21,7 +21,7 @@ class Subest_model extends CI_Model {
         public function getAll_subestaciones()
         {
             //SELECT *, CASE WHEN activo = 1 THEN "ACTIVO" WHEN activo = 0 THEN "INACTIVO" END AS nomEstado FROM SUBESTACION;
-            $query = 'SELECT *, CASE WHEN activo = 1 THEN "ACTIVO" WHEN activo = 0 THEN "INACTIVO" END AS nomEstado FROM SUBESTACION;';
+            $query = 'SELECT *, CASE WHEN activo = 1 THEN "ACTIVO" WHEN activo = 0 THEN "INACTIVO" END AS nomEstado FROM subestacion;';
             $subs = $this->db->query($query);
             return $subs->result_array();
         }
@@ -52,6 +52,11 @@ class Subest_model extends CI_Model {
         
         public function get_latestCorrelFoto($id){
             $query = $this->db->query('SELECT 0 as correlFoto union select correlFoto FROM subestuca.foto where idSubestacion = ' . $id . ' order by correlFoto desc limit 1;');
+            return $query->result_array();
+        }
+        
+        public function get_valsistema($valor){
+            $query = $this->db->get_where('valsistema',array('nomValor' => $valor));
             return $query->result_array();
         }
         

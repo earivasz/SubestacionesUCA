@@ -52,11 +52,11 @@ class Excel_model extends CI_Model {
             //print_r($batch);
             //echo '<br />';
             if ($tipo == 2) {
-                $this->db->insert_batch('datoI', $batch);
+                $this->db->insert_batch('datoi', $batch);
             } elseif ($tipo == 3) {
-                $this->db->insert_batch('datoV', $batch);
+                $this->db->insert_batch('datov', $batch);
             } else {
-                $this->db->insert_batch('datoP', $batch);
+                $this->db->insert_batch('datop', $batch);
             }
             //echo 'FIN';
 

@@ -96,6 +96,26 @@ class Subestaciones extends CI_Controller {
             }
             redirect(base_url().'index.php/subestaciones/galeria/'. $sub);
         }
+        
+        
+//$tempname and $actualname come from $_FILES varaibles at the top of this reply
+
+        function thumb_jpeg($tempname,$actualname) 
+            { 
+                global $destination_path;
+                $destination_path = "images/thumb/".$actualname;
+                global $new_width; 
+                global $new_height;
+                //set new sizes as you want them
+                $new_width = 80;
+                $new_height = 73;
+                //jpeg output quality
+                $quality = 100;
+                $destimg=imagecreatetruecolor($new_width,$new_height) or die("Problem In Creating image"); 
+                $srcimg=imagecreatefromjpeg($tempname) or die("Problem In opening Source Image"); 
+                imagecopyresized($destimg,$srcimg,0,0,0,0,$new_width,$new_height,ImageSX($srcimg),ImageSY($srcimg)) or die("Problem In resizing"); 
+                imagejpeg($destimg,$destination_path,$quality) or die("Problem In saving");
+            }
 
 
 	public function index()
@@ -233,7 +253,8 @@ class Subestaciones extends CI_Controller {
             $data['subest'] = $this->subest_model->get_subest($id);
             $data['idSub'] = $id;
             $data['tipo'] = $tipo;
-            
+            $data['multafp'] = $this->subest_model->get_valsistema('multafp');
+            $data['multathdi'] = $this->subest_model->get_valsistema('multathdi');
             $this->load->view('templates/header');	
             $this->load->view('subestaciones/graficos', $data);
             $this->load->view('templates/footer');
