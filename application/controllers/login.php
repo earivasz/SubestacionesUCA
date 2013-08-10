@@ -108,7 +108,8 @@ class Login extends CI_Controller
             'is_logued_in'   =>    TRUE,
             'id_usuario'     =>    '0',
             'perfil'         =>    '3',
-            'username'       =>    'INVITADO'
+            'username'       =>    'INVITADO',
+            'nomUser'        =>    'INVITADO'
         );        
         $this->session->set_userdata($data);
         $this->index();

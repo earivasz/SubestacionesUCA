@@ -75,9 +75,19 @@
            </div>
            <div style="float:left; width:200px;">
                <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href='<?=base_url()?>index.php/subestaciones/graficos/<?=$subestId?>/pri'">Tabla Principal</button><br>
-               <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href='<?=base_url()?>index.php/subestaciones/graficos/<?=$subestId?>/armi'">Armónicos de Corriente</button><br>
-               <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href='<?=base_url()?>index.php/subestaciones/graficos/<?=$subestId?>/armv'">Armónicos de Voltaje</button><br>
-               <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href='<?=base_url()?>index.php/subestaciones/cargas/<?=$subestId?>'">Cargas de subestacion</button><br>
+               <?php 
+                if($this->session->userdata('perfil') != '3'){
+                    echo '
+                    <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href=\'' . base_url() . 'index.php/subestaciones/graficos/' . $subestId . '/armi\'">Armónicos de Corriente</button><br>
+                    <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href=\'' . base_url() . 'index.php/subestaciones/graficos/' . $subestId . '/armv\'">Armónicos de Voltaje</button><br>
+                    <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href=\'' . base_url() . 'index.php/subestaciones/cargas/' . $subestId . '\'">Cargas de subestacion</button><br>';
+                }
+                if($this->session->userdata('perfil') == '1'){
+                    echo '
+                    <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href=\'' . base_url() . 'index.php/subestaciones/galeria/' . $subestId . '\'">Galeria de imagenes</button><br>';
+                    }
+                ?>
+               
                
            </div>
            

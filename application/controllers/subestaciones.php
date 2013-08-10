@@ -115,23 +115,25 @@ class Subestaciones extends CI_Controller {
         
 	public function index()
 	{   
-            $data['subest'] = $this->subest_model->get_subestaciones();
             if (!$this->session->userdata('perfil')){
                 redirect(base_url());
             }else{
                 $data['perfil'] = $this->session->userdata('perfil');
                 switch ($this->session->userdata('perfil')) {
                     case '1'://admin
+                        $data['subest'] = $this->subest_model->get_subestaciones();
                         $this->load->view('templates/header', $data);
                         $this->load->view('subestaciones/home', $data);
                         $this->load->view('templates/footer');
                         break;
                     case '2'://consultas
+                        $data['subest'] = $this->subest_model->get_subestaciones();
                         $this->load->view('templates/header');
                         $this->load->view('subestaciones/home', $data);
                         $this->load->view('templates/footer');
                         break;    
-                    case '3'://generico
+                    case '3'://invitado
+                        $data['subest'] = $this->subest_model->get_subestaciones_xperfil('3');
                         $this->load->view('templates/header');
                         $this->load->view('subestaciones/home', $data);
                         $this->load->view('templates/footer');

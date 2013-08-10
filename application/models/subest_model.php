@@ -12,6 +12,15 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
+        public function get_subestaciones_xperfil($idperfil)
+        {
+            $query = 'SELECT s.idSubestacion, s.coordX, s.coordY, s.numSubestacion, s.localizacion, s.capacidad, s.conexion, s.activo 
+                FROM subestuca.subestacion s inner join subestuca.perfilxsubest pxs on s.idSubestacion = pxs.idSubestacion 
+                where s.activo = 1 and pxs.idPerfil = ' . $idperfil . ';';
+            $subs = $this->db->query($query);
+            return $subs->result_array();
+        }
+        
         public function getAll_trans()
         {
             $query = $this->db->get('transformador');
@@ -20,7 +29,6 @@ class Subest_model extends CI_Model {
         
         public function getAll_subestaciones()
         {
-            //SELECT *, CASE WHEN activo = 1 THEN "ACTIVO" WHEN activo = 0 THEN "INACTIVO" END AS nomEstado FROM SUBESTACION;
             $query = 'SELECT *, CASE WHEN activo = 1 THEN "ACTIVO" WHEN activo = 0 THEN "INACTIVO" END AS nomEstado FROM subestacion;';
             $subs = $this->db->query($query);
             return $subs->result_array();
