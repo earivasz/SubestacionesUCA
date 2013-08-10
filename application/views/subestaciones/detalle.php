@@ -7,7 +7,6 @@
          //$("#cssmenu .active").removeClass(".active");
          //$('#cssmenu ul li[id=cssmenu1]')("refresh");
          //$('#cssmenu ul li[id=cssmenu2]').addClass("active");
-         $('#cssmenu ul li[id=cssmenu2] ul').append('<li><a href="<?php echo base_url() . 'index.php/subestaciones/modificar/' . $subestId ?>"><span>Modificar</span></a></li>');
          $('#cssmenu ul li[id=cssmenu2] ul').append('<li><a href="<?php echo base_url() . 'index.php/subestaciones/galeria/' . $subestId ?>"><span>Galeria</span></a></li>');
          //cargas tipo = 1
          $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $subestId . '/1' ?>"><span>Cargas de subestacion</span></a></li>');
