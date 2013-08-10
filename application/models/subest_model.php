@@ -60,6 +60,16 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
+        public function set_valsistema($valsistema, $valor){
+            $data = array(
+              'nomValor' => $valsistema,
+                'valor' => $valor
+            );
+            $this->db->where('nomValor', $valsistema);
+            $this->db->update('valsistema', $data);
+            return ($this->db->affected_rows() != 1) ? false : true;
+        }
+        
         public function get_tablaPrincipal($idSubest, $fechaInicio, $fechaFin)
         {
             //tengo que filtrar por fecha, el filtrador por fase se hace en la vista

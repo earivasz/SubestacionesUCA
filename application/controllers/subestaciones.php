@@ -39,18 +39,17 @@ class Subestaciones extends CI_Controller {
             $sub = $this->input->post('subest');
             $arrimagenes = Array();
             $allgood = 1;
+            $picnum = $this->subest_model->get_valsistema('picnum');
+            $picnum = $picnum[0]['valor'];
 
-            $allowedExts = array("gif", "jpeg", "jpg", "png");
+            $allowedExts = array("jpeg", "jpg");
             for($ar=0;$ar<$numImagenes;$ar++){//hago uno por uno
                 $temp = explode(".", $_FILES["arrimg"]["name"][$ar]);
                 $extension = end($temp);
-                 if ((($_FILES["arrimg"]["type"][$ar] == "image/gif")
-                 || ($_FILES["arrimg"]["type"][$ar] == "image/jpeg")
+                 if ((($_FILES["arrimg"]["type"][$ar] == "image/jpeg")
                  || ($_FILES["arrimg"]["type"][$ar] == "image/jpg")
-                || ($_FILES["arrimg"]["type"][$ar] == "image/pjpeg")
-                || ($_FILES["arrimg"]["type"][$ar] == "image/x-png")
-                 || ($_FILES["arrimg"]["type"][$ar] == "image/png"))
-                 && ($_FILES["arrimg"]["size"][$ar] < 2000000)
+                || ($_FILES["arrimg"]["type"][$ar] == "image/pjpeg"))
+                 && ($_FILES["arrimg"]["size"][$ar] < 2097152)//max 2 mb
                  && in_array($extension, $allowedExts))
                    {
                        if ($_FILES["arrimg"]["error"][$ar] > 0)
@@ -70,11 +69,27 @@ class Subestaciones extends CI_Controller {
 //                           }
 //                         else
 //                           {
-                           move_uploaded_file($_FILES["arrimg"]["tmp_name"][$ar],
-                           $rutaGuardar . $sub . '/' . $_FILES["arrimg"]["name"][$ar]);
+                            $picnum = $picnum + 1;
+                           
+                            $image_info = getimagesize($_FILES["arrimg"]["tmp_name"][$ar]);
+                            $image_width = $image_info[0];
+                            $image_height = $image_info[1];
+                            $new_width = 300;
+                            $new_height = $image_width/$image_height;
+                            $new_height = $new_width/$new_height;
+                            //jpeg output quality
+                            $quality = 100;
+                            $destimg=imagecreatetruecolor($new_width,$new_height); 
+                            $srcimg=imagecreatefromjpeg($_FILES["arrimg"]["tmp_name"][$ar]); 
+                            imagecopyresized($destimg,$srcimg,0,0,0,0,$new_width,$new_height,ImageSX($srcimg),ImageSY($srcimg)); 
+                            imagejpeg($destimg,$rutaGuardar . $sub . '/' . $picnum . '.jpeg',$quality);
+                           
+                           
+                           //move_uploaded_file($_FILES["arrimg"]["tmp_name"][$ar],
+                           //$rutaGuardar . $sub . '/' . $picnum . '.jpeg');
                            //echo "Stored in: " . $rutaGuardar . $_FILES["arrimg"]["name"][$ar];
                            $ultCorr = $ultCorr + 1;
-                           $tta = Array('correl' => $ultCorr, 'url' => base_url() . 'img/' . $sub . '/' . $_FILES["arrimg"]["name"][$ar]);
+                           $tta = Array('correl' => $ultCorr, 'url' => base_url() . 'img/' . $sub . '/' . $picnum . '.jpeg');
                            array_push($arrimagenes, $tta);
                            //}
                          }
@@ -88,6 +103,7 @@ class Subestaciones extends CI_Controller {
             //guardo en la base de datos
             if($allgood == 1){
                 $allgood = $this->subest_model->crear_fotos($sub, $arrimagenes);
+                $allgood2 = $this->subest_model->set_valsistema('picnum', '' . $picnum);
                 if(!$allgood)
                     $this->session->set_flashdata('msj', 'Ocurrio un error al subir las imagenes al servidor');
             }
@@ -97,27 +113,6 @@ class Subestaciones extends CI_Controller {
             redirect(base_url().'index.php/subestaciones/galeria/'. $sub);
         }
         
-        
-//$tempname and $actualname come from $_FILES varaibles at the top of this reply
-
-        function thumb_jpeg($tempname,$actualname) 
-            { 
-                global $destination_path;
-                $destination_path = "images/thumb/".$actualname;
-                global $new_width; 
-                global $new_height;
-                //set new sizes as you want them
-                $new_width = 80;
-                $new_height = 73;
-                //jpeg output quality
-                $quality = 100;
-                $destimg=imagecreatetruecolor($new_width,$new_height) or die("Problem In Creating image"); 
-                $srcimg=imagecreatefromjpeg($tempname) or die("Problem In opening Source Image"); 
-                imagecopyresized($destimg,$srcimg,0,0,0,0,$new_width,$new_height,ImageSX($srcimg),ImageSY($srcimg)) or die("Problem In resizing"); 
-                imagejpeg($destimg,$destination_path,$quality) or die("Problem In saving");
-            }
-
-
 	public function index()
 	{   
             $data['subest'] = $this->subest_model->get_subestaciones();

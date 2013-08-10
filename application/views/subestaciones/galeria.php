@@ -5,6 +5,10 @@ $(document).ready(function() {
                 $(this).toggleClass('selected');
             });
             
+            $('#subirimgs').click(function(){
+                showMsg('modal_msj', 'loading', 'Su peticion se esta procesando');
+            });
+            
             <?php
                 $msj = $this->session->flashdata('msj');
                 if ($msj) {
@@ -75,7 +79,7 @@ $(document).ready(function() {
         width:auto;
         height:125px;
         padding: 2px;
-        margin: 10px;
+        margin: 5px;
         float: left;
         background-color: #333333;
     }
@@ -99,10 +103,6 @@ $(document).ready(function() {
     .galeria .divsmain .removeGif:hover {
          margin:0px;
      }
-        
-    
-    
-
 </style>
 
 <div style="width: 100%; text-align:center;">
@@ -115,7 +115,7 @@ $(document).ready(function() {
             <?php $hidden = array('subest' => $idSubest, 'ultimocorrel' => $ultimocorrel[0]['correlFoto']); ?>
             <?php echo form_open_multipart('subestaciones/subir_archivo', 'id="imagenes"', $hidden) ?>
             
-            <input type="file" id="T8A" accept="gif|jpg|jpeg|png" name="arrimg[]">
+            <input type="file" id="T8A" accept="jpg|jpeg" name="arrimg[]">
             <script type="text/javascript" language="javascript">
                               $(function(){
                                   //alert('hola');
@@ -126,7 +126,7 @@ $(document).ready(function() {
                                }); 
                               });
                               </script>
-             <input type="submit" style="clear:both; display:block; width:250px; height:30px; margin-left:80px; margin-top:25px;" value="Subir imagenes seleccionadas" />
+             <input id="subirimgs" type="submit" style="clear:both; display:block; width:250px; height:30px; margin-left:80px; margin-top:25px;" value="Subir imagenes seleccionadas" />
              <?php echo form_close(); ?>
         </div>
     </div>
