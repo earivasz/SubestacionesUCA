@@ -83,6 +83,13 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
+        public function check_subestacion_invitado($idSub){
+            $query = 'select * from subestuca.perfilxsubest where idSubestacion = ' . $idSub;
+            $this->db->query($query);
+            //return (count($arr) > 0) ? true : false;
+            return ($this->db->affected_rows() > 0) ? true : false;
+        }
+        
         public function get_subestaciones_con_perfil()
         {
             $query = 'SELECT s.idSubestacion, numSubestacion, localizacion, idPerfil FROM subestuca.subestacion s left join subestuca.perfilxsubest pxs on s.idSubestacion = pxs.idSubestacion 

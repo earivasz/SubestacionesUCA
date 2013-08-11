@@ -54,7 +54,6 @@ class Subestaciones extends CI_Controller {
                    {
                        if ($_FILES["arrimg"]["error"][$ar] > 0)
                          {
-                         //echo "Return Code: " . $_FILES["arrimg"]["error"][$ar] . "<br>";
                            $allgood = 0;
                          }
                        else
@@ -83,8 +82,6 @@ class Subestaciones extends CI_Controller {
                             $srcimg=imagecreatefromjpeg($_FILES["arrimg"]["tmp_name"][$ar]); 
                             imagecopyresized($destimg,$srcimg,0,0,0,0,$new_width,$new_height,ImageSX($srcimg),ImageSY($srcimg)); 
                             imagejpeg($destimg,$rutaGuardar . $sub . '/' . $picnum . '.jpeg',$quality);
-                           
-                           
                            //move_uploaded_file($_FILES["arrimg"]["tmp_name"][$ar],
                            //$rutaGuardar . $sub . '/' . $picnum . '.jpeg');
                            //echo "Stored in: " . $rutaGuardar . $_FILES["arrimg"]["name"][$ar];
@@ -96,7 +93,6 @@ class Subestaciones extends CI_Controller {
                    }
                  else
                    {
-                   //echo "Invalid file";
                      $allgood = 0;
                    }
             }
@@ -148,14 +144,44 @@ class Subestaciones extends CI_Controller {
 	}
         
         public function detalle($id)
-	{          
-            $data['subest'] = $this->subest_model->get_subest($id);
-            $data['transformadores'] = $this->subest_model->get_transformadores($id);
-            $data['fotos'] = $this->subest_model->get_fotosSubest($id);
-            $data['subestId'] = $id;
-            $this->load->view('templates/header');
-            $this->load->view('subestaciones/detalle', $data);
-            $this->load->view('templates/footer');
+	{
+            if (!$this->session->userdata('perfil')){
+                redirect(base_url());
+            }else{
+                $data['subest'] = $this->subest_model->get_subest($id);
+                $data['transformadores'] = $this->subest_model->get_transformadores($id);
+                $data['fotos'] = $this->subest_model->get_fotosSubest($id);
+                $data['subestId'] = $id;
+                switch ($this->session->userdata('perfil')) {
+                    case '1'://admin
+                        $this->load->view('templates/header');
+                        $this->load->view('subestaciones/detalle', $data);
+                        $this->load->view('templates/footer');
+                        break;
+                    case '2'://consultas
+                        $this->load->view('templates/header');
+                        $this->load->view('subestaciones/detalle', $data);
+                        $this->load->view('templates/footer');
+                        break;    
+                    case '3'://invitado
+                        if($this->subest_model->check_subestacion_invitado($id)){
+                            $this->load->view('templates/header');
+                            $this->load->view('subestaciones/detalle', $data);
+                            $this->load->view('templates/footer');
+                        }
+                        else{
+                            $this->load->view('templates/header');
+                            $this->load->view('template/no_auth');
+                            $this->load->view('templates/footer');
+                        }
+                        break;
+                    default:
+                        $this->load->view('templates/header');
+                        $this->load->view('template/no_auth');
+                        $this->load->view('templates/footer');
+                        break;
+                }
+            }
 	}
         
         public function crear_trans(){
@@ -183,12 +209,12 @@ class Subestaciones extends CI_Controller {
             }
         }
         
-        public function crear(){
-            $data['subs'] = $this->subest_model->getAll_subestaciones();
-            $this->load->view('templates/header');	
-            $this->load->view('subestaciones/crear_sub',$data);
-            $this->load->view('templates/footer');
-        }
+//        public function crear(){
+//            $data['subs'] = $this->subest_model->getAll_subestaciones();
+//            $this->load->view('templates/header');	
+//            $this->load->view('subestaciones/crear_sub',$data);
+//            $this->load->view('templates/footer');
+//        }
         
         public function crear_sub()
         {
@@ -247,14 +273,44 @@ class Subestaciones extends CI_Controller {
         
         public function graficos($id, $tipo)
         {
-            $data['subest'] = $this->subest_model->get_subest($id);
-            $data['idSub'] = $id;
-            $data['tipo'] = $tipo;
-            $data['multafp'] = $this->subest_model->get_valsistema('multafp');
-            $data['multathdi'] = $this->subest_model->get_valsistema('multathdi');
-            $this->load->view('templates/header');	
-            $this->load->view('subestaciones/graficos', $data);
-            $this->load->view('templates/footer');
+            if (!$this->session->userdata('perfil')){
+                redirect(base_url());
+            }else{
+                $data['subest'] = $this->subest_model->get_subest($id);
+                $data['idSub'] = $id;
+                $data['tipo'] = $tipo;
+                $data['multafp'] = $this->subest_model->get_valsistema('multafp');
+                $data['multathdi'] = $this->subest_model->get_valsistema('multathdi');
+                switch ($this->session->userdata('perfil')) {
+                    case '1'://admin
+                        $this->load->view('templates/header');	
+                        $this->load->view('subestaciones/graficos', $data);
+                        $this->load->view('templates/footer');
+                        break;
+                    case '2'://consultas
+                        $this->load->view('templates/header');	
+                        $this->load->view('subestaciones/graficos', $data);
+                        $this->load->view('templates/footer');
+                        break;    
+                    case '3'://invitado
+                        if($this->subest_model->check_subestacion_invitado($id) && $tipo == 'pri'){
+                            $this->load->view('templates/header');	
+                            $this->load->view('subestaciones/graficos', $data);
+                            $this->load->view('templates/footer');
+                        }
+                        else{
+                            $this->load->view('templates/header');
+                            $this->load->view('template/no_auth');
+                            $this->load->view('templates/footer');
+                        }
+                        break;
+                    default:
+                        $this->load->view('templates/header');
+                        $this->load->view('template/no_auth');
+                        $this->load->view('templates/footer');
+                        break;
+                }   
+            }
         }
         
         public function mod_sub()

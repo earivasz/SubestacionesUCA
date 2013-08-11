@@ -13,8 +13,6 @@ class Sistema extends CI_Controller {
 	}
         
         public function mod_sistema(){
-//            $data['idSubest'] = $id;
-//            $data['fotos'] = $this->subest_model->get_fotos($id);
             $data['subest'] = $this->subest_model->get_subestaciones_con_perfil();
             $data['vals_sistema'] = $this->subest_model->get_valsistema_all();
             $this->load->view('templates/header');
