@@ -556,8 +556,9 @@ var setListaCB = function(f1, f2, f3){
             <button style="width: 105px; height: 35px;" onClick="graficaPredef(\'it\')" name="graficarPri">Corriente/tiempo</button>
             <button style="width: 100px; height: 35px;" onClick="graficaPredef(\'fpt\')" name="graficarPri">FP/tiempo</button>
             <button style="width: 100px; height: 35px;" onClick="graficaPredef(\'thdit\')" name="graficarPri">THD I/tiempo</button>
-            <button style="width: 135px; height: 35px; margin-left:20px;" onClick="graficaPredef(\'fpprom\')" name="graficarPri"> FP Promedio</button>
-            <button style="width: 135px; height: 35px;" onClick="graficaPredef(\'thdiprom\')" name="graficarPri"> THD I Promedio</button>
+            |
+            <button style="width: 125px; height: 35px;" onClick="graficaPredef(\'fpprom\')" name="graficarPri"> FP Promedio</button>
+            <button style="width: 125px; height: 35px;" onClick="graficaPredef(\'thdiprom\')" name="graficarPri"> THD I Promedio</button>
         </div>';
     }
         ?>

@@ -78,6 +78,62 @@ class Subest_model extends CI_Model {
             return ($this->db->affected_rows() != 1) ? false : true;
         }
         
+        public function get_valsistema_all(){
+            $query = $this->db->get('valsistema');
+            return $query->result_array();
+        }
+        
+        public function get_subestaciones_con_perfil()
+        {
+            $query = 'SELECT s.idSubestacion, numSubestacion, localizacion, idPerfil FROM subestuca.subestacion s left join subestuca.perfilxsubest pxs on s.idSubestacion = pxs.idSubestacion 
+                where s.activo = 1;';
+            $subs = $this->db->query($query);
+            return $subs->result_array();
+        }
+        
+        public function set_sistema($arrSubs, $multafp, $multathdi){
+            $this->db->trans_begin();
+            $allgood = 1;
+            
+            //primero borro
+            $query = 'delete from subestuca.perfilxsubest where idPerfil = 3;';
+            $this->db->query($query);
+            if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $allgood = 0;
+                }
+            //luego hago insert por cada subestacion
+            foreach ($arrSubs as $sub) {
+                $data = array(
+                    'idPerfil' => '3',
+                    'idSubestacion' => $sub,
+                );
+                $this->db->insert('perfilxsubest', $data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $allgood = 0;
+                }
+            }
+            
+            $this->set_valsistema('multafp', $multafp);
+            if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $allgood = 0;
+                }
+            $this->set_valsistema('multathdi', $multathdi);
+            if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $allgood = 0;
+                }
+            
+            if($allgood == 1){
+                $this->db->trans_commit();
+                return true;
+            }
+            else
+                return false;
+        }
+        
         public function get_tablaPrincipal($idSubest, $fechaInicio, $fechaFin)
         {
             //tengo que filtrar por fecha, el filtrador por fase se hace en la vista

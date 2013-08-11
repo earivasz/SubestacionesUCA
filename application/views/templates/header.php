@@ -35,7 +35,7 @@
                        <li><a href="#"><span>Mantenimiento</span></a></li>
                     </ul>
                 </li>
-                <li><a href="#"><span>Sistema</span></a></li>';
+                <li><a href="' . base_url() . 'index.php/sistema/mod_sistema"><span>Sistema</span></a></li>';
                 }
             ?>
                
