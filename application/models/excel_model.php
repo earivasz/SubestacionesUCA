@@ -36,7 +36,7 @@ class Excel_model extends CI_Model {
             for ($row = 2; $row <= $highestRow; $row++) {
                 //  Read a row of data into an array
                 if($tipo==4){
-                    $rowData = $sheet->rangeToArray('C' . $row . ':AA' . $row, NULL, TRUE, TRUE);
+                    $rowData = $sheet->rangeToArray('B' . $row . ':AB' . $row, NULL, TRUE, TRUE);
                 }else{
                     $rowData = $sheet->rangeToArray('B' . $row . ':AP' . $row, NULL, TRUE, TRUE);
                 }
@@ -181,7 +181,7 @@ class Excel_model extends CI_Model {
         }
         switch($tipo){
             case '4':
-                $newFec = $fecha[2].'-'.$fecha[1].'-'.$fecha[0].' '.$time[1];
+                $newFec = $fecha[2].'-'.$fecha[0].'-'.$fecha[1].' '.$time[1];
                 break;
             default :
                 $newFec = $fecha[2].'-'.$fecha[0].'-'.$fecha[1].' '.$time[1];

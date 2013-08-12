@@ -93,6 +93,8 @@
                     //echo getRealIP();
                     $username = array('name' => 'username', 'placeholder' => 'nombre de usuario');
                     $password = array('name' => 'password', 'placeholder' => 'introduce tu password');
+                    $newpass = array('name' => 'newPass', 'placeholder' => 'introduce tu nuevo password');
+                    $confpass = array('name' => 'confPass', 'placeholder' => 'confirma tu nuevo password');
                     $submit = array('name' => 'submit', 'value' => 'Iniciar sesión', 'title' => 'Iniciar sesión');
                     ?>
 
@@ -110,12 +112,16 @@
                         <div class="grid_8 push_2" id="formulario_login">
 
                             <div class="grid_6 push_1" id="campos_login">
-                                <?= form_open(base_url() . 'index.php/login/new_user') ?>
+                                <?= form_open(base_url() . 'index.php/login/cambio_pass') ?>
                                 <br>
                                 <label for="username">Nombre de usuario:</label>
                                 <?= form_input($username) ?><p><?= form_error('username') ?></p>
                                 <label for="password">Introduce tu password:</label>
                                 <?= form_password($password) ?><p><?= form_error('password') ?></p>
+                                <label for="newPass">Introduce tu nuevo password:</label>
+                                <?= form_password($newpass) ?><p><?= form_error('newPass') ?></p>
+                                <label for="confpass">Confirma tu nuevo password:</label>
+                                <?= form_password($confpass) ?><p><?= form_error('confpass') ?></p>
                                 <?= form_submit($submit) ?>
                                 <?= form_close() ?>
                                 <br />

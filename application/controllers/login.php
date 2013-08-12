@@ -73,21 +73,31 @@ class Login extends CI_Controller
                 $check_user = $this->login_model->login_user($username,$password);
                 switch($check_user){
                     case 1:
-                        echo 'usuario inactivo';
+                        $this->session->set_flashdata('msj', 'usuario inactivo');
+                        //echo 'usuario inactivo';
                         break;
                     case 2:
-                        echo 'usuario bloqueado';
+                        $this->session->set_flashdata('msj', 'usuario bloqueado');
+                        //echo 'usuario bloqueado';
                         break;
                     case 3:
-                        echo 'usuario bloqueado';
+                        $this->session->set_flashdata('msj', 'usuario bloqueado');
+                        //echo 'usuario bloqueado';
                         break;
                     case 4:
-                        echo 'usuario o contraseña incorrecta';
+                        $this->session->set_flashdata('msj', 'usuario o contraseña incorrecta');
+                        //echo 'usuario o contraseña incorrecta';
+                        break;
+                    case 5:
+                        $this->session->set_flashdata('msj', 'Debe cambiar su password por defecto');
+                        redirect(base_url()."index.php/cambioPassword");
+                        //echo 'Debe cambiar su password por defecto';
                         break;
                     default:
                         $this->index();
                         break;
                 }
+                redirect(base_url().'index.php');
             }
     }
  
@@ -165,7 +175,7 @@ class Login extends CI_Controller
                     'nomUser' => $this->input->post('nomUser'),
                     'apel' => $this->input->post('apel'),
                     'usuario' => $this->input->post('usuario'),
-                    'contrasena' => sha1('subUCA') ,
+                    'contrasena' => sha1('subUCA'),
                     'correo' => $this->input->post('correo'),
                     'estado' => $this->input->post('estado'),
                     'ultimoIngreso' => null,
@@ -176,6 +186,21 @@ class Login extends CI_Controller
             redirect(base_url()."index.php/admin/usuarios");
         }
     
+    }
+    
+    public function cambioPassword(){
+        $this->load->view('Login/cambioPass');
+    }
+    
+    public function cambio_pass(){
+        //logica de cambio de password
+        try{
+            $this->login_model->cambio_pass();
+            redirect(base_url()."index.php/cambioPassword");
+        }catch(Exception $e){
+            $this->session->set_flashdata('msj', 'Ocurrio un problema para actualizar su usuario, favor intente de nuevo.');
+            redirect(base_url()."index.php/cambioPassword");
+        }
     }
 }
 ?>

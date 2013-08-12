@@ -279,9 +279,9 @@
       for(gp=0;gp<itemsChecked.length;gp++){
           arrColsGraf.push(itemsChecked[gp]['value']);
       }
-      console.log(arrColsGraf);
+      //console.log(arrColsGraf);
       recargarGrafico('principal', arrColsGraf, '', 0);
-  }
+  };
   
   var graficaPredef = function(tipoGrafico){
       //obtengo la fase que quieren graficar
@@ -331,11 +331,11 @@
         }
     }
     recargarGrafico('principal', [+colg], titulo, linearoja);
-  }
+  };
   
   var obtieneFase = function(){
       return $('input:radio[name=fase]:checked').val();
-  }
+  };
   
   var traerDatos = function(){
       $("#botbotTraerDatos").prop('disabled',true);
@@ -365,7 +365,7 @@
                 });
                 request.fail(function(XHR, textStatus, response) {
                   close_modal();
-                  console.log(response);
+                  //console.log(response);
                   showMsg('modal_msj', 'aceptar', 'Ocurrio un error obteniendo los datos, asegurese que su conexion a internet este activa y vuelva a intentarlo');
                 });
             }
@@ -389,6 +389,7 @@
                 });
                 request.done(function(msg, status, XHR) {
                   arreglo_completo = msg;
+                  //console.log(arreglo_completo);
                   setColumnas();
                   setListaCB(true, true, true);
                   $("#jqxgrid").jqxGrid('columns', arrColumnasGrid);

@@ -15,8 +15,11 @@ class Login_model extends CI_Model {
         $query = $this->db->get('user');
         if($query->num_rows() == 1)
         {
+            
             //echo 'TRUE';
             $user = $query->row();
+            //echo $password . '<br/>';
+            //echo $user->contrasena;
             if($user->estado == 'I'){
                 //realizar proceso de usuario inactivo
                 return 1;
@@ -32,6 +35,11 @@ class Login_model extends CI_Model {
                 $this->db->where('usuario',$username);
                 $this->db->update('user',array('estado'=>'B'));
                 return 3;
+            }
+            
+            if(sha1("subUCA")==$user->contrasena && $user->estado == 'A'){
+                //proceso de cambio de contra por defecto
+                return 5;
             }
             
             if($password==$user->contrasena && $user->estado == 'A'){
@@ -103,5 +111,36 @@ class Login_model extends CI_Model {
             return false;
         }
     }
+    
+    public function cambio_pass(){
+        $usuario= $this->input->post('username');
+        $newPass = $this->input->post('newPass');
+        $oldPass = $this->input->post('password');
+        $data = array(
+                'usuario'=> $usuario,
+                'contrasena'=> sha1($oldPass)
+                );
+        $query = $this->db->get_where('user',$data);
+        $count = $this->db->count_all_results();
+        if($count > 0){
+            //logica de cambio de password
+            $data = array(
+                'contrasena'=> sha1($newPass)
+                );
+            $this->db->where('usuario',$usuario);
+            $query = $this->db->update('user',$data);
+            if($query > 0){
+                $this->session->set_flashdata('msj', 'Usuario actualizado correctamente.');
+                return true;
+            }else{
+                $this->session->set_flashdata('msj', 'No se pudo actualizar el usuario.');
+                return false;
+            }
+        }else{
+            $this->session->set_flashdata('msj', 'Usuario o contraseña incorrectos.');
+            return false;
+        }
+    }
+    
 }
 ?>
