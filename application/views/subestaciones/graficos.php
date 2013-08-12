@@ -33,7 +33,8 @@
     arreglo_headersPri = ['Fecha y hora',
         'Voltaje 1 [V]','Corriente 1 [A]','%THD V1','%THD I1','Potencia Aparente 1 [VA]','Potencia Activa 1 [W]','Potencia reactiva 1 [VAR]','Factor de potencia 1',
         'Voltaje 2 [V]','Corriente 2 [A]','%THD V2','%THD I2','Potencia Aparente 2 [VA]','Potencia Activa 2 [W]','Potencia reactiva 2 [VAR]','Factor de potencia 2',
-        'Voltaje 3 [V]','Corriente 3 [A]','%THD V3','%THD I3','Potencia Aparente 3 [VA]','Potencia Activa 3 [W]','Potencia reactiva 3 [VAR]','Factor de potencia 3'];
+        'Voltaje 3 [V]','Corriente 3 [A]','%THD V3','%THD I3','Potencia Aparente 3 [VA]','Potencia Activa 3 [W]','Potencia reactiva 3 [VAR]','Factor de potencia 3',
+        'FP Promedio', '%THDI Promedio'];
     arreglo_headersArm = ['Fecha y hora','fundamental',
         '2 armonico','3 armonico','4 armonico','5 armonico','6 armonico','7 armonico','8 armonico','9 armonico','10 armonico',
         '11 armonico','12 armonico','13 armonico','14 armonico','15 armonico','16 armonico','17 armonico','18 armonico','19 armonico','20 armonico',
@@ -243,7 +244,7 @@
                 arrGrafico = new Array();
                 for(var s2=0;s2<longDatos;s2++){
                   item = {
-                      'label' : 'multa',
+                      'label' : fechas[s2],
                       'y' : linearoja
                   };
                   arrGrafico.push(item);
@@ -311,20 +312,34 @@
               titulo = 'THD I/tiempo';
               linearoja = +multathdi;
             }
+            else{
+                if(tipoGrafico == 'fpprom'){
+                    colg = 25;
+                    titulo = 'FP Promedio';
+                    linearoja = +multafp;
+                }
+                else{
+                    if(tipoGrafico == 'thdiprom'){
+                        colg = 26;
+                        titulo = 'THDI Promedio';
+                        linearoja = +multathdi;
+                    }
+                }
+            }
         }
       }
     }
-    if(fase == '1'){
+    if(fase == '1' && tipoGrafico != 'fpprom' && tipoGrafico != 'thdiprom'){
         colg = colg + 0;
         titulo += ' Fase 1';
     }
     else{
-        if(fase == '2'){
+        if(fase == '2' && tipoGrafico != 'fpprom' && tipoGrafico != 'thdiprom'){
             colg = colg + 8;
             titulo += ' Fase 2';
         }
         else{
-            if(fase == '3'){
+            if(fase == '3' && tipoGrafico != 'fpprom' && tipoGrafico != 'thdiprom'){
                 colg = colg + 16;
                 titulo += ' Fase 3';
             }
@@ -472,6 +487,14 @@ var setListaCB = function(f1, f2, f3){
                 listSource.push(itemListSource);
             }
     }
+    for(dd=25;dd<27;dd++){
+                itemListSource = {
+                    label: arreglo_headersPri[dd],
+                    value : dd+'',
+                    checked : true
+                }
+                listSource.push(itemListSource);
+            }
     $("#jqxlistbox").jqxListBox('source', listSource);
 }
   
@@ -526,14 +549,17 @@ var setListaCB = function(f1, f2, f3){
     <?php if ($tipo == 'pri'){
         echo '<div id="graficosPredefinidos" style="clear: both; margin-top:25px; margin-bottom: 5px;">
             Graficos Predefinidos:<br>
-            <button style="width: 125px; height: 35px;" onClick="graficaPredef(\'vt\')" name="graficarPri">Grafico V-t</button>
-            <button style="width: 125px; height: 35px;" onClick="graficaPredef(\'it\')" name="graficarPri">Grafico I-t</button>
-            <button style="width: 125px; height: 35px;" onClick="graficaPredef(\'fpt\')" name="graficarPri">Grafico Fp.-t</button>
-            <button style="width: 125px; height: 35px;" onClick="graficaPredef(\'thdit\')" name="graficarPri">Grafico THD I-t</button>
             Fase:
             <input type="radio" name="fase" value="1">1
             <input type="radio" name="fase" value="2">2
             <input type="radio" name="fase" value="3">3
+            <button style="width: 105px; height: 35px;" onClick="graficaPredef(\'vt\')" name="graficarPri">Voltaje/tiempo</button>
+            <button style="width: 105px; height: 35px;" onClick="graficaPredef(\'it\')" name="graficarPri">Corriente/tiempo</button>
+            <button style="width: 100px; height: 35px;" onClick="graficaPredef(\'fpt\')" name="graficarPri">FP/tiempo</button>
+            <button style="width: 100px; height: 35px;" onClick="graficaPredef(\'thdit\')" name="graficarPri">THD I/tiempo</button>
+            |
+            <button style="width: 125px; height: 35px;" onClick="graficaPredef(\'fpprom\')" name="graficarPri"> FP Promedio</button>
+            <button style="width: 125px; height: 35px;" onClick="graficaPredef(\'thdiprom\')" name="graficarPri"> THD I Promedio</button>
         </div>';
     }
         ?>

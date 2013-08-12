@@ -25,7 +25,8 @@
                     echo '
                 <li id="cssmenu2" class="has-sub "><a href="#"><span>Subestaciones</span></a>
                     <ul>
-                       <li><a href="#"><span>Crear</span></a></li>
+                       <li><a href="' . base_url() . 'index.php/subestaciones/crear_sub"><span>Crear/modificar</span></a></li>
+                       <li><a href="' . base_url() . 'index.php/subestaciones/crear_trans"><span>Crear/modificar transformadores</span></a></li>
                     </ul>
                  </li>
                  <li id="cssmenu3"><a href="' . base_url() . 'index.php/admin/usuarios"><span>Usuarios</span></a></li>
@@ -33,12 +34,13 @@
                     <ul>
                        <li><a href="#"><span>Mantenimiento</span></a></li>
                     </ul>
-                </li>';
+                </li>
+                <li><a href="' . base_url() . 'index.php/sistema/mod_sistema"><span>Sistema</span></a></li>';
                 }
             ?>
                
                <li><a href="<?php echo base_url("index.php/login/logout_ci"); ?>"><span>Salir</span></a></li>
-               <li class="nombreUsuario" style="<?php echo ($this->session->userdata('perfil') == '1') ? 'left:100px;' : 'left:450px;' ?>"><span>Usuario: <?php echo $this->session->userdata('nomUser') . ' ' . $this->session->userdata('apel') ?></span></li>
+               <li class="nombreUsuario" style="<?php echo ($this->session->userdata('perfil') == '1') ? 'left:30px;' : 'left:450px;' ?>"><span>Usuario: <?php echo $this->session->userdata('nomUser') . ' ' . $this->session->userdata('apel') ?></span></li>
             </ul>
         </div>
         <div id="separacion_contenido"></div>

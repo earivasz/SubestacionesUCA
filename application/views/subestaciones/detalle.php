@@ -7,7 +7,6 @@
          //$("#cssmenu .active").removeClass(".active");
          //$('#cssmenu ul li[id=cssmenu1]')("refresh");
          //$('#cssmenu ul li[id=cssmenu2]').addClass("active");
-         $('#cssmenu ul li[id=cssmenu2] ul').append('<li><a href="<?php echo base_url() . 'index.php/subestaciones/modificar/' . $subestId ?>"><span>Modificar</span></a></li>');
          $('#cssmenu ul li[id=cssmenu2] ul').append('<li><a href="<?php echo base_url() . 'index.php/subestaciones/galeria/' . $subestId ?>"><span>Galeria</span></a></li>');
          //cargas tipo = 1
          $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $subestId . '/1' ?>"><span>Cargas de subestacion</span></a></li>');
@@ -76,9 +75,19 @@
            </div>
            <div style="float:left; width:200px;">
                <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href='<?=base_url()?>index.php/subestaciones/graficos/<?=$subestId?>/pri'">Tabla Principal</button><br>
-               <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href='<?=base_url()?>index.php/subestaciones/graficos/<?=$subestId?>/armi'">Armónicos de Corriente</button><br>
-               <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href='<?=base_url()?>index.php/subestaciones/graficos/<?=$subestId?>/armv'">Armónicos de Voltaje</button><br>
-               <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href='<?=base_url()?>index.php/subestaciones/cargas/<?=$subestId?>'">Cargas de subestacion</button><br>
+               <?php 
+                if($this->session->userdata('perfil') != '3'){
+                    echo '
+                    <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href=\'' . base_url() . 'index.php/subestaciones/graficos/' . $subestId . '/armi\'">Armónicos de Corriente</button><br>
+                    <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href=\'' . base_url() . 'index.php/subestaciones/graficos/' . $subestId . '/armv\'">Armónicos de Voltaje</button><br>
+                    <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href=\'' . base_url() . 'index.php/subestaciones/cargas/' . $subestId . '\'">Cargas de subestacion</button><br>';
+                }
+                if($this->session->userdata('perfil') == '1'){
+                    echo '
+                    <button class="botDetalle" TYPE = "Button" Name = "Submit1" onClick="location.href=\'' . base_url() . 'index.php/subestaciones/galeria/' . $subestId . '\'">Galeria de imagenes</button><br>';
+                    }
+                ?>
+               
                
            </div>
            

@@ -12,6 +12,15 @@ class Subest_model extends CI_Model {
             return $query->result_array();
         }
         
+        public function get_subestaciones_xperfil($idperfil)
+        {
+            $query = 'SELECT s.idSubestacion, s.coordX, s.coordY, s.numSubestacion, s.localizacion, s.capacidad, s.conexion, s.activo 
+                FROM subestuca.subestacion s inner join subestuca.perfilxsubest pxs on s.idSubestacion = pxs.idSubestacion 
+                where s.activo = 1 and pxs.idPerfil = ' . $idperfil . ';';
+            $subs = $this->db->query($query);
+            return $subs->result_array();
+        }
+        
         public function getAll_trans()
         {
             $query = $this->db->get('transformador');
@@ -20,7 +29,6 @@ class Subest_model extends CI_Model {
         
         public function getAll_subestaciones()
         {
-            //SELECT *, CASE WHEN activo = 1 THEN "ACTIVO" WHEN activo = 0 THEN "INACTIVO" END AS nomEstado FROM SUBESTACION;
             $query = 'SELECT *, CASE WHEN activo = 1 THEN "ACTIVO" WHEN activo = 0 THEN "INACTIVO" END AS nomEstado FROM subestacion;';
             $subs = $this->db->query($query);
             return $subs->result_array();
@@ -58,6 +66,79 @@ class Subest_model extends CI_Model {
         public function get_valsistema($valor){
             $query = $this->db->get_where('valsistema',array('nomValor' => $valor));
             return $query->result_array();
+        }
+        
+        public function set_valsistema($valsistema, $valor){
+            $data = array(
+              'nomValor' => $valsistema,
+                'valor' => $valor
+            );
+            $this->db->where('nomValor', $valsistema);
+            $this->db->update('valsistema', $data);
+            return ($this->db->affected_rows() != 1) ? false : true;
+        }
+        
+        public function get_valsistema_all(){
+            $query = $this->db->get('valsistema');
+            return $query->result_array();
+        }
+        
+        public function check_subestacion_invitado($idSub){
+            $query = 'select * from subestuca.perfilxsubest where idSubestacion = ' . $idSub;
+            $this->db->query($query);
+            //return (count($arr) > 0) ? true : false;
+            return ($this->db->affected_rows() > 0) ? true : false;
+        }
+        
+        public function get_subestaciones_con_perfil()
+        {
+            $query = 'SELECT s.idSubestacion, numSubestacion, localizacion, idPerfil FROM subestuca.subestacion s left join subestuca.perfilxsubest pxs on s.idSubestacion = pxs.idSubestacion 
+                where s.activo = 1;';
+            $subs = $this->db->query($query);
+            return $subs->result_array();
+        }
+        
+        public function set_sistema($arrSubs, $multafp, $multathdi){
+            $this->db->trans_begin();
+            $allgood = 1;
+            
+            //primero borro
+            $query = 'delete from subestuca.perfilxsubest where idPerfil = 3;';
+            $this->db->query($query);
+            if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $allgood = 0;
+                }
+            //luego hago insert por cada subestacion
+            foreach ($arrSubs as $sub) {
+                $data = array(
+                    'idPerfil' => '3',
+                    'idSubestacion' => $sub,
+                );
+                $this->db->insert('perfilxsubest', $data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $allgood = 0;
+                }
+            }
+            
+            $this->set_valsistema('multafp', $multafp);
+            if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $allgood = 0;
+                }
+            $this->set_valsistema('multathdi', $multathdi);
+            if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $allgood = 0;
+                }
+            
+            if($allgood == 1){
+                $this->db->trans_commit();
+                return true;
+            }
+            else
+                return false;
         }
         
         public function get_tablaPrincipal($idSubest, $fechaInicio, $fechaFin)

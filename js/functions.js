@@ -8,6 +8,10 @@ function setSub(drop){
     $('#verSub').attr('href' , newURL);
 }
 
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 function showMsg(id, tipo, msj){
     switch(tipo){
         case 'aceptar':
