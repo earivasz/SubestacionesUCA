@@ -59,14 +59,29 @@
             $("#noSerie").val(datarow.noSerie);
             $("#capaTra").val(datarow.capacidad);
             $("#fabricante").val(datarow.fabricante);
+            $("#enfriamiento").val(datarow.enfriamiento);
             $("#impedancia").val(datarow.impedancia);
             $("#vPrimaria").val(datarow.vPrimaria);
             $("#vSecundario").val(datarow.vSecundario);
             $("#rTrans").val(datarow.rTransformacion);
             $("#polaridad").val(datarow.polaridad);
-            $("#aterriza").val(datarow.aterrizamiento);
-            $("#pararrayos").val(datarow.pararrayos);
-            $("#cuchillas").val(datarow.cuchillas);
+            if(datarow.aterrizamiento === '1'){
+                $('#aterriza').prop('checked',true);
+            }else{
+                $('#aterriza').prop('checked',false);
+            } 
+            
+            if(datarow.pararrayos === '1'){
+                $('#pararrayos').prop('checked',true);
+            }else{
+                $('#pararrayos').prop('checked',false);
+            } 
+            
+            if(datarow.cuchillas === '1'){
+                $('#cuchillas').prop('checked',true);
+            }else{
+                $('#cuchillas').prop('checked',false);
+            }    
             $("#correl").val(datarow.correlTransformador);
             if(datarow.activoTrans === '1'){
                 $('#activo').prop('checked',true);
@@ -122,6 +137,7 @@
         $("#capaTra").val('');
         $("#fabricante").val('');
         $("#impedancia").val('');
+        $("#enfriamiento").val('');
         $("#vPrimaria").val('');
         $("#vSecundario").val('');
         $("#rTrans").val('');
@@ -248,10 +264,10 @@
             <div class="limpiar"></div>
             <div class="params-tra-left">
                 <div class="lbl-left">
-                    <label for="enfriamento">Enfriamento</label>
+                    <label for="enfriamiento">Enfriamento</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="enfriamento" name="enfriamento" />
+                    <input type="input" id="enfriamiento" name="enfriamiento" />
                 </div>
             </div>
             <div class="params-tra-right">
@@ -304,7 +320,8 @@
                     <label for="aterriza">Aterrizamiento</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="aterriza" name="aterriza" />
+                    <input type="checkbox" name="aterriza" id="aterriza" value="1" checked="checked">
+                    <!--<input type="input" id="aterriza" name="aterriza" />-->
                 </div>
             </div>
             
@@ -313,7 +330,8 @@
                     <label for="pararrayos">Pararrayos</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="pararrayos" name="pararrayos" />
+                    <input type="checkbox" name="pararrayos" id="pararrayos" value="1" checked="checked">
+                    <!--<input type="input" id="pararrayos" name="pararrayos" />-->
                 </div>
             </div>
             <div class="limpiar"></div>
@@ -322,7 +340,8 @@
                     <label for="cuchillas">Cuchillas</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="cuchillas" name="cuchillas" />
+                    <input type="checkbox" name="cuchillas" id="cuchillas" value="1" checked="checked">
+                    <!--<input type="input" id="cuchillas" name="cuchillas" />-->
                 </div>
             </div>
             <div class="params-tra-right">
@@ -330,7 +349,7 @@
                     <label for="activo">Activo</label>
                 </div>
                 <div class="in-right">
-                    <input type="checkbox" name="activo" id="activo" value="1" checked="checked" onclick="javascript:setCheck();">
+                    <input type="checkbox" name="activo" id="activo" value="1" checked="checked">
                 </div>
             </div>
             

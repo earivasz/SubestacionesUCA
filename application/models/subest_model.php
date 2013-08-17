@@ -388,6 +388,7 @@ class Subest_model extends CI_Model {
         
         
         public function update_trans(){
+                
                 $noSerie = $this->input->post('noSerie');
                 if($noSerie==''){
                     $noSerie = null;
@@ -426,16 +427,21 @@ class Subest_model extends CI_Model {
                 }
                 $aterrizamiento = $this->input->post('aterriza');
                 if($aterrizamiento==''){
-                    $aterrizamiento = null;
+                    $aterrizamiento = 0;
                 }
                 $pararrayos = $this->input->post('pararrayos');
                 if($pararrayos==''){
-                    $pararrayos = null;
+                    $pararrayos = 0;
                 }
                 $cuchillas = $this->input->post('cuchillas');
                 if($cuchillas==''){
-                    $cuchillas = null;
+                    $cuchillas = 0;
                 }
+                $activo = $this->input->post('activo');
+                if($activo==''){
+                    $activo=0;
+                }
+                
                 $idSub = $this->input->post('idSub');
                 $correl = $this->input->post('correl');
                     $dataT = array(
@@ -451,8 +457,9 @@ class Subest_model extends CI_Model {
                         'aterrizamiento' => $aterrizamiento,
                         'pararrayos' => $pararrayos,
                         'cuchillas' => $cuchillas,
-                        'activoTrans' => $this->input->post('activo')
+                        'activoTrans' => $activo
                     );
+                    
                     $this->db->trans_begin();
                     $this->db->where('idSubestacion', $idSub);
                     $this->db->where('correlTransformador', $correl);
