@@ -209,12 +209,12 @@ class Subestaciones extends CI_Controller {
             }
         }
         
-//        public function crear(){
-//            $data['subs'] = $this->subest_model->getAll_subestaciones();
-//            $this->load->view('templates/header');	
-//            $this->load->view('subestaciones/crear_sub',$data);
-//            $this->load->view('templates/footer');
-//        }
+        public function crear(){
+            $data['subs'] = $this->subest_model->getAll_subestaciones();
+            $this->load->view('templates/header');	
+            $this->load->view('subestaciones/crear_sub',$data);
+            $this->load->view('templates/footer');
+        }
         
         public function crear_sub()
         {

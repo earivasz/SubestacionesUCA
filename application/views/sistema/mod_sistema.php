@@ -47,7 +47,7 @@
     <h4>Valores globales de sistema:</h4>
     <?php 
         foreach($vals_sistema as $vals){
-            if($vals['nomValor'] != 'picnum'){
+            if($vals['nomValor'] == 'multafp' || $vals['nomValor'] == 'multathdi'){
                 echo '
                     <label for="' . $vals['nomValor'] . '">' . $vals['nombreExt'] . ': </label><br>
                     <input type="input" id="' . $vals['nomValor'] . '" name="' . $vals['nomValor'] . '" value="' . $vals['valor'] . '"><br>';
