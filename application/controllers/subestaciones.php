@@ -33,7 +33,7 @@ class Subestaciones extends CI_Controller {
         }
         
         public function subir_archivo(){
-            $rutaGuardar = 'img/';
+            $rutaGuardar = base_url().'img/galeria/';
             $numImagenes = count($_FILES['arrimg']['name']);
             $ultCorr = $this->input->post('ultimocorrel');
             $sub = $this->input->post('subest');
@@ -81,7 +81,25 @@ class Subestaciones extends CI_Controller {
                             $destimg=imagecreatetruecolor($new_width,$new_height); 
                             $srcimg=imagecreatefromjpeg($_FILES["arrimg"]["tmp_name"][$ar]); 
                             imagecopyresized($destimg,$srcimg,0,0,0,0,$new_width,$new_height,ImageSX($srcimg),ImageSY($srcimg)); 
-                            imagejpeg($destimg,$rutaGuardar . $sub . '/' . $picnum . '.jpeg',$quality);
+                            //echo getcwd() . '<br/>';
+                            if (file_exists($rutaGuardar . $sub . '/') && is_dir($rutaGuardar . $sub . '/')){
+                                imagejpeg($destimg,$rutaGuardar . $sub . '/' . $picnum . '.jpeg',$quality);
+                            }else{
+                                //if(mkdir($rutaGuardar . $sub . '/', 777, true)){
+                                //chmod($rutaGuardar, 777);
+                                if(is_writable($rutaGuardar)){
+                                    imagejpeg($destimg,$rutaGuardar . $picnum . '.jpeg',$quality);
+                                }else{
+                                    $this->session->set_flashdata('msj', 'no se puede escribir:');
+                                    $allgood = 0;
+                                }
+                                //}else{
+                                  //  $error = error_get_last();
+                                    //$this->session->set_flashdata('msj', 'Ocurrio un error al tratar de crear la carpeta: '. $error['message']);
+                                    //$allgood = 0;
+                                //}
+                            }
+                            
                            //move_uploaded_file($_FILES["arrimg"]["tmp_name"][$ar],
                            //$rutaGuardar . $sub . '/' . $picnum . '.jpeg');
                            //echo "Stored in: " . $rutaGuardar . $_FILES["arrimg"]["name"][$ar];
@@ -104,7 +122,7 @@ class Subestaciones extends CI_Controller {
                     $this->session->set_flashdata('msj', 'Ocurrio un error al subir las imagenes al servidor');
             }
             else{
-                $this->session->set_flashdata('msj', 'Ocurrio un error al subir las imagenes al servidor');
+                //$this->session->set_flashdata('msj', 'Ocurrio un error al subir las imagenes al servidor');
             }
             redirect(base_url().'index.php/subestaciones/galeria/'. $sub);
         }
@@ -194,7 +212,7 @@ class Subestaciones extends CI_Controller {
         
         public function set_trans(){
             try{
-                
+                $this->output->enable_profiler(TRUE);
                 if($this->input->post('isMod')=='True'){
                     $response = $this->subest_model->update_trans();
                 }else{

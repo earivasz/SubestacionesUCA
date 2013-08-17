@@ -56,7 +56,7 @@
             $("#localizacion").val(datarow.localizacion);
             $("#capacidad").val(datarow.capacidad);
             $("#conexion").val(datarow.conexion);
-            console.log(datarow.activo);
+            //console.log(datarow.activo);
             if(datarow.activo === '1'){
                 $('#activo').prop('checked',true);
             }else{
@@ -129,8 +129,8 @@
         var cct = $.cookie('cookieUCA');
         //alert(cct);
         //'tokenUCA': cct, 
-        console.log(sub)
-        console.log(dataT);
+        //console.log(sub)
+        //console.log(dataT);
         var request = $.ajax({
             url: "<?= base_url() ?>index.php/subestaciones/crear",
             type: "POST",
@@ -144,9 +144,9 @@
 
         });
         request.fail(function(XHR, textStatus, response) {
-            console.log(XHR);
-            console.log(textStatus);
-            console.log(response);
+            //console.log(XHR);
+            //console.log(textStatus);
+            //console.log(response);
             close_modal();
             showMsg('modal_msj', 'aceptar', 'Ocurrio un error obteniendo los datos, asegurese que su conexion a internet este activa y vuelva a intentarlo');
         });
@@ -280,7 +280,7 @@
                 <label for="activo">Activo</label>
             </div>
             <div class="in-right">
-                <input type="checkbox" name="activo" id="activo" value="1" checked="checked" onclick="javascript:setCheck();">
+                <input type="checkbox" name="activo" id="activo" value="1" checked="checked">
             </div>
         </div>
         

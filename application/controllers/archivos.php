@@ -61,6 +61,23 @@ class Archivos extends CI_Controller {
             
         }
     }
+    
+    public function mant_archivos(){
+        $data['archivos'] = $this->excel_model->get_archivos();
+        $this->load->view('templates/header');
+        $this->load->view('archivos/mantenimiento', $data);
+        $this->load->view('templates/footer');
+    }
+    
+    public function set_archivo(){
+        try{
+            $this->excel_model->set_archivo();
+            redirect(base_url()."index.php/archivos/mantenimiento");
+        }catch(Exception $e){
+            $this->session->set_flashdata('msj', 'Ocurrio un problema para actualizar el archivo, favor intente de nuevo.');
+            redirect(base_url()."index.php/archivos/mantenimiento");
+        }
+    }
 
 }
 

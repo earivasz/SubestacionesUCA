@@ -10,7 +10,7 @@ class Excel_model extends CI_Model {
         $this->load->library('excel');
         require_once BASEPATH . 'libraries/excel_reader2.php';
     }
-    
+
     public function dato_i_v($tipo, $idFase) {
         try {
             $batch = array();
@@ -35,9 +35,9 @@ class Excel_model extends CI_Model {
             //$highestColumn = $sheet->getHighestColumn();
             for ($row = 2; $row <= $highestRow; $row++) {
                 //  Read a row of data into an array
-                if($tipo==4){
+                if ($tipo == 4) {
                     $rowData = $sheet->rangeToArray('B' . $row . ':AB' . $row, NULL, TRUE, TRUE);
-                }else{
+                } else {
                     $rowData = $sheet->rangeToArray('B' . $row . ':AP' . $row, NULL, TRUE, TRUE);
                 }
                 if (!empty($rowData[0][0])) {
@@ -145,7 +145,7 @@ class Excel_model extends CI_Model {
                 'idFase' => utf8_encode($idFase),
                 'datoV' => utf8_encode($value)
             );
-        } elseif($tipo == 4) {
+        } elseif ($tipo == 4) {
             $data = array(
                 'idSubestacion' => utf8_encode($this->input->post('subest')),
                 'correlTabla' => utf8_encode($lastTab),
@@ -153,7 +153,7 @@ class Excel_model extends CI_Model {
                 'correlDatoP' => utf8_encode($i - 1),
                 'datoP' => utf8_encode($value)
             );
-        }else{
+        } else {
             $data = array(
                 'idSubestacion' => utf8_encode($this->input->post('subest')),
                 'correlTabla' => utf8_encode($lastTab),
@@ -172,34 +172,34 @@ class Excel_model extends CI_Model {
         $time = explode(' ', $tiempo);
         //echo $tiempo . '    ';
         //print_r($time);
-        if (strpos($time[0],'-') !== false) {
-            $fecha = explode('-',$time[0]);
-        }elseif(strpos($time[0],'/') !== false){
-            $fecha = explode('/',$time[0]);
-        }elseif(strpos($time[0],'.') !== false){
-            $fecha = explode('.',$time[0]);
+        if (strpos($time[0], '-') !== false) {
+            $fecha = explode('-', $time[0]);
+        } elseif (strpos($time[0], '/') !== false) {
+            $fecha = explode('/', $time[0]);
+        } elseif (strpos($time[0], '.') !== false) {
+            $fecha = explode('.', $time[0]);
         }
-        switch($tipo){
+        switch ($tipo) {
             case '4':
-                $newFec = $fecha[2].'-'.$fecha[0].'-'.$fecha[1].' '.$time[1];
+                $newFec = $fecha[2] . '-' . $fecha[0] . '-' . $fecha[1] . ' ' . $time[1];
                 break;
             default :
-                $newFec = $fecha[2].'-'.$fecha[0].'-'.$fecha[1].' '.$time[1];
+                $newFec = $fecha[2] . '-' . $fecha[0] . '-' . $fecha[1] . ' ' . $time[1];
                 break;
         }
         $timeN = strtotime($newFec);
         //echo $newFec . '  :  ' . $timeN . '<br/>';
         //$timeF = date('Y-m-d H:m:s', $timeN);
         $query = "INSERT INTO tiempo (idTiempo, fechaHora) VALUES (NULL, CONVERT_TZ(FROM_UNIXTIME(?),'+00:00', '+01:00'));";
-        
-        $this->db->query($query, array($timeN,'?'));
+
+        $this->db->query($query, array($timeN, '?'));
         return $this->db->insert_id();
-        /*$data = array(
-            'idTiempo' => NULL,
-            'fechaHora' => 'FROM_UNIXTIME('.$timeN.')'
-        );
-        $this->db->insert('tiempo', $data);
-        return $this->db->insert_id();*/
+        /* $data = array(
+          'idTiempo' => NULL,
+          'fechaHora' => 'FROM_UNIXTIME('.$timeN.')'
+          );
+          $this->db->insert('tiempo', $data);
+          return $this->db->insert_id(); */
     }
 
     public function cargas() {
@@ -252,6 +252,33 @@ class Excel_model extends CI_Model {
             $this->db->trans_commit();
             $this->session->set_flashdata('msj', 'Su archivo fue cargado exitosamente.');
             return TRUE;
+        }
+    }
+
+    public function get_archivos() {
+        $query = 'SELECT t.*, s.localizacion, p.tipo, CASE WHEN t.activo = 1 THEN "ACTIVO" WHEN t.activo = 0 THEN "INACTIVO" END AS nomEstado FROM tabla t INNER JOIN subestacion s ON t.idSubestacion=s.idSubestacion INNER JOIN tipo p ON t.idTipo = p.idTipo;';
+        $result = $this->db->query($query);
+        return $result->result_array();
+    }
+
+    public function set_archivo() {
+        $idSub = $this->input->post('idSub');
+        $correlTabla = $this->input->post('correlTabla');
+        $activo = $this->input->post('activo');
+        $notas = $this->input->post('notas');
+        $data = array(
+            'activo' => $activo,
+            'notasTabla' => $notas
+        );
+        $this->db->where('idSubestacion', $idSub);
+        $this->db->where('correlTabla', $correlTabla);
+        $query = $this->db->update('tabla', $data);
+        if ($query > 0) {
+            $this->session->set_flashdata('msj', 'Archivo actualizado correctamente.');
+            return true;
+        } else {
+            $this->session->set_flashdata('msj', 'No se pudo actualizar el archivo.');
+            return false;
         }
     }
 
