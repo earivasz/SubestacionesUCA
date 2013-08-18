@@ -94,7 +94,7 @@
        
             
        </div>
-<hr> <h2 align="center">TRANSFORMADORES</h2> 
+ <h2 align="center">TRANSFORMADORES</h2> 
       <div class="tablas"> 
       
       <table  class="hor-minimalist-b" style="float:left; width:200px; margin-left:50px; margin-right: 0px; margin-top: 0px;" >

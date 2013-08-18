@@ -69,6 +69,13 @@ if ($msj) {
 ?>
     };
 </script>
+<div class="menu_navegacion_subs">
+      <a href="<?=base_url()?>index.php/subestaciones">Subestaciones</a>
+      <span class="menu_navegacion_subs_sep">/</span>
+      <a href="<?=base_url()?>index.php/subestaciones/detalle/<?php echo $idSub ?>">Subestacion <?php echo $subest[0]['numSubestacion'] . ', ' . $subest[0]['localizacion'] ?></a>
+      <span class="menu_navegacion_subs_sep">/</span>
+      Cargas de Subestación
+  </div>
 <h2 style="width:100%; text-align: center;">CARGAS DE SUBESTACION <?php echo $subest[0]['numSubestacion'] . ', ' . $subest[0]['localizacion'];?></h2>
     <div style="text-align: right; width: 100%;">
         <div align="center" id='jqxWidget' style="text-align: center;">
