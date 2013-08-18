@@ -158,7 +158,7 @@ function validArch() {
     <div align="center" style="width:100%; height: 700px;" id="jqxgrid"></div>
 </div>
 <br/>
-<?php echo form_open('archivos/set_archivo','id=archForm'); ?>
+<?php echo form_open('archivos/set_archivo','id=archForm', array('origenCorrecto' => true)); ?>
 <div id="arch-form">
     <input type="hidden" name="correlTabla" id="correlTabla"/>
     <input type="hidden" name="idSub" id="idSub"/>

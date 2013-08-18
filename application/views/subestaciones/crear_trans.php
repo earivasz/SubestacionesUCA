@@ -216,7 +216,7 @@
 </div>
 <br/>
 <?php
-    echo form_open('subestaciones/set_trans','id=transForm');
+    echo form_open('subestaciones/set_trans','id=transForm', array('origenCorrecto' => true));
 ?>
 <input type="hidden" name="isMod" id="isMod" value="False"/>
 <input type="hidden" name="correl" id="correl" value="False"/>

@@ -33,7 +33,7 @@ $(document).ready(function() {
         var request = $.ajax({
                   url: "<?=base_url()?>index.php/subestaciones/borrar_fotos",
                   type: "POST",
-                  data: {'tokenUCA' : cct, 'idSub' : <?php echo $idSubest ?>, 'arrFotos' : imagenesId},
+                  data: {'tokenUCA' : cct, 'idSub' : <?php echo $idSubest ?>, 'arrFotos' : imagenesId, 'origenCorrecto' : true},
                   dataType: "text"
                 });
                 request.done(function(msg, status, XHR) {
@@ -112,7 +112,7 @@ $(document).ready(function() {
     <div style="float:left; width: 45%" class="divsmain">
         <h3>Subir Imagenes de subestacion</h3>
         <div style="text-align:left; width: 90%; margin-left:10%; font-style: italic;">
-            <?php $hidden = array('subest' => $idSubest, 'ultimocorrel' => $ultimocorrel[0]['correlFoto']); ?>
+            <?php $hidden = array('subest' => $idSubest, 'ultimocorrel' => $ultimocorrel[0]['correlFoto'], 'origenCorrecto' => true); ?>
             <?php echo form_open_multipart('subestaciones/subir_archivo', 'id="imagenes"', $hidden) ?>
             
             <input type="file" id="T8A" accept="jpg|jpeg" name="arrimg[]">

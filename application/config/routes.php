@@ -37,44 +37,39 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-//$route['subestaciones/(:any)'] = 'subestaciones/home';
 $route['subestaciones'] = 'subestaciones';
-//$route['news/create'] = 'news/create';
-//$route['subestaciones/(:any)'] = 'subestaciones/index';
 $route['subestaciones/detalle/(:num)'] = 'subestaciones/detalle/$1';
 $route['subestaciones/cargas/(:num)'] = 'subestaciones/cargas/$1';
 $route['subestaciones/graficos/(:num)/(:any)'] = 'subestaciones/graficos/$1/$2';
-$route['graficos_control/graficosDatos'] = 'graficos_control/graficosDatos';
 $route['subestaciones/crear_trans'] = 'subestaciones/crear_trans';
-//$route['subestaciones/crear'] = 'subestaciones/crear';
 $route['subestaciones/crear_sub'] = 'subestaciones/crear_sub';
-$route['sistema/mod_sistema'] = 'sistema/mod_sistema';
-$route['sistema/mod_sistema_action'] = 'sistema/mod_sistema_action';
 $route['subestaciones/set_trans'] = 'subestaciones/set_trans';
 $route['subestaciones/subir_archivo'] = 'subestaciones/subir_archivo';
-//$route['subestaciones/modificar/(:num)'] = 'subestaciones/modificar/$1';
 $route['subestaciones/galeria/(:num)'] = 'subestaciones/galeria/$1';
 $route['subestaciones/borrar_fotos'] = 'subestaciones/borrar_fotos';
-//$route['news/(:any)'] = 'news/views/$1';
-//$route['news'] = 'news';
+//$route['subestaciones/mod_sub'] = 'subestaciones/mod_sub';
+$route['graficos_control/graficosDatos'] = 'graficos_control/graficosDatos';
+
 $route['archivos/crear/(:num)/(:num)'] = 'archivos/mod_archivos/$1/$2';
 $route['archivos/subir_cargas'] = 'archivos/subir_cargas';
-$route['archivos/prueba'] = 'archivos/prueba';
-$route['subestaciones/mod_sub'] = 'subestaciones/mod_sub';
-$route['excel/importar'] = 'excel/importar_line';
-$route['excel'] = 'excel';
-$route['login/new_user'] = 'login/new_user';
-$route['login/logout_ci'] = 'login/logout_ci';
-$route['(:any)'] = 'subestaciones/index';
-$route['login/guest_login'] = 'login/guest_login';
-$route['admin/usuarios'] = 'login/admin_users';
-$route['admin/traer_users'] = 'login/get_data';
-$route['login/crear_user'] = 'login/crear_user';
-$route['login/cambio_pass'] = 'login/cambio_pass';
-$route['cambioPassword'] = 'login/cambioPassword';
 $route['archivos/mantenimiento'] = 'archivos/mant_archivos';
 $route['archivos/set_archivo'] = 'archivos/set_archivo';
-//$route['default_controller'] = "subestaciones/index";
+//$route['excel'] = 'excel';
+//$route['excel/importar'] = 'excel/importar_line';
+
+$route['login/new_user'] = 'login/new_user';
+$route['login/logout_ci'] = 'login/logout_ci';
+$route['login/crear_user'] = 'login/crear_user';
+$route['login/cambio_pass'] = 'login/cambio_pass';
+$route['login/guest_login'] = 'login/guest_login';
+$route['cambioPassword'] = 'login/cambioPassword';
+
+$route['admin/usuarios'] = 'login/admin_users';
+//$route['admin/traer_users'] = 'login/get_data';
+$route['sistema/mod_sistema'] = 'sistema/mod_sistema';
+$route['sistema/mod_sistema_action'] = 'sistema/mod_sistema_action';
+
+$route['(:any)'] = 'subestaciones/index';
 $route['default_controller'] = "login/index";
 $route['404_override'] = '';
 

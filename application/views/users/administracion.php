@@ -140,7 +140,9 @@ if ($msj) {
         echo '<select name="perfil" id="perfil">';
         echo '<option value="">Seleccione una opcion</option>';
         foreach ($perfiles as $perfil):
-            echo '<option value="' . $perfil['idPerfil'] . '">' . $perfil['tipoPerfil'] . '</option>';
+            if($perfil['tipoPerfil'] != 'INVITADO'){
+                echo '<option value="' . $perfil['idPerfil'] . '">' . $perfil['tipoPerfil'] . '</option>';
+            }
         endforeach;
         echo '</select> </td><td></td></tr><tr><td colspan="3">&nbsp;</td></tr><tr align="left"><td  colspan="2"></td><td>';
         echo form_button('crear', 'Crear', 'id="crear" onclick="javascript:crear_user();"');

@@ -192,7 +192,7 @@
               var arrGrafico = new Array();
               var item = {};
               var num;
-              for(var ss=2;ss<long;ss++){
+              for(var ss=1;ss<long;ss++){
                   num = +datos[ss];
                   if(num != datos[ss])
                       num = 0;
@@ -365,7 +365,7 @@
               var request = $.ajax({
                   url: "<?=base_url()?>index.php/graficos_control/graficosDatos",
                   type: "POST",
-                  data: {'tokenUCA' : cct, 'id' : <?php echo $idSub ?>, 'fechaIni' : fechaIni, 'fechaFin' : fechaFin, 'tipo' : tipo, 'fase' : fase},
+                  data: {'tokenUCA' : cct, 'id' : <?php echo $idSub ?>, 'fechaIni' : fechaIni, 'fechaFin' : fechaFin, 'tipo' : tipo, 'fase' : fase, 'origenCorrecto' : true},
                   dataType: "json"
                 });
                 request.done(function(msg, status, XHR) {
@@ -399,7 +399,7 @@
               var request = $.ajax({
                   url: "<?=base_url()?>index.php/graficos_control/graficosDatos",
                   type: "POST",
-                  data: {'tokenUCA' : cct, 'id' : <?php echo $idSub ?>, 'fechaIni' : fechaIni, 'fechaFin' : fechaFin, 'tipo' : tipo},
+                  data: {'tokenUCA' : cct, 'id' : <?php echo $idSub ?>, 'fechaIni' : fechaIni, 'fechaFin' : fechaFin, 'tipo' : tipo, 'origenCorrecto' : true},
                   dataType: "json"
                 });
                 request.done(function(msg, status, XHR) {
