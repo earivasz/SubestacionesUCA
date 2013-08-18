@@ -37,16 +37,20 @@ class Login_model extends CI_Model {
                 return 3;
             }
             
-            if(sha1("subUCA")==$user->contrasena && $user->estado == 'A'){
+            /*if(sha1("subUCA13")==$user->contrasena && $user->estado == 'A'){
                 //proceso de cambio de contra por defecto
                 return 5;
-            }
+            }*/
             
             if($password==$user->contrasena && $user->estado == 'A'){
                 //update ultimo ingreso
                 $this->db->where('usuario',$username);
                 $this->db->update('user',array('intentos'=>0,'ultimoIngreso'=>date('Y-m-d H:i:s')));
                 //setear session
+                if(sha1("subUCA13")==$user->contrasena && $user->estado == 'A'){
+                //proceso de cambio de contra por defecto
+                    return 5;
+                }
                 $data = array(
                 'is_logued_in'=>TRUE,
                 'id_usuario'=>$user->idUser,

@@ -56,8 +56,8 @@ class Login extends CI_Controller
     public function new_user()
     {
 
-            $this->form_validation->set_rules('username', 'nombre de usuario', 'required|trim|min_length[2]|max_length[150]|xss_clean');
-            $this->form_validation->set_rules('password', 'password', 'required|trim|min_length[5]|max_length[150]|xss_clean');
+            $this->form_validation->set_rules('username', 'nombre de usuario', 'required|trim|min_length[6]|max_length[10]|xss_clean');
+            $this->form_validation->set_rules('password', 'password', 'required|trim|min_length[8]|max_length[12]|xss_clean');
  
             //lanzamos mensajes de error si es que los hay
             $this->form_validation->set_message('required', 'El campo %s es requerido');
@@ -65,7 +65,8 @@ class Login extends CI_Controller
             $this->form_validation->set_message('max_length', 'El %s debe tener al menos %s carácteres');
             if($this->form_validation->run() == FALSE)
             {
-                $this->index();
+                $this->session->set_flashdata('msj', 'Debe completar los campos necesarios');
+                redirect(base_url().'index.php');
                 //echo sha1($this->input->post('encriptar'));
             }else{
                 $username = $this->input->post('username');
@@ -176,7 +177,7 @@ class Login extends CI_Controller
                     'nomUser' => $this->input->post('nomUser'),
                     'apel' => $this->input->post('apel'),
                     'usuario' => $this->input->post('usuario'),
-                    'contrasena' => sha1('subUCA'),
+                    'contrasena' => sha1('subUCA13'),
                     'correo' => $this->input->post('correo'),
                     'estado' => $this->input->post('estado'),
                     'ultimoIngreso' => null,
@@ -196,8 +197,22 @@ class Login extends CI_Controller
     public function cambio_pass(){
         //logica de cambio de password
         try{
-            $this->login_model->cambio_pass();
-            redirect(base_url()."index.php/cambioPassword");
+            $this->form_validation->set_rules('username', 'nombre de usuario', 'required|trim|min_length[6]|max_length[10]|xss_clean');
+            $this->form_validation->set_rules('password', 'password', 'required|trim|min_length[8]|max_length[12]|xss_clean');
+            $this->form_validation->set_rules('newPass', 'password', 'required|trim|min_length[8]|max_length[12]|xss_clean');
+            $this->form_validation->set_rules('confPass', 'password', 'required|trim|min_length[8]|max_length[12]|xss_clean');
+            if($this->form_validation->run() == FALSE)
+            {
+                $this->session->set_flashdata('msj', 'Debe completar los campos necesarios');
+                redirect(base_url().'index.php/cambioPassword');
+                //echo sha1($this->input->post('encriptar'));
+            }else{
+                if($this->login_model->cambio_pass()){
+                    redirect(base_url()."index.php");
+                }else{
+                    redirect(base_url()."index.php/cambioPassword");
+                }
+            }
         }catch(Exception $e){
             $this->session->set_flashdata('msj', 'Ocurrio un problema para actualizar su usuario, favor intente de nuevo.');
             redirect(base_url()."index.php/cambioPassword");

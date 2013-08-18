@@ -91,9 +91,10 @@
                     }
 
                     //echo getRealIP();
-                    $username = array('name' => 'username', 'placeholder' => 'nombre de usuario');
-                    $password = array('name' => 'password', 'placeholder' => 'introduce tu password');
-                    $submit = array('name' => 'submit', 'value' => 'Iniciar sesión', 'title' => 'Iniciar sesión');
+                    $username = array('name' => 'username', 'placeholder' => 'nombre de usuario', 'maxlength' => '10', 'id'=>'user');
+                    $password = array('name' => 'password', 'placeholder' => 'introduce tu password', 'maxlength' => '12', 'id'=>'password');
+                    $submit = array('type' => 'button','value' => 'Iniciar sesión', 'title' => 'Iniciar sesión', 'onclick' => 'javascript:submitLogin();');
+                    //'type' => 'button' 'name' => 'submit'
                     ?>
 
                     <br>    
@@ -110,13 +111,13 @@
                         <div class="grid_8 push_2" id="formulario_login">
 
                             <div class="grid_6 push_1" id="campos_login">
-                                <?= form_open(base_url() . 'index.php/login/new_user') ?>
+                                <?= form_open(base_url() . 'index.php/login/new_user','id="loginForm"') ?>
                                 <br>
                                 <label for="username">Nombre de usuario:</label>
                                 <?= form_input($username) ?><p><?= form_error('username') ?></p>
                                 <label for="password">Introduce tu password:</label>
                                 <?= form_password($password) ?><p><?= form_error('password') ?></p>
-                                <?= form_submit($submit) ?>
+                                <?= form_input($submit) ?>
                                 <?= form_close() ?>
                                 <br />
                                 <a href="<?php echo base_url('index.php/login/guest_login'); ?>">Iniciar como invitado</a>

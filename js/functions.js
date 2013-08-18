@@ -13,6 +13,9 @@ function isNumber(n) {
 }
 
 function showMsg(id, tipo, msj){
+    if(id===''){
+        id='modal_msj';
+    }
     switch(tipo){
         case 'aceptar':
             $('#'+id).empty();
@@ -23,6 +26,7 @@ function showMsg(id, tipo, msj){
             $('#'+id).html('<div style="margin: 10px 10px 10px 10px; height:50px;"><img style="width: 50px; height: 50px; float: left; margin-right: 15px;" src="' + base_url + 'img/ajax-loader-circle.gif" /><div style="height: 50px;"><div style="display:block; height: 15px;"></div>' + msj + '</div></div>');
             break;       
     }
+    
     $.blockUI({ 
         fadeIn: 300,
         message: $('#'+id)
@@ -70,6 +74,85 @@ function fechaValida(s) {
          }
      }
      else{
+         return false;
+     }
+ }
+ 
+ function isAlphanumeric(texto){
+    var myRegxp = /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,12})$/;
+    if(myRegxp.test(texto) == false)
+    {
+        return false;
+    }else{
+        return true;
+    }
+ }
+ 
+ function validUser(user){
+    var myRegxp = /^[a-zA-Z0-9]{6,10}$/;
+    if(myRegxp.test(user) == false)
+    {
+        return false;
+    }else{
+        return true;
+    }
+ }
+ 
+ function submitLogin(){
+     var user = $("#user").val();
+     var pass = $("#password").val();
+     var band = 0;
+     var msj='';
+     if(!validUser(user)){
+         msj= msj + '<li>Verifique el formato de su usuario</li>';
+         band=1;
+     }
+     
+     if(!isAlphanumeric(pass)){
+         msj= msj + '<li>Verifique el formato de su password</li>';
+         band=1;
+     }
+     
+     if(band===0){
+         $("#loginForm").submit();
+         return true;
+     }else{
+         showMsg('','aceptar','<ul>'+msj+'</ul>');
+         return true;
+     }
+ }
+ 
+ function submitCambio(){
+     var user = $("#user").val();
+     var passold = $("#passOld").val();
+     var passNew1 = $("#passNew1").val();
+     var passNew2 = $("#passNew2").val();
+     var band = 0;
+     var msj='';
+     if(!validUser(user)){
+         msj= msj + '<li>Verifique el formato de su usuario</li>';
+         band=1;
+     }
+     
+     if(!isAlphanumeric(passold)){
+         msj= msj + '<li>Verifique el formato de su password antiguo</li>';
+         band=1;
+     }
+     if (passNew1 === passNew2){
+     if(!isAlphanumeric(passNew1)){
+         msj= msj + '<li>Verifique el formato de su  nuevo password</li>';
+         band=1;
+     }
+     }else{
+         msj= msj + '<li>Verifique la confirmacion de su password</li>';
+         band=1;
+     }
+     
+     if(band===0){
+         $("#cambioForm").submit();
+         return true;
+     }else{
+         showMsg('','aceptar','<ul>'+msj+'</ul>');
          return false;
      }
  }

@@ -91,11 +91,11 @@
                     }
 
                     //echo getRealIP();
-                    $username = array('name' => 'username', 'placeholder' => 'nombre de usuario');
-                    $password = array('name' => 'password', 'placeholder' => 'introduce tu password');
-                    $newpass = array('name' => 'newPass', 'placeholder' => 'introduce tu nuevo password');
-                    $confpass = array('name' => 'confPass', 'placeholder' => 'confirma tu nuevo password');
-                    $submit = array('name' => 'submit', 'value' => 'Iniciar sesión', 'title' => 'Iniciar sesión');
+                    $username = array('name' => 'username', 'placeholder' => 'nombre de usuario', 'maxlength' => '10', 'id'=>'user');
+                    $password = array('name' => 'password', 'placeholder' => 'introduce tu password', 'maxlength' => '12', 'id'=>'passOld');
+                    $newpass = array('name' => 'newPass', 'placeholder' => 'introduce tu nuevo password', 'maxlength' => '12', 'id'=>'passNew1');
+                    $confpass = array('name' => 'confPass', 'placeholder' => 'confirma tu nuevo password', 'maxlength' => '12', 'id'=>'passNew2');
+                    $submit = array('type' => 'button', 'onclick' => 'javascript:submitCambio();', 'value' => 'Cambiar contraseña', 'title' => 'Cambiar contraseña');
                     ?>
 
                     <br>    
@@ -112,7 +112,7 @@
                         <div class="grid_8 push_2" id="formulario_login">
 
                             <div class="grid_6 push_1" id="campos_login">
-                                <?= form_open(base_url() . 'index.php/login/cambio_pass') ?>
+                                <?= form_open(base_url() . 'index.php/login/cambio_pass','id="cambioForm"') ?>
                                 <br>
                                 <label for="username">Nombre de usuario:</label>
                                 <?= form_input($username) ?><p><?= form_error('username') ?></p>
@@ -125,7 +125,6 @@
                                 <?= form_submit($submit) ?>
                                 <?= form_close() ?>
                                 <br />
-                                <a href="<?php echo base_url('index.php/login/guest_login'); ?>">Iniciar como invitado</a>
                             </div>
                         </div>
                     </div>

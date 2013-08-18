@@ -32,11 +32,17 @@ class Archivos extends CI_Controller {
         if ($tipo == 1) {
 
             //echo $tname . '<br/>' . $name;
+            
             if ($tname == '' && $name == '') {
                 $this->session->set_flashdata('msj', 'Debe completar los campos obligatorios');
                 redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
             } else {
-                $result = $this->excel_model->cargas();
+                if(preg_match('/[0-3][0-9]-[0-1][0-9]-[0-9]{2,2}-CARGAS/', $name)){
+                  $this->session->set_flashdata('msj', 'cumple formato');
+                }else{
+                    $this->session->set_flashdata('msj', 'NO cumple formato');
+                }
+                //$result = $this->excel_model->cargas();
                 redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
             }
         } else {
@@ -46,17 +52,28 @@ class Archivos extends CI_Controller {
                 $this->session->set_flashdata('msj', 'Debe completar los campos obligatorios');
                 redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
                 } else {
-                    $result = $this->excel_model->dato_i_v($tipo, $fase);
+                    if(preg_match('/[0-3][0-9]-[0-1][0-9]-[0-9]{2,2}-PRINCIPAL/', $name)){
+                        $this->session->set_flashdata('msj', 'cumple formato');
+                    }else{
+                        $this->session->set_flashdata('msj', 'NO cumple formato');
+                    }
+                    //$result = $this->excel_model->dato_i_v($tipo, $fase);
                     redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
                 }
             }else{
                 if (($tname == '' && $name == '') || $fase == '') {
-                $this->session->set_flashdata('msj', 'Debe completar los campos obligatorios');
-                redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
-            } else {
-                $result = $this->excel_model->dato_i_v($tipo, $fase);
-                redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
-            }
+                    $this->session->set_flashdata('msj', 'Debe completar los campos obligatorios');
+                    redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
+                } else {
+                    if((preg_match('/[0-3][0-9]-[0-1][0-9]-[0-9]{2,2}-CORRIENTE-[A-C]/', $name) && $tipo==2)||(preg_match('/[0-3][0-9]-[0-1][0-9]-[0-9]{2,2}-VOLTAJE-[A-C]/', $name) && $tipo==3)){
+                        $this->session->set_flashdata('msj', 'cumple formato');
+                        //$result = $this->excel_model->dato_i_v($tipo, $fase);
+                    }else{
+                        $this->session->set_flashdata('msj', 'NO cumple formato');
+                    }
+                    //$result = $this->excel_model->dato_i_v($tipo, $fase);
+                    redirect(base_url()."index.php/archivos/crear/".$sub."/".$tipo);
+                }
             }
             
         }
