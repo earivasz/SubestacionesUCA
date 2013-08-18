@@ -16,8 +16,8 @@ class Subest_model extends CI_Model {
         {
             $query = 'SELECT s.idSubestacion, s.coordX, s.coordY, s.numSubestacion, s.localizacion, s.capacidad, s.conexion, s.activo 
                 FROM subestuca.subestacion s inner join subestuca.perfilxsubest pxs on s.idSubestacion = pxs.idSubestacion 
-                where s.activo = 1 and pxs.idPerfil = ' . $idperfil . ';';
-            $subs = $this->db->query($query);
+                where s.activo = 1 and pxs.idPerfil = ?;';
+            $subs = $this->db->query($query, array($idperfil));
             return $subs->result_array();
         }
         
@@ -54,12 +54,12 @@ class Subest_model extends CI_Model {
         
         public function get_fotosSubest($id)
         {
-            $query = $this->db->query('SELECT * FROM subestuca.foto where idSubestacion = ' . $id . ' order by correlFoto desc;');
+            $query = $this->db->query('SELECT * FROM subestuca.foto where idSubestacion = ? order by correlFoto desc;', array($id));
             return $query->result_array();
         }
         
         public function get_latestCorrelFoto($id){
-            $query = $this->db->query('SELECT 0 as correlFoto union select correlFoto FROM subestuca.foto where idSubestacion = ' . $id . ' order by correlFoto desc limit 1;');
+            $query = $this->db->query('SELECT 0 as correlFoto union select correlFoto FROM subestuca.foto where idSubestacion = ? order by correlFoto desc limit 1;', array($id));
             return $query->result_array();
         }
         
@@ -84,8 +84,8 @@ class Subest_model extends CI_Model {
         }
         
         public function check_subestacion_invitado($idSub){
-            $query = 'select * from subestuca.perfilxsubest where idSubestacion = ' . $idSub;
-            $this->db->query($query);
+            $query = 'select * from subestuca.perfilxsubest where idSubestacion = ?';
+            $this->db->query($query, array($idSub));
             //return (count($arr) > 0) ? true : false;
             return ($this->db->affected_rows() > 0) ? true : false;
         }
@@ -145,21 +145,20 @@ class Subest_model extends CI_Model {
         {
             //tengo que filtrar por fecha, el filtrador por fase se hace en la vista
             $query = $this->db->query("select DATE_FORMAT(t.fechaHora, '%d/%m/%Y %H:%i:%s') as fechaHora, p.datop from subestuca.datop p inner join subestuca.tiempo t on p.idTiempo = t.idTiempo 
-                where idSubestacion = " . $idSubest .  
-                " AND t.fechaHora BETWEEN STR_TO_DATE('" . $fechaInicio . "', '%d/%m/%Y') 
-                AND STR_TO_DATE('" . $fechaFin . "', '%d/%m/%Y')
-                LIMIT 0, 10000;");
+                where idSubestacion = ?  
+                 AND t.fechaHora BETWEEN STR_TO_DATE(?, '%d/%m/%Y') 
+                AND STR_TO_DATE(?, '%d/%m/%Y')
+                LIMIT 0, 10000;", array($idSubest, $fechaInicio, $fechaFin));
             return $query->result_array();
         }
         
         public function get_tablaArmI($idSubest, $fechaInicio, $fechaFin, $fase)
         {
             $query = $this->db->query("select DATE_FORMAT(t.fechaHora, '%d/%m/%Y %H:%i:%s') as fechaHora, i.datoi from subestuca.datoi i inner join subestuca.tiempo t on i.idTiempo = t.idTiempo 
-                where idSubestacion = " . $idSubest .  
-                " AND t.fechaHora BETWEEN STR_TO_DATE('" . $fechaInicio . "', '%d/%m/%Y') 
-                AND STR_TO_DATE('" . $fechaFin . "', '%d/%m/%Y') 
-                AND i.idFase = " . $fase . 
-                " LIMIT 0, 10000;");
+                where idSubestacion = ?  
+                 AND t.fechaHora BETWEEN STR_TO_DATE(?, '%d/%m/%Y') 
+                AND STR_TO_DATE(?, '%d/%m/%Y') 
+                AND i.idFase = ? LIMIT 0, 10000;", array($idSubest, $fechaInicio, $fechaFin, $fase));
             return $query->result_array();
         }
         
@@ -167,17 +166,16 @@ class Subest_model extends CI_Model {
         {
             //tengo que filtrar por fecha, el filtrador por fase se hace en la vista
             $query = $this->db->query("select DATE_FORMAT(t.fechaHora, '%d/%m/%Y %H:%i:%s') as fechaHora, v.datov from subestuca.datov v inner join subestuca.tiempo t on v.idTiempo = t.idTiempo 
-                where idSubestacion = " . $idSubest .  
-                " AND t.fechaHora BETWEEN STR_TO_DATE('" . $fechaInicio . "', '%d/%m/%Y') 
-                AND STR_TO_DATE('" . $fechaFin . "', '%d/%m/%Y') 
-                AND v.idFase = " . $fase . 
-                " LIMIT 0, 10000;");
+                where idSubestacion = ?  
+                 AND t.fechaHora BETWEEN STR_TO_DATE(?, '%d/%m/%Y') 
+                AND STR_TO_DATE(?, '%d/%m/%Y') 
+                AND v.idFase = ? LIMIT 0, 10000;", array($idSubest, $fechaInicio, $fechaFin, $fase));
             return $query->result_array();
         }
         
         public function get_cargas($idSubest){
             $query = $this->db->query("select edificio, tipoCarga, cantidad, corriente, voltaje, fase, fp, especificacion, accesorio, notasCargas 
-                from subestuca.datoc where idSubestacion = " . $idSubest . " limit 0,10000;");
+                from subestuca.datoc where idSubestacion = ? limit 0,10000;", array($idSubest));
             return $query->result_array();
         }
         
@@ -200,9 +198,9 @@ class Subest_model extends CI_Model {
                     $fs = $fs . " OR correlFoto = " . $fotocorrel;
                 $cont++;
             }
-            $queryString = "delete from subestuca.foto where idSubestacion = " . $idSub . " and (" . $fs . ")";
+            $queryString = "delete from subestuca.foto where idSubestacion = ? and (" . $fs . ")";
             //print_r($queryString);
-            $this->db->query($queryString);
+            $this->db->query($queryString, array($idSub));
             return ($this->db->affected_rows() < 1) ? false : true;
         }
         

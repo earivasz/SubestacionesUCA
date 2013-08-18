@@ -34,7 +34,7 @@
     }
 </script>
 
-<?php echo form_open('sistema/mod_sistema_action','id=subForm'); ?>
+<?php echo form_open('sistema/mod_sistema_action','id=subForm', array('origenCorrecto' => true)); ?>
 <div style ='float:left; width: 30%; margin-left:10%'>
     <h4>Selecciones subestaciones visibles a INVITADOS:</h4>
     <?php 

@@ -137,14 +137,15 @@ class Login extends CI_Controller
             //echo '<br><br><br>';
             //print_r(json_encode($data['usuarios']));
         }else{
-            echo $this->session->userdata('perfil') . '<br/>';
-            echo 'ola ke ase';
+            $this->load->view('templates/header');
+            $this->load->view('templates/no_auth');
+            $this->load->view('templates/footer');
         }
     }
     
-    public function get_data(){
-        return $this->login_model->get_users();
-    }
+//    public function get_data(){
+//        return $this->login_model->get_users();
+//    }
     
     public function crear_user(){
         $this->form_validation->set_rules('usuario', '"Usuario"', 'required');

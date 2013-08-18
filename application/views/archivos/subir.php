@@ -26,7 +26,7 @@ if ($msj) {
  <hr  align="left"><h2 align="center">ARCHIVO PRINCIPAL Y CARGAS</h2>
  
 <?php echo validation_errors(); ?>
-<?php $hidden = array('subest' => $subest, 'tipo' => $tipo); ?>
+<?php $hidden = array('subest' => $subest, 'tipo' => $tipo, 'origenCorrecto' => true); ?>
 <?php echo form_open_multipart('archivos/subir_cargas', 'id="archivo"', $hidden) ?>
  
 <table>
