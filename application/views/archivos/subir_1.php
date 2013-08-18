@@ -27,7 +27,7 @@ if ($msj) {
  <hr  align="left"><h2 align="center">ARMÓNICOS</h2>
  
 <?php echo validation_errors(); ?>
-<?php $hidden = array('subest' => $subest, 'tipo' => $tipo);?>
+ <?php $hidden = array('subest' => $subest, 'tipo' => $tipo, 'origenCorrecto' => true); ?>
 <br>
 <br>
 <?php echo form_open_multipart('archivos/subir_cargas','id="archivo"',$hidden) ?>
