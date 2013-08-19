@@ -7,7 +7,7 @@
     <link href="<?=base_url()?>css/style.css" rel="stylesheet" type="text/css" />
     <link href="<?=base_url()?>css/styles_menu.css" rel="stylesheet" type="text/css" />
     <link href="<?=base_url()?>css/jqx.base.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/datePicker.css" />
+    <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/jquery-ui.css" />
     <script src="<?=base_url()?>js/jquery-2.0.2.min.js"></script>
     <script src="<?=base_url()?>js/jquery.cookie.js"></script>
     <script src="<?=base_url()?>js/functions.js"></script>

@@ -10,7 +10,9 @@
 <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxcheckbox.js"></script> 
 <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxlistbox.js"></script> 
 <script type="text/javascript" src="<?=base_url()?>jqwidgets/gettheme.js"></script>
-<script type="text/javascript" src="<?=base_url()?>js/jquery.datePicker.js"></script>
+
+<script type="text/javascript" src="<?=base_url()?>js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="<?=base_url()?>js/jquery.ui.datepicker.js"></script>
 <script type="text/javascript" src="<?=base_url()?>js/date.js"></script>
     
 
@@ -515,30 +517,35 @@ var setListaCB = function(f1, f2, f3){
   <script type="text/javascript" charset="utf-8">
     $(function()
     {
-            $('.date-pick').datePicker({startDate:'01/01/1996'})
-            $('#start-date').bind(
-                    'dpClosed',
-                    function(e, selectedDates)
-                    {
-                            var d = selectedDates[0];
-                            if (d) {
-                                    d = new Date(d);
-                                    $('#end-date').dpSetStartDate(d.addDays(1).asString());
-                            }
-                    }
-            );
-            $('#end-date').bind(
-                    'dpClosed',
-                    function(e, selectedDates)
-                    {
-                            var d = selectedDates[0];
-                            if (d) {
-                                    d = new Date(d);
-                                    $('#start-date').dpSetEndDate(d.addDays(-1).asString());
-                            }
-                    }
-            );
+            var dias = '<?php foreach($diasConDatos as $dia){echo $dia['dia'] . ',';} ?>';
+            //console.log(dias);
+            var ev = dias.split(',');
+            //console.log(ev);
+            $('#start-date').datepicker({
+                startDate:'01/01/1996', 
+                dateFormat: 'dd/mm/yy',
+                onSelect: function(selected){
+                    console.log(selected);
+                    $('#end-date').datepicker("option", "minDate", selected);
+                },
+                beforeShowDay: function(date){
+                    var current = $.datepicker.formatDate('dd-mm-yy', date);
+                    return $.inArray(current, ev) == -1 ? [true, ''] : [true, 'markedDay', 'ui-state-highlight'];
+                }
+            });
+            $('#end-date').datepicker({
+                startDate:'01/01/1996', 
+                dateFormat: 'dd/mm/yy',
+                beforeShowDay: function(date){
+                    var current = $.datepicker.formatDate('dd-mm-yy', date);
+                    return $.inArray(current, ev) == -1 ? [true, ''] : [true, 'markedDay', 'ui-state-highlight'];
+                }
+            });
     });
+    
+
+        
+    
   </script>
   <div class="menu_navegacion_subs">
       <a href="<?=base_url()?>index.php/subestaciones">Subestaciones</a>

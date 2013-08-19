@@ -334,6 +334,13 @@ div.info{
     border-bottom-width: 1px;
     border-bottom-color: #0099FF;
     border-bottom-style: solid;
-    color: #ffffff;
-    
+    color: #ffffff;   
+}
+
+.markedDay a.ui-state-default {
+    background: green !important;
+}
+
+.markedDay a.ui-state-hover {
+    background: red !important;
 }

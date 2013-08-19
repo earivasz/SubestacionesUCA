@@ -388,24 +388,35 @@ class Subestaciones extends CI_Controller {
             if (!$this->session->userdata('perfil')){
                 redirect(base_url());
             }else{
-                $data['subest'] = $this->subest_model->get_subest($id);
-                $data['idSub'] = $id;
-                $data['tipo'] = $tipo;
-                $data['multafp'] = $this->subest_model->get_valsistema('multafp');
-                $data['multathdi'] = $this->subest_model->get_valsistema('multathdi');
                 switch ($this->session->userdata('perfil')) {
                     case '1'://admin
+                        $data['subest'] = $this->subest_model->get_subest($id);
+                        $data['idSub'] = $id;
+                        $data['tipo'] = $tipo;
+                        $data['multafp'] = $this->subest_model->get_valsistema('multafp');
+                        $data['multathdi'] = $this->subest_model->get_valsistema('multathdi');
+                        $data['diasConDatos'] = $this->subest_model->get_fechasConDatos($id, $tipo);
                         $this->load->view('templates/header');	
                         $this->load->view('subestaciones/graficos', $data);
                         $this->load->view('templates/footer');
                         break;
                     case '2'://consultas
+                        $data['subest'] = $this->subest_model->get_subest($id);
+                        $data['idSub'] = $id;
+                        $data['tipo'] = $tipo;
+                        $data['multafp'] = $this->subest_model->get_valsistema('multafp');
+                        $data['multathdi'] = $this->subest_model->get_valsistema('multathdi');
                         $this->load->view('templates/header');	
                         $this->load->view('subestaciones/graficos', $data);
                         $this->load->view('templates/footer');
                         break;    
                     case '3'://invitado
                         if($this->subest_model->check_subestacion_invitado($id) && $tipo == 'pri'){
+                            $data['subest'] = $this->subest_model->get_subest($id);
+                            $data['idSub'] = $id;
+                            $data['tipo'] = $tipo;
+                            $data['multafp'] = $this->subest_model->get_valsistema('multafp');
+                            $data['multathdi'] = $this->subest_model->get_valsistema('multathdi');
                             $this->load->view('templates/header');	
                             $this->load->view('subestaciones/graficos', $data);
                             $this->load->view('templates/footer');

@@ -141,6 +141,29 @@ class Subest_model extends CI_Model {
                 return false;
         }
         
+        public function get_fechasConDatos($idSub, $tipo){
+            if($tipo == 'pri'){
+                $query = $this->db->query("select distinct DATE_FORMAT(fechaHora, '%d-%m-%Y') as dia 
+                from subestuca.tiempo t inner join subestuca.datop dp 
+                where dp.idSubestacion = ?;", array($idSub));
+                return $query->result_array();
+            }
+            else{
+                if($tipo == 'armv'){
+                    $query = $this->db->query("select distinct DATE_FORMAT(fechaHora, '%d-%m-%Y') as dia 
+                    from subestuca.tiempo t inner join subestuca.datov dv 
+                    where dv.idSubestacion = ?;", array($idSub));
+                    return $query->result_array();
+                }
+                else{//armi
+                    $query = $this->db->query("select distinct DATE_FORMAT(fechaHora, '%d-%m-%Y') as dia 
+                    from subestuca.tiempo t inner join subestuca.datoi di 
+                    where di.idSubestacion = ?;", array($idSub));
+                    return $query->result_array();
+                }
+            }
+        }
+        
         public function get_tablaPrincipal($idSubest, $fechaInicio, $fechaFin)
         {
             //tengo que filtrar por fecha, el filtrador por fase se hace en la vista

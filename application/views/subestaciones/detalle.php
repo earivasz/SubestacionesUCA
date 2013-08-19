@@ -93,7 +93,7 @@
            
        
             
-       </div>
+       </div> 
  <h2 align="center">TRANSFORMADORES</h2> 
       <div class="tablas"> 
       
