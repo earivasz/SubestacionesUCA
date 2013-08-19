@@ -518,14 +518,11 @@ var setListaCB = function(f1, f2, f3){
     $(function()
     {
             var dias = '<?php foreach($diasConDatos as $dia){echo $dia['dia'] . ',';} ?>';
-            //console.log(dias);
             var ev = dias.split(',');
-            //console.log(ev);
             $('#start-date').datepicker({
-                startDate:'01/01/1996', 
-                dateFormat: 'dd/mm/yy',
+                startDate:'01-01-1996', 
+                dateFormat: 'dd-mm-yy',
                 onSelect: function(selected){
-                    console.log(selected);
                     $('#end-date').datepicker("option", "minDate", selected);
                 },
                 beforeShowDay: function(date){
@@ -534,8 +531,8 @@ var setListaCB = function(f1, f2, f3){
                 }
             });
             $('#end-date').datepicker({
-                startDate:'01/01/1996', 
-                dateFormat: 'dd/mm/yy',
+                startDate:'01-01-1996', 
+                dateFormat: 'dd-mm-yy',
                 beforeShowDay: function(date){
                     var current = $.datepicker.formatDate('dd-mm-yy', date);
                     return $.inArray(current, ev) == -1 ? [true, ''] : [true, 'markedDay', 'ui-state-highlight'];
