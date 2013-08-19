@@ -23,7 +23,7 @@ function showMsg(id, tipo, msj){
             break;
         case 'loading':
             $('#'+id).empty();
-            $('#'+id).html('<div style="margin: 10px 10px 10px 10px; height:50px;"><img style="width: 50px; height: 50px; float: left; margin-right: 15px;" src="' + base_url + 'img/ajax-loader-circle.gif" /><div style="height: 50px;"><div style="display:block; height: 15px;"></div>' + msj + '</div></div>');
+            $('#'+id).html('<div style="margin: 10px 10px 10px 10px; height:50px;"><img style="width: 50px; height: 50px; float: left; margin-right: 15px;" src="' + base_url + 'ajax-loader-circle.gif" /><div style="height: 50px;"><div style="display:block; height: 15px;"></div>' + msj + '</div></div>');
             break;       
     }
     
