@@ -167,10 +167,11 @@ class Subest_model extends CI_Model {
         public function get_tablaPrincipal($idSubest, $fechaInicio, $fechaFin)
         {
             //tengo que filtrar por fecha, el filtrador por fase se hace en la vista
+            //echo $fechaFin;
             $query = $this->db->query("select DATE_FORMAT(t.fechaHora, '%d/%m/%Y %H:%i:%s') as fechaHora, p.datop from subestuca.datop p inner join subestuca.tiempo t on p.idTiempo = t.idTiempo 
                 where idSubestacion = ?  
-                 AND t.fechaHora BETWEEN STR_TO_DATE(?, '%d/%m/%Y') 
-                AND STR_TO_DATE(?, '%d/%m/%Y')
+                 AND t.fechaHora BETWEEN STR_TO_DATE(?, '%d-%m-%Y') 
+                AND DATE_ADD(STR_TO_DATE(?, '%d-%m-%Y'), INTERVAL 1 DAY) 
                 LIMIT 0, 10000;", array($idSubest, $fechaInicio, $fechaFin));
             return $query->result_array();
         }
@@ -179,8 +180,8 @@ class Subest_model extends CI_Model {
         {
             $query = $this->db->query("select DATE_FORMAT(t.fechaHora, '%d/%m/%Y %H:%i:%s') as fechaHora, i.datoi from subestuca.datoi i inner join subestuca.tiempo t on i.idTiempo = t.idTiempo 
                 where idSubestacion = ?  
-                 AND t.fechaHora BETWEEN STR_TO_DATE(?, '%d/%m/%Y') 
-                AND STR_TO_DATE(?, '%d/%m/%Y') 
+                 AND t.fechaHora BETWEEN STR_TO_DATE(?, '%d-%m-%Y') 
+                AND DATE_ADD(STR_TO_DATE(?, '%d-%m-%Y'), INTERVAL 1 DAY) 
                 AND i.idFase = ? LIMIT 0, 10000;", array($idSubest, $fechaInicio, $fechaFin, $fase));
             return $query->result_array();
         }
@@ -190,8 +191,8 @@ class Subest_model extends CI_Model {
             //tengo que filtrar por fecha, el filtrador por fase se hace en la vista
             $query = $this->db->query("select DATE_FORMAT(t.fechaHora, '%d/%m/%Y %H:%i:%s') as fechaHora, v.datov from subestuca.datov v inner join subestuca.tiempo t on v.idTiempo = t.idTiempo 
                 where idSubestacion = ?  
-                 AND t.fechaHora BETWEEN STR_TO_DATE(?, '%d/%m/%Y') 
-                AND STR_TO_DATE(?, '%d/%m/%Y') 
+                 AND t.fechaHora BETWEEN STR_TO_DATE(?, '%d-%m-%Y') 
+                AND DATE_ADD(STR_TO_DATE(?, '%d-%m-%Y'), INTERVAL 1 DAY) 
                 AND v.idFase = ? LIMIT 0, 10000;", array($idSubest, $fechaInicio, $fechaFin, $fase));
             return $query->result_array();
         }

@@ -12,6 +12,11 @@ class Graficos_control extends CI_Controller {
                 $id =  $this->input->post('id');
                 $fechaIni = $this->input->post('fechaIni'); 
                 $fechaFin = $this->input->post('fechaFin');
+//                $date = DateTime::createFromFormat('m-d-Y', '04-15-2013');
+//$date->modify('+1 day');
+//echo $date->format('m-d-Y');
+                //echo date('d-m-Y', strtotime($fechaFin, "+1 days"));
+                
                 $fase = $this->input->post('fase');
                 $tipo = $this->input->post('tipo');
                 $datos = Array();

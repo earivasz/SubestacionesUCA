@@ -54,7 +54,7 @@ function reloadSub(url){
     window.location.href = url;
 }
 function fechaValida(s) {
-   var bits = s.split('/');
+   var bits = s.split('-');
    var d = new Date(bits[2] + '/' + bits[1] + '/' + bits[0]);
    return !!(d && (d.getMonth() + 1) == bits[1] && d.getDate() == Number(bits[0]) && d.getYear() < 1099 && d.getYear() > 0);
 }
