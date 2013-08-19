@@ -23,8 +23,10 @@ class Subest_model extends CI_Model {
         
         public function getAll_trans()
         {
-            $query = $this->db->get('transformador');
-            return $query->result_array();
+            $query = 'SELECT t.*, s.localizacion, CASE WHEN t.aterrizamiento = 1 THEN "ACTIVO" WHEN t.aterrizamiento = 0 THEN "INACTIVO" END AS nomAterr, CASE WHEN t.pararrayos = 1 THEN "ACTIVO" WHEN t.pararrayos = 0 THEN "INACTIVO" END AS nomPara, CASE WHEN t.cuchillas = 1 THEN "ACTIVO" WHEN t.cuchillas = 0 THEN "INACTIVO" END AS nomCuchillas, CASE WHEN t.activoTrans = 1 THEN "ACTIVO" WHEN t.activoTrans = 0 THEN "INACTIVO" END AS nomActivo FROM subestuca.transformador t INNER JOIN subestuca.subestacion s ON t.idSubestacion = s.idSubestacion;';
+            //$query = $this->db->get('transformador');
+            $trans = $this->db->query($query);
+            return $trans->result_array();
         }
         
         public function getAll_subestaciones()
