@@ -104,7 +104,13 @@ $(document).ready(function() {
          margin:0px;
      }
 </style>
-
+<div class="menu_navegacion_subs">
+      <a href="<?=base_url()?>index.php/subestaciones">Subestaciones</a>
+      <span class="menu_navegacion_subs_sep">/</span>
+      <a href="<?=base_url()?>index.php/subestaciones/detalle/<?php echo $idSubest ?>">Subestacion <?php echo $subest[0]['numSubestacion'] . ', ' . $subest[0]['localizacion'] ?></a>
+      <span class="menu_navegacion_subs_sep">/</span>
+      Galeria
+  </div>
 <div style="width: 100%; text-align:center;">
     <h2 style="margin: 5px 5px 20px 20px;">GALERIA SUBESTACION <?php echo $subest[0]['numSubestacion'] . ', ' . $subest[0]['localizacion'];?></h2>
 </div>

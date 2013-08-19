@@ -19,6 +19,7 @@ class Archivos extends CI_Controller {
                 case '1'://admin
                     $data['subest'] = $idSub;
                     $data['tipo'] = $idTipo;
+                    $data['subestacion'] = $this->excel_model->get_subest($idSub);
                     $this->load->view('templates/header');
                     if ($idTipo == 1 || $idTipo == 4) {
                         $this->load->view('archivos/subir', $data);

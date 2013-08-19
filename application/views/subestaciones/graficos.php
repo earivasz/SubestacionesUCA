@@ -26,6 +26,18 @@
     var multafp;
     var multathdi;
 
+$(document).ready( function(){
+         $('#cssmenu ul li[id=cssmenu2] ul').append('<li><a href="<?php echo base_url() . 'index.php/subestaciones/galeria/' . $idSub ?>"><span>Galeria</span></a></li>');
+         //cargas tipo = 1
+         $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $idSub . '/1' ?>"><span>Cargas de subestacion</span></a></li>');
+         //principal tipo = 4
+         $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $idSub . '/4' ?>"><span>Tabla principal</span></a></li>');
+         //voltaje tipo = 3
+         $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $idSub . '/3' ?>"><span>Tabla armonicas (Voltaje)</span></a></li>');
+         //corriente tipo = 2
+         $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $idSub . '/2' ?>"><span>Tabla armonicas (Corriente)</span></a></li>');
+});
+
   window.onload = function () {
     tipo = '<?php echo $tipo; ?>';
     multafp = <?php echo $multafp[0]['valor']; ?>;
@@ -528,7 +540,24 @@ var setListaCB = function(f1, f2, f3){
             );
     });
   </script>
-
+  <div class="menu_navegacion_subs">
+      <a href="<?=base_url()?>index.php/subestaciones">Subestaciones</a>
+      <span class="menu_navegacion_subs_sep">/</span>
+      <a href="<?=base_url()?>index.php/subestaciones/detalle/<?php echo $idSub ?>">Subestacion <?php echo $subest[0]['numSubestacion'] . ', ' . $subest[0]['localizacion'] ?></a>
+      <span class="menu_navegacion_subs_sep">/</span>
+      <?php if ($tipo == 'pri'){
+            echo 'Tabla Principal';
+        }
+        else{
+            if($tipo == 'armi'){
+                echo 'Armonicas de Corriente';
+            }
+            else{
+                echo 'Armonicas de Voltaje';
+            }
+        }
+        ?>
+  </div>
   <div style="width: 100%; text-align:center;"><h2 style="margin: 5px 5px 20px 20px;">GRAFICOS <?php echo (($tipo == 'pri') ? 'TABLA PRINCIPAL' : 'TABLA ARMONICOS ' . (($tipo == 'armi') ? '(CORRIENTE)' : '(VOLTAJE)')) . ', SUBESTACION ' . $subest[0]['numSubestacion'] . ', ' . $subest[0]['localizacion'];?></h2></div>
 <div style="text-align: center; width: 100%; margin-bottom: 20px;">
     <div style="float:left; margin-left: 175px;">Fecha de inicio<br>
@@ -580,7 +609,7 @@ var setListaCB = function(f1, f2, f3){
                 <input type="checkbox" name="fase3" id="cboxfase3">3
                 </div>
                 <div id="jqxlistbox"></div>
-                <button style="width: 147px; height: 25px;" onClick="graficaPri()" name="graficarPri">Graficar</button>';
+                <button style="width: 135px; height: 25px;" onClick="graficaPri()" name="graficarPri">Graficar</button>';
         }
         ?>
         
