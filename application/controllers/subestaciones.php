@@ -324,20 +324,30 @@ class Subestaciones extends CI_Controller {
             {
                     if($this->input->post('isMod')=='True'){
                         $response = $this->subest_model->mod_subest($this->input->post('idSub'));
+                        if($response){
+                            $this->session->set_flashdata('msj', 'Subestacion modificada con exito.');
+
+                        }else{
+                            $this->session->set_flashdata('msj', 'La subetacion no pudo ser modificada');
+                            //$this->crear();
+                            //echo json_encode('error');
+                            //$this->load->view('subestaciones/errordb');
+                        }
                     }else{
                         $response = $this->subest_model->set_subest();
+                    
+                        //$response = true;
+                        if($response){
+                            $this->session->set_flashdata('msj', 'Subestacion creada con exito.');
+
+                        }else{
+                            $this->session->set_flashdata('msj', 'La subetacion no pudo ser creada');
+                            //$this->crear();
+                            //echo json_encode('error');
+                            //$this->load->view('subestaciones/errordb');
+                        }
                     }
-                    //$response = true;
-                    if($response){
-                        $this->session->set_flashdata('msj', 'Exito');
-                        
-                    }else{
-                        $this->session->set_flashdata('msj', 'Error');
-                        //$this->crear();
-                        //echo json_encode('error');
-                        //$this->load->view('subestaciones/errordb');
-                    }
-                    redirect(base_url().'index.php/subestaciones/crear');
+                    redirect(base_url().'index.php/subestaciones/crear_sub');
             }
         }
         

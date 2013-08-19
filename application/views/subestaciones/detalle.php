@@ -2,7 +2,22 @@
 <script src="<?=base_url()?>js/maps_detalle.js"></script>
 <script type="text/javascript" src="<?=base_url()?>js/jqFancyTransitions.1.8.min.js"></script>
 <script>
-     $(document).ready( function(){
+     
+    var neighborhoods = [];
+    <?php 
+    foreach ($subest as $subest_item): 
+        $numSub = $subest_item['numSubestacion'];
+        $localizacion = $subest_item['localizacion'];
+        $capacidad = $subest_item['capacidad'];
+        $conexion = $subest_item['conexion'];
+    ?>
+        console.log(<?php echo $subest_item['coordX']?>);
+        console.log(<?php echo $subest_item['coordY']?>);
+        neighborhoods.push(new google.maps.LatLng(<?php echo $subest_item['coordX'] ?>, <?php echo $subest_item['coordY'] ?>));
+    <?php
+    endforeach;       
+    ?>
+    $(document).ready( function(){
          $('#slideshowHolder').jqFancyTransitions({ width: 300, height: 200, navigation: true });
          //$("#cssmenu .active").removeClass(".active");
          //$('#cssmenu ul li[id=cssmenu1]')("refresh");
@@ -16,37 +31,11 @@
          $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $subestId . '/3' ?>"><span>Tabla armonicas (Voltaje)</span></a></li>');
          //corriente tipo = 2
          $('#cssmenu ul li[id=cssmenu4] ul').append('<li><a href="<?php echo base_url() . 'index.php/archivos/crear/' . $subestId . '/2' ?>"><span>Tabla armonicas (Corriente)</span></a></li>');
-});
-    var neighborhoods = [
-    <?php 
-    $contSubEst = count($subest);
-    $cont = 1;
-    foreach ($subest as $subest_item): 
-        if($cont<$contSubEst){
-    ?>
-        new google.maps.LatLng(<?php echo $subest_item['coordX'] ?>, <?php echo $subest_item['coordY'] ?>),    
-    <?php 
-        }else{
-    ?>
-        new google.maps.LatLng(<?php echo $subest_item['coordX'] ?>, <?php echo $subest_item['coordY'] ?>)
-    <?php
-        }
-    endforeach;
-
-        foreach ($subest as $subest_item) :
-                //$cX = $subest_item['coordX'];
-                //$cY = $subest_item['coordY'];
-                $numSub = $subest_item['numSubestacion'];
-                $localizacion = $subest_item['localizacion'];
-                $capacidad = $subest_item['capacidad'];
-                $conexion = $subest_item['conexion'];
-                //$activo = $subest_item['activo'];
-            endforeach;  
-
-            
-    ?>
-    ];
-    setTimeout(drop_modificar(), 1000);
+         
+    });
+    window.onload = function(){
+        setTimeout(drop_modificar(), 1000);
+    };
     
 </script>
 <h2 align="center">DETALLE SUBESTACIÓN</h2>

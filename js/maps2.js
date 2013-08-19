@@ -74,7 +74,7 @@ function addMarker() {
         animation: google.maps.Animation.DROP
     }));
     google.maps.event.addListener(markers[iterator], 'click', function(correl) {
-        alertaClic(correl);
+        alert(this.correl);
         correl++;
     });
     iterator++;
@@ -98,6 +98,6 @@ function placeMarker(location) {
       map: map
     });
   }
-    $('#coordX').val(location.lb);
-    $('#coordY').val(location.mb);
+    $('#coordX').val(location.mb);
+    $('#coordY').val(location.nb);
 }

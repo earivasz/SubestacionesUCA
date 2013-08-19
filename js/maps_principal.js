@@ -11,7 +11,7 @@ var newMarker;
 var markers = [];
 var iterator = 0;
 var correl = 0;
-var mensajes = new Array('mensaje 1', 'mensaje 2', 'mensaje 3', 'mensaje 4');
+//var mensajes = new Array('mensaje 1', 'mensaje 2', 'mensaje 3', 'mensaje 4');
 var map;
 
 function initialize() {
@@ -39,8 +39,10 @@ function addMarker() {
         position: neighborhoods[iterator],
         map: map,
         draggable: false,
-        animation: google.maps.Animation.DROP
+        animation: google.maps.Animation.DROP,
+        title: mensajes[iterator]
     }));
+    attachSecretMessage(markers[iterator],iterator);
     iterator++;
 }
 
@@ -64,4 +66,28 @@ function placeMarker(location) {
   }
     $('#coordX').val(location.lb);
     $('#coordY').val(location.mb);
+}
+
+function attachSecretMessage(marker, number) {
+    //console.log(number);
+    //console.log(mensajes[number]);
+  var infowindow = new google.maps.InfoWindow(
+      { content: mensajes[number].toString(),
+        size: new google.maps.Size(50,50)
+      });
+      //console.log(infowindow);
+  google.maps.event.addListener(marker, 'click', function() {
+    //infowindow.open(map,marker);
+    //-alert(mensajes[number]);
+    window.location.href = base_url + 'index.php/subestaciones/detalle/' + links[number];
+  });
+  
+  google.maps.event.addListener(marker, 'mouseover', function() {
+    infowindow.open(map,marker);
+  });
+  
+  google.maps.event.addListener(marker, 'mouseout', function() {
+      //alert("ja");
+    infowindow.close();
+  });
 }
