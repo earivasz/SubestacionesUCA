@@ -1,23 +1,18 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script src="<?=base_url()?>js/maps_principal.js"></script>
 <script>
-    var neighborhoods = [
+    var neighborhoods = [];
+    var mensajes = [];
+    var links = [];
     <?php 
-    $contSubEst = count($subest);
-    $cont = 1;
     foreach ($subest as $subest_item): 
-        if($cont<$contSubEst){
     ?>
-        new google.maps.LatLng(<?php echo $subest_item['coordX'] ?>, <?php echo $subest_item['coordY'] ?>),    
-    <?php 
-        }else{
-    ?>
-        new google.maps.LatLng(<?php echo $subest_item['coordX'] ?>, <?php echo $subest_item['coordY'] ?>)
+        neighborhoods.push(new google.maps.LatLng(<?php echo $subest_item['coordX'] ?>, <?php echo $subest_item['coordY'] ?>));
+        mensajes.push('<?php echo $subest_item['localizacion'] ?>');
+        links.push('<?php echo $subest_item['idSubestacion'] ?>');
     <?php
-        }
     endforeach 
     ?>
-    ];
     setTimeout(drop(), 1000);
 </script>
 <div id="contenido">
