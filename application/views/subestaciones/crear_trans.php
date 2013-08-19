@@ -33,24 +33,27 @@
             pageable: true,
             autoheight: true,
             filterable: true,
+            columnsresize: true,
             columns: [
-                {text: 'Subestacion', datafield: 'idSubestacion', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
-                {text: 'Numero de serie', datafield: 'noSerie', width: 235, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Subestacion', datafield: 'localizacion', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Numero de serie', datafield: 'noSerie', width: 125, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
                 {text: 'Capacidad', datafield: 'capacidad', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
-                {text: 'Fabricante', datafield: 'fabricante', width: 255, cellsalign: 'right', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Fabricante', datafield: 'fabricante', width: 125, cellsalign: 'right', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
                 {text: 'Enfriamiento', datafield: 'enfriamiento', width: 80, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
                 {text: 'Impedancia', datafield: 'impedancia', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
-                {text: 'Voltaje primaria', datafield: 'vPrimaria', width: 235, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Voltaje primaria', datafield: 'vPrimaria', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
                 {text: 'Voltaje secundario', datafield: 'vSecundario', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
-                {text: 'Transformacion', datafield: 'rTransformacion', width: 255, cellsalign: 'right', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
-                {text: 'Polaridad', datafield: 'polaridad', width: 80, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
-                {text: 'Aterrizamiento', datafield: 'aterrizamiento', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
-                {text: 'Pararrayos', datafield: 'pararrayos', width: 235, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
-                {text: 'Cuchillas', datafield: 'cuchillas', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
-                {text: 'Estado', datafield: 'activoTrans', width: 80, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'}
+                {text: 'Transformacion', datafield: 'rTransformacion', width: 80, cellsalign: 'right', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Polaridad', datafield: 'polaridad', width: 120, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Aterrizamiento', datafield: 'nomAterr', width: 80, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Pararrayos', datafield: 'nomPara', width: 80, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Cuchillas', datafield: 'nomCuchillas', width: 80, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
+                {text: 'Estado', datafield: 'nomActivo', width: 80, cellsalign: 'right', cellsformat: 'c2', columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'}
             ]
         });
-
+        
+        $("#jqxgrid").jqxGrid('autoresizecolumns');
+        
         $("#jqxgrid").bind('rowselect', function(event) {
             var row = event.args.rowindex;
             var datarow = $("#jqxgrid").jqxGrid('getrowdata', row);
