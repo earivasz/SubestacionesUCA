@@ -158,7 +158,8 @@ class Login extends CI_Controller
         $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
         if ($this->form_validation->run() === FALSE)
         {
-            $this->admin_users();
+            $this->session->set_flashdata('msj', 'Debe completar los campos obligatorios');
+            redirect(base_url()."index.php/admin/usuarios");
         }else{
             $isMod = $this->input->post('isMod');
             

@@ -41,6 +41,7 @@
                     pageable: true,
                     autoheight: true,
                     filterable: true,
+                    columnsresize: true,
                     columns: [
                         {text: 'Usuario', datafield: 'usuario', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
                         {text: 'Nombre', datafield: 'nomUser', width: 100, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'},
@@ -51,7 +52,9 @@
                         {text: 'Perfil', datafield: 'tipoPerfil', width: 125, columntype: 'textbox', filtertype: 'textbox', filtercondition: 'starts_with'}
                     ]
                 });
-
+                
+                $("#jqxgrid").jqxGrid('autoresizecolumns');
+                
         $("#jqxgrid").bind('rowselect', function(event) {
             var row = event.args.rowindex;
             var datarow = $("#jqxgrid").jqxGrid('getrowdata', row);
@@ -86,6 +89,56 @@ if ($msj) {
         $("#perfil").val('');
         $("#isMod").val('False');
     }
+    
+    function submit_user(){
+        var user= $.trim($("#usuario").val()); 
+        var nombre = $.trim($("#nomUser").val()); 
+        var apellido = $.trim($("#apel").val()); 
+        var correo = $.trim($("#correo").val()); 
+        var estado = $.trim($("#estado").val()); 
+        var perfil = $.trim($("#perfil").val());
+        var band = 0;
+        var msj = '';
+        if(user==''){
+            msj = msj +'<li>Debe colocar un usuario</li>';
+            band = 1;
+        }else{
+            if(!validUser(user)){
+                msj = msj + '<li>Verifique el formato de su usuario</li>';
+                band = 1;
+            }
+        }
+        if(nombre==''){
+            msj = msj +'<li>Debe colocar un nombre</li>';
+            band = 1;
+        }
+        if(apellido==''){
+            msj = msj +'<li>Debe colocar un apellido</li>';
+            band = 1;
+        }
+        if(correo==''){
+            msj = msj +'<li>Debe colocar un correo</li>';
+            band = 1;
+        }
+        if(estado==''){
+            msj = msj +'<li>Debe elegir un estado</li>';
+            band = 1;
+        }
+        if(perfil==''){
+            msj = msj +'<li>Debe elegir un perfil</li>';
+            band = 1;
+        }
+        
+        if(band==1){
+            showMsg('modal_msj', 'aceptar', '<ul>' + msj + '</ul>');
+            return false;
+        }else{
+            showMsg('modal_msj', 'loading', 'Un momento mientras se procesa su solicitud');
+            $("#userForm").submit();
+            return true;
+        }
+        
+    }
 </script>
 <!--<h2 align="center">MANTENIMIENTO USUARIOS</h2>-->
 
@@ -105,7 +158,7 @@ if ($msj) {
             
         <?php
         echo '<tr><td width=40%">';
-        echo form_open('login/crear_user');
+        echo form_open('login/crear_user', 'id="userForm"');
         echo '</td><td width="5%"></td><td width="55%">';
         echo form_input(array('name' => 'isMod', 'type' => 'hidden', 'id' => 'isMod', 'value' => 'False'));
         echo '</td><td></td></tr><tr align="right"><td>';
@@ -138,7 +191,7 @@ if ($msj) {
         echo form_label('Perfil:', 'perfil');
         echo '</td></td><td><td align="left">';
         echo '<select name="perfil" id="perfil">';
-        echo '<option value="">Seleccione una opcion</option>';
+        echo '<option value="" id="perfil">Seleccione una opcion</option>';
         foreach ($perfiles as $perfil):
             if($perfil['tipoPerfil'] != 'INVITADO'){
                 echo '<option value="' . $perfil['idPerfil'] . '">' . $perfil['tipoPerfil'] . '</option>';
@@ -146,9 +199,8 @@ if ($msj) {
         endforeach;
         echo '</select> </td><td></td></tr><tr><td colspan="3">&nbsp;</td></tr><tr align="left"><td  colspan="2"></td><td>';
         echo form_button('crear', 'Crear', 'id="crear" onclick="javascript:crear_user();"');
-        echo form_submit('save', 'Guardar', 'save');
+        echo form_button('save', 'Guardar', 'id="guardar" onclick="javascript:submit_user();"');
         echo '</td></tr>';
-        echo validation_errors();
         echo form_close();
         ?>
         
