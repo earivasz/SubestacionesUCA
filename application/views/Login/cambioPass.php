@@ -7,6 +7,9 @@
         <script src="<?=base_url()?>js/functions.js"></script>
         <script src="<?=base_url()?>js/jquery.blockUI.js"></script>
         <script type="text/javascript">
+            function cancelar(){
+                window.location.href = base_url + "index.php";
+            }
             window.onload = function() {
                 <?php
                 $msj = $this->session->flashdata('msj');
@@ -16,6 +19,26 @@
                 <?php
                 }
                 ?>
+                $("#user").keypress(function(e) {
+                    if(e.which == 13) {
+                        submitLogin();
+                    }
+                });
+                $("#passOld").keypress(function(e) {
+                    if(e.which == 13) {
+                        submitLogin();
+                    }
+                });
+                $("#passNew1").keypress(function(e) {
+                    if(e.which == 13) {
+                        submitLogin();
+                    }
+                });
+                $("#passNew2").keypress(function(e) {
+                    if(e.which == 13) {
+                        submitLogin();
+                    }
+                });
             };
         </script>
         <style type="text/css">
@@ -96,6 +119,7 @@
                     $newpass = array('name' => 'newPass', 'placeholder' => 'introduce tu nuevo password', 'maxlength' => '12', 'id'=>'passNew1');
                     $confpass = array('name' => 'confPass', 'placeholder' => 'confirma tu nuevo password', 'maxlength' => '12', 'id'=>'passNew2');
                     $submit = array('type' => 'button', 'onclick' => 'javascript:submitCambio();', 'value' => 'Cambiar contraseña', 'title' => 'Cambiar contraseña');
+                    $cancelar = array('type' => 'button', 'onclick' => 'javascript:cancelar();', 'value' => 'Cancelar', 'title' => 'Cancelar');
                     ?>
 
                     <br>    
@@ -122,7 +146,8 @@
                                 <?= form_password($newpass) ?><p><?= form_error('newPass') ?></p>
                                 <label for="confpass">Confirma tu nuevo password:</label>
                                 <?= form_password($confpass) ?><p><?= form_error('confpass') ?></p>
-                                <?= form_submit($submit) ?>
+                                <?= form_submit($cancelar) ?>
+                                <?= form_input($submit) ?>
                                 <?= form_close() ?>
                                 <br />
                             </div>
