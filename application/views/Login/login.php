@@ -7,6 +7,9 @@
         <script src="<?=base_url()?>js/functions.js"></script>
         <script src="<?=base_url()?>js/jquery.blockUI.js"></script>
         <script type="text/javascript">
+            function cambiar(){
+                window.location.href = base_url + "index.php/cambioPassword";
+            }
             window.onload = function() {
                 <?php
                 $msj = $this->session->flashdata('msj');
@@ -16,6 +19,16 @@
                 <?php
                 }
                 ?>
+                $("#user").keypress(function(e) {
+                    if(e.which == 13) {
+                        submitLogin();
+                    }
+                });
+                $("#password").keypress(function(e) {
+                    if(e.which == 13) {
+                        submitLogin();
+                    }
+                });
             };
         </script>
         <style type="text/css">
@@ -94,6 +107,7 @@
                     $username = array('name' => 'username', 'placeholder' => 'nombre de usuario', 'maxlength' => '10', 'id'=>'user');
                     $password = array('name' => 'password', 'placeholder' => 'introduce tu password', 'maxlength' => '12', 'id'=>'password');
                     $submit = array('type' => 'button','value' => 'Iniciar sesión', 'title' => 'Iniciar sesión', 'onclick' => 'javascript:submitLogin();');
+                    $cambio = array('type' => 'button', 'onclick' => 'javascript:cambiar();', 'value' => 'Cambiar password', 'title' => 'Cambiar password');
                     //'type' => 'button' 'name' => 'submit'
                     ?>
 
@@ -118,6 +132,7 @@
                                 <label for="password">Introduce tu password:</label>
                                 <?= form_password($password) ?><p><?= form_error('password') ?></p>
                                 <?= form_input($submit) ?>
+                                <?= form_submit($cambio) ?>
                                 <?= form_close() ?>
                                 <br />
                                 <a href="<?php echo base_url('index.php/login/guest_login'); ?>">Iniciar como invitado</a>
