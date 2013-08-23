@@ -59,6 +59,7 @@ class Sistema extends CI_Controller {
                     $multathdi = $_POST['multathdi'];
                     unset($_POST['multafp']);
                     unset($_POST['multathdi']);
+                    unset($_POST['origenCorrecto']);
                     $subs = Array();
                     foreach($_POST as $val){
                         array_push($subs, $val);

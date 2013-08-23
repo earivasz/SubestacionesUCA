@@ -81,12 +81,16 @@
         var coordX = $('#coordX').val();
         var coordY = $('#coordY').val();
         var numSub = $('#numSub').val();
+        var loc = $('#localizacion').val();
         var msj = '';
         if (coordX === '' || coordY === '') {
             msj = msj + '<li>Debe seleccionar un punto en el mapa.</li>';
         }
         if (numSub === '') {
             msj = msj + '<li>Debe completar el campo Numero Subestacion</li>';
+        }
+        if (loc === '') {
+            msj = msj + '<li>Debe completar el campo Localizacion</li>';
         }
         if (msj !== '') {
             showMsg('modal_msj', 'aceptar', 'Debe completar la siguiente informacion: <br /><ul>' + msj + '</ul>');
@@ -96,60 +100,6 @@
             $("#subForm").submit();
             return true;
         }
-    }
-    
-    function validTrans() {
-        var dataT = '';
-        var numParams = 0;
-        $('div[id^="trans_"]').each(function() {
-            var idDiv = $(this).attr('id');
-            numParams = 0;
-            $('#' + idDiv + ' :input[type="input"]').each(function() {
-                //var idI = $(this).attr('id');
-                var valor = $(this).val();
-                if (dataT === '') {
-                    dataT = valor + '/|\\';
-                } else {
-                    dataT = dataT + valor + '/|\\';
-                }
-                if (valor !== '') {
-                    numParams++;
-                }
-                //dataT = dataT + $(this).val() + '/|\\';
-            });
-            dataT = dataT.slice(0, -3);
-            dataT = dataT + '|||';
-            if (numParams === 0) {
-                showMsg('modal_msj', 'aceptar', 'Debe completar al menos un campo de cada transformador.');
-                return false;
-            }
-        });
-        dataT = dataT.slice(0, -3);
-        var sub = getParamsSub();
-        var cct = $.cookie('cookieUCA');
-        //alert(cct);
-        //'tokenUCA': cct, 
-        //console.log(sub)
-        //console.log(dataT);
-        var request = $.ajax({
-            url: "<?= base_url() ?>index.php/subestaciones/crear",
-            type: "POST",
-            data: {'tokenUCA': cct, 'subD': sub, 'transD': dataT, 'tipo': '2'},
-            dataType: "json"
-        });
-        request.done(function(msg, status, XHR) {
-            //var msj = '<?php echo $this->session->flashdata('msj'); ?>';
-            close_modal();
-            showMsgRed('modal_msj', 'aceptar', msg, 'crear');
-
-        });
-        request.fail(function(XHR, textStatus, response) {
-            //console.log(XHR);
-            //console.log(textStatus);
-            //console.log(response);
-            close_modal();
-            showMsg('modal_msj', 'aceptar', 'Ocurrio un error obteniendo los datos, asegurese que su conexion a internet este activa y vuelva a intentarlo');
-        });
     }
     
     function setCheck(){
@@ -226,12 +176,19 @@
     }
     .border-box{padding:14px 12px; border:1px solid #e9e9e9;}
 </style>
-<div align="center" id='jqxWidget'>         
+<div align="center" id='jqxWidget'>
+    <br>
     <h2>SUBESTACIONES</h2>
+    <br>
     <div align="center" style="width:100%; height: 700px;" id="jqxgrid"></div>
 </div>
 <br/>
 <div id="map-canvas" class="map-create"></div>
+<div class="errores_form">
+    <?php
+        echo validation_errors();
+    ?>
+    </div>
 <?php echo form_open('subestaciones/crear_sub','id=subForm'); ?>
 <div id="sub-form">
     <input type="hidden" name="coordX" id="coordX"/>
@@ -285,18 +242,16 @@
         </div>
         
     </div>
-    <?php echo validation_errors(); ?>
     <div class="params">
 
         <div class="prev-step">
         </div>
         <div class="finish-step">
-            <input type="button" id="crear-sub" value="Crear" onclick="javascript:crear_sub();"/>
-            <input type="button" id="fin-sub" value="Guardar" onclick="javascript:validSub();"/>
+            <input type="button" id="crear-sub" value="Crear" onclick="javascript:crear_sub();" style="width:100px;"/>
+            <input type="button" id="fin-sub" value="Guardar" onclick="javascript:validSub();" style="width:100px;"/>
         </div>
-        <div class="next-step">
-            <!--<input type="button" id="next-sub" value="Siguiente >" onclick="javascript:nextStep();"/>-->
-        </div>
+        <br>
+        <br>
     </div>
 </div>
 <?php echo form_close(); ?>

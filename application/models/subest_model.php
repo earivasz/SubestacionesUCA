@@ -8,15 +8,21 @@ class Subest_model extends CI_Model {
         
         public function get_subestaciones()
         {
-            $query = $this->db->get_where('subestacion',array('activo' => '1'));
-            return $query->result_array();
+            
+            $query = "select s.idSubestacion, s.coordX, s.coordY, s.numSubestacion, s.localizacion, s.capacidad, s.conexion, s.activo, f.url 
+                from subestuca.subestacion s left join subestuca.foto f on s.idSubestacion = f.idSubestacion
+                where activo = 1 and (correlFoto = 1 or correlFoto is NULL)";
+            $subs = $this->db->query($query);
+            return $subs->result_array();
+            
         }
         
         public function get_subestaciones_xperfil($idperfil)
         {
-            $query = 'SELECT s.idSubestacion, s.coordX, s.coordY, s.numSubestacion, s.localizacion, s.capacidad, s.conexion, s.activo 
-                FROM subestuca.subestacion s inner join subestuca.perfilxsubest pxs on s.idSubestacion = pxs.idSubestacion 
-                where s.activo = 1 and pxs.idPerfil = ?;';
+            $query = 'select s.idSubestacion, s.coordX, s.coordY, s.numSubestacion, s.localizacion, s.capacidad, s.conexion, s.activo, f.url 
+                from subestuca.subestacion s inner join subestuca.perfilxsubest pxs on s.idSubestacion = pxs.idSubestacion
+                left join subestuca.foto f on s.idSubestacion = f.idSubestacion
+                where activo = 1 and pxs.idPerfil = ? and (correlFoto = 1 or correlFoto is NULL);';
             $subs = $this->db->query($query, array($idperfil));
             return $subs->result_array();
         }
@@ -111,30 +117,35 @@ class Subest_model extends CI_Model {
                     $this->db->trans_rollback();
                     $allgood = 0;
                 }
+            else{
             //luego hago insert por cada subestacion
-            foreach ($arrSubs as $sub) {
-                $data = array(
-                    'idPerfil' => '3',
-                    'idSubestacion' => $sub,
-                );
-                $this->db->insert('perfilxsubest', $data);
-                if ($this->db->trans_status() === FALSE) {
-                    $this->db->trans_rollback();
-                    $allgood = 0;
+                foreach ($arrSubs as $sub) {
+                    $data = array(
+                        'idPerfil' => '3',
+                        'idSubestacion' => $sub,
+                    );
+                    $this->db->insert('perfilxsubest', $data);
+                    if ($this->db->trans_status() === FALSE) {
+                        $this->db->trans_rollback();
+                        $allgood = 0;
+                    }
+                }
+
+                if($allgood == 1){
+                    $this->set_valsistema('multafp', $multafp);
+                    if ($this->db->trans_status() === FALSE) {
+                            $this->db->trans_rollback();
+                            $allgood = 0;
+                        }
+                }
+                if($allgood == 1){
+                    $this->set_valsistema('multathdi', $multathdi);
+                    if ($this->db->trans_status() === FALSE) {
+                            $this->db->trans_rollback();
+                            $allgood = 0;
+                        }
                 }
             }
-            
-            $this->set_valsistema('multafp', $multafp);
-            if ($this->db->trans_status() === FALSE) {
-                    $this->db->trans_rollback();
-                    $allgood = 0;
-                }
-            $this->set_valsistema('multathdi', $multathdi);
-            if ($this->db->trans_status() === FALSE) {
-                    $this->db->trans_rollback();
-                    $allgood = 0;
-                }
-            
             if($allgood == 1){
                 $this->db->trans_commit();
                 return true;

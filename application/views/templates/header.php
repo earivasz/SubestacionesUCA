@@ -3,7 +3,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Subestaciones UCA</title>
     <link href="<?=base_url()?>css/style.css" rel="stylesheet" type="text/css" />
     <link href="<?=base_url()?>css/styles_menu.css" rel="stylesheet" type="text/css" />
     <link href="<?=base_url()?>css/jqx.base.css" rel="stylesheet" type="text/css" />

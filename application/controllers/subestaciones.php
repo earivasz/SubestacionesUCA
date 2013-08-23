@@ -253,18 +253,42 @@ class Subestaciones extends CI_Controller {
         
         public function set_trans(){
             if($this->input->post('origenCorrecto')){
-                try{
-                    $this->output->enable_profiler(TRUE);
-                    if($this->input->post('isMod')=='True'){
-                        $response = $this->subest_model->update_trans();
-                    }else{
-                        $response=$this->subest_model->set_trans_sub();
+                $this->form_validation->set_rules('noSerie', 'Numero de Serie', 'max_length[24]');
+                $this->form_validation->set_rules('capaTra', 'Capacidad', 'numeric');
+                $this->form_validation->set_rules('fabricante', 'Fabricante', 'max_length[54]');
+                $this->form_validation->set_rules('enfriamiento', 'Enfriamiento', 'max_length[24]');
+                $this->form_validation->set_rules('impedancia', 'Impedancia', 'max_length[24]');
+                $this->form_validation->set_rules('vPrimaria', 'Voltaje Primario', 'max_length[29]');
+                $this->form_validation->set_rules('vSecundario', 'Voltaje Secundario', 'max_length[29]');
+                $this->form_validation->set_rules('rTrans', 'Resistencia Transformador', 'max_length[14]');
+                $this->form_validation->set_rules('polaridad', 'Polaridad', 'max_length[19]');
+                $this->form_validation->set_rules('aterriza', 'Aterrizamiento', 'numeric');
+                $this->form_validation->set_rules('pararrayos', 'Pararrayos', 'numeric');
+                $this->form_validation->set_rules('cuchillas', 'Cuchillas', 'numeric');
+                $this->form_validation->set_rules('activo', 'Activo', 'numeric');
+                $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
+                $this->form_validation->set_message('numeric', 'El campo %s debe tener un valor numerico.');
+                $this->form_validation->set_message('max_length', 'El campo %s debe ser no mayor de %s caracteres.');
+                
+                if ($this->form_validation->run() === FALSE)
+                {
+                        //$this->session->set_flashdata('msj', '%s');
+                        $this->crear_trans();
+                        //redirect(base_url().'index.php/subestaciones/crear_trans');
+                }
+                else{
+                    try{
+                        $this->output->enable_profiler(TRUE);
+                        if($this->input->post('isMod')=='True'){
+                            $response = $this->subest_model->update_trans();
+                            $this->session->set_flashdata('msj', 'El transformador se modifico con éxito');
+                        }else{
+                            $response=$this->subest_model->set_trans_sub();
+                            $this->session->set_flashdata('msj', 'El transformador se creo con éxito');
+                        }
+                    }catch(Exception $e){
+                        $this->session->set_flashdata('msj', 'Ocurrio un problema al momento de recibir su peticion');
                     }
-
-
-                    redirect(base_url().'index.php/subestaciones/crear_trans');
-                }catch(Exception $e){
-                    $this->session->set_flashdata('msj', 'Ocurrio un problema al momento de recibir su peticion');
                     redirect(base_url().'index.php/subestaciones/crear_trans');
                 }
             }
@@ -309,16 +333,19 @@ class Subestaciones extends CI_Controller {
         {
             $this->form_validation->set_rules('coordX', 'Coordenada X', 'required');
             $this->form_validation->set_rules('coordY', 'Coordenada Y', 'required');
-            $this->form_validation->set_rules('numSub', 'Numero Subestacion', 'required');
+            $this->form_validation->set_rules('numSub', 'Numero Subestacion', 'required|numeric');
+            $this->form_validation->set_rules('localizacion', 'Localizacion', 'required|max_length[99]');
+            $this->form_validation->set_rules('capacidad', 'Capacidad', 'numeric');
+            $this->form_validation->set_rules('conexion', 'Conexion', 'max_length[99]');
             $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
+            $this->form_validation->set_message('numeric', 'El campo %s debe tener un valor numerico.');
+            $this->form_validation->set_message('max_length', 'El campo %s debe ser no mayor de %s caracteres.');
 
 
             if ($this->form_validation->run() === FALSE)
             {
-                    //$this->session->set_flashdata('msj', 'Hace falta uno o mas campos obligatorios');
+                    //$this->session->set_flashdata('msj', 'Verifique los campos ingresados, pueden faltar datos obligatorios');
                     $this->crear();
-
-
             }
             else
             {
@@ -328,23 +355,15 @@ class Subestaciones extends CI_Controller {
                             $this->session->set_flashdata('msj', 'Subestacion modificada con exito.');
 
                         }else{
-                            $this->session->set_flashdata('msj', 'La subetacion no pudo ser modificada');
-                            //$this->crear();
-                            //echo json_encode('error');
-                            //$this->load->view('subestaciones/errordb');
+                            $this->session->set_flashdata('msj', 'La Subestacion no pudo ser modificada');
                         }
                     }else{
                         $response = $this->subest_model->set_subest();
-                    
-                        //$response = true;
                         if($response){
                             $this->session->set_flashdata('msj', 'Subestacion creada con exito.');
 
                         }else{
-                            $this->session->set_flashdata('msj', 'La subetacion no pudo ser creada');
-                            //$this->crear();
-                            //echo json_encode('error');
-                            //$this->load->view('subestaciones/errordb');
+                            $this->session->set_flashdata('msj', 'La Subestacion no pudo ser creada');
                         }
                     }
                     redirect(base_url().'index.php/subestaciones/crear_sub');

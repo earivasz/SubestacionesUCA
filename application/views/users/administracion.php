@@ -147,7 +147,9 @@ if ($msj) {
       
        <table width="100%" align="center" id="tabla_usuario" border="0">
            <td align="center" colspan="3">
-           <h2>LISTA DE USUARIOS</h2>   </td></tr>
+               <br>
+           <h2>LISTA DE USUARIOS</h2> <br>  </td></tr>
+       
    <tr><td  colspan="3">
    <div align="center" id='jqxWidget'>
                

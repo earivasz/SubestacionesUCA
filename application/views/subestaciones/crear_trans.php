@@ -213,19 +213,27 @@
     .border-box{padding:14px 12px; border:1px solid #e9e9e9;}
 </style>
 
-<div align="center" id='jqxWidget'>         
+<div align="center" id='jqxWidget'>  
+    <br>
     <h2>TRANSFORMADORES</h2>
+    <br>
     <div align="center" style="width:100%;" id="jqxgrid"></div>
 </div>
 <br/>
+<div class="errores_form">
+    <?php
+        echo validation_errors();
+    ?>
+    </div>
 <?php
+
     echo form_open('subestaciones/set_trans','id=transForm', array('origenCorrecto' => true));
 ?>
 <input type="hidden" name="isMod" id="isMod" value="False"/>
 <input type="hidden" name="correl" id="correl" value="False"/>
 <div id="trans-form">
     <div id="transformadores">      
-        <div id="trans_1" class="border-box">
+        <div id="trans_1">
             <div class="params-tra-left">
                 <div class="lbl-left">
                     <label for="idSub">Subestacion</label>
@@ -244,7 +252,7 @@
                     <label for="noSerie">Numero de serie</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="noSerie" name="noSerie" />
+                    <input type="input" id="noSerie" name="noSerie" value="<?php echo set_value('noSerie'); ?>" />
                 </div>
             </div>
             <div class="limpiar"></div>
@@ -253,7 +261,7 @@
                     <label for="capaTra">Capacidad</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="capaTra" name="capaTra">
+                    <input type="input" id="capaTra" name="capaTra" value="<?php echo set_value('capaTra'); ?>">
                 </div>
             </div>
             <div class="params-tra-right">
@@ -261,7 +269,7 @@
                     <label for="fabricante">Fabricante</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="fabricante" name="fabricante" />
+                    <input type="input" id="fabricante" name="fabricante" value="<?php echo set_value('fabricante'); ?>" />
                 </div>
             </div>
             <div class="limpiar"></div>
@@ -270,7 +278,7 @@
                     <label for="enfriamiento">Enfriamento</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="enfriamiento" name="enfriamiento" />
+                    <input type="input" id="enfriamiento" name="enfriamiento" value="<?php echo set_value('enfriamiento'); ?>" />
                 </div>
             </div>
             <div class="params-tra-right">
@@ -278,7 +286,7 @@
                     <label for="impedancia">Impedancia</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="impedancia" name="impedancia" />
+                    <input type="input" id="impedancia" name="impedancia" value="<?php echo set_value('impedancia'); ?>" />
                 </div>
             </div>
             <div class="limpiar"></div>
@@ -287,7 +295,7 @@
                     <label for="vPrimaria">Voltaje primario</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="vPrimaria" name="vPrimaria" />
+                    <input type="input" id="vPrimaria" name="vPrimaria" value="<?php echo set_value('vPrimaria'); ?>" />
                 </div>
             </div>
             
@@ -296,7 +304,7 @@
                     <label for="vSecundario">Voltaje secundario</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="vSecundario" name="vSecundario" />
+                    <input type="input" id="vSecundario" name="vSecundario" value="<?php echo set_value('vSecundario'); ?>" />
                 </div>
             </div>
             <div class="limpiar"></div>
@@ -305,7 +313,7 @@
                     <label for="rTrans">Resistencia transformador</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="rTrans" name="rTrans" />
+                    <input type="input" id="rTrans" name="rTrans" value="<?php echo set_value('rTrans'); ?>"  />
                 </div>
             </div>
             
@@ -314,7 +322,7 @@
                     <label for="polaridad">Polaridad</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="polaridad" name="polaridad" />
+                    <input type="input" id="polaridad" name="polaridad" value="<?php echo set_value('polaridad'); ?>" />
                 </div>
             </div>
             <div class="limpiar"></div>
@@ -361,12 +369,9 @@
 
     </div>
     <div class="params" id="but-trans">
-        <div class="prev-step">
-            <!--<input type="button" id="prev-sub" value="< Anterior" onclick="javascript:prevStep();"/>-->
-        </div>
         <div class="finish-step">
-            <input type="button" id="crear-sub" value="Crear" onclick="javascript:crear_trans();"/>
-            <input type="button" id="add-trans" value="Guardar" onclick="javascript:validTrans();"/>
+            <input type="button" id="crear-sub" value="Crear" onclick="javascript:crear_trans();" style="width:100px;"/>
+            <input type="button" id="add-trans" value="Guardar" onclick="javascript:validTrans();" style="width:100px;"/>
         </div>
         <div class="next-step">
             <!--<input type="button" id="fin-trans" value="Finalizar" onclick="javascript:validTrans();"/>-->
