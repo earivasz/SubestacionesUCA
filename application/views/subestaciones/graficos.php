@@ -10,7 +10,6 @@
 <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxcheckbox.js"></script> 
 <script type="text/javascript" src="<?=base_url()?>jqwidgets/jqxlistbox.js"></script> 
 <script type="text/javascript" src="<?=base_url()?>jqwidgets/gettheme.js"></script>
-
 <script type="text/javascript" src="<?=base_url()?>js/jquery.ui.core.js"></script>
 <script type="text/javascript" src="<?=base_url()?>js/jquery.ui.datepicker.js"></script>
 <script type="text/javascript" src="<?=base_url()?>js/date.js"></script>
@@ -564,7 +563,7 @@ var setListaCB = function(f1, f2, f3){
   </div>
   <div style="width: 100%; text-align:center;"><h2 style="margin: 5px 5px 20px 20px;">GRAFICOS <?php echo (($tipo == 'pri') ? 'TABLA PRINCIPAL' : 'TABLA ARMONICOS ' . (($tipo == 'armi') ? '(CORRIENTE)' : '(VOLTAJE)')) . ', SUBESTACION ' . $subest[0]['numSubestacion'] . ', ' . $subest[0]['localizacion'];?></h2></div>
 <div style="text-align: center; width: 100%; margin-bottom: 20px;">
-    <div style="float:left; margin-left: 175px;">Fecha de inicio<br>
+    <div style="float:left; margin-left: 175px; margin-right: 30px;">Fecha de inicio<br>
     <input name="start-date" id="start-date" class="date-pick" value="Fecha de inicio" /></div>
     <div style="float:left;">Fecha de finalizacion<br>
     <input name="end-date" id="end-date" class="date-pick" value="Fecha fin" /></div>
