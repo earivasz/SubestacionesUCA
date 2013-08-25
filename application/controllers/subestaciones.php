@@ -435,6 +435,7 @@ class Subestaciones extends CI_Controller {
                         $data['tipo'] = $tipo;
                         $data['multafp'] = $this->subest_model->get_valsistema('multafp');
                         $data['multathdi'] = $this->subest_model->get_valsistema('multathdi');
+                        $data['diasConDatos'] = $this->subest_model->get_fechasConDatos($id, $tipo);
                         $this->load->view('templates/header');	
                         $this->load->view('subestaciones/graficos', $data);
                         $this->load->view('templates/footer');
@@ -446,6 +447,7 @@ class Subestaciones extends CI_Controller {
                             $data['tipo'] = $tipo;
                             $data['multafp'] = $this->subest_model->get_valsistema('multafp');
                             $data['multathdi'] = $this->subest_model->get_valsistema('multathdi');
+                            $data['diasConDatos'] = $this->subest_model->get_fechasConDatos($id, $tipo);
                             $this->load->view('templates/header');	
                             $this->load->view('subestaciones/graficos', $data);
                             $this->load->view('templates/footer');
