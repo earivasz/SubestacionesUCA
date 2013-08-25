@@ -98,6 +98,17 @@ function fechaValida(s) {
     }
  }
  
+ 
+ function isNumerico(valor){
+    var myRegxp = /^[0-9]*$/;
+    if(myRegxp.test(valor) == false)
+    {
+        return false;
+    }else{
+        return true;
+    }
+ }
+ 
  function submitLogin(){
      var user = $("#user").val();
      var pass = $("#password").val();

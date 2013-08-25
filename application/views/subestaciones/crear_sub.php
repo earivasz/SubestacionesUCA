@@ -12,7 +12,7 @@
 <script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxlistbox.js"></script> 
 <script type="text/javascript" src="<?= base_url() ?>jqwidgets/jqxdropdownlist.js"></script>
 <script type="text/javascript" src="<?= base_url() ?>jqwidgets/gettheme.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.14&sensor=false"></script>
 <script src="<?= base_url() ?>js/maps2.js"></script>
 <script type="text/javascript">
     var numTrans = 1;
@@ -67,6 +67,16 @@
             $("#idSub").val(datarow.idSubestacion);
         });
         
+        $('#numSub').keyup(function() {
+            var $th = $(this);
+            $th.val( $th.val().replace(/[^0-9]/g, function(str) { return ''; } ) );
+        });
+        
+        $('#capacidad').keyup(function() {
+            var $th = $(this);
+            $th.val( $th.val().replace(/[^0-9.]/g, function(str) { return ''; } ) );
+        });
+        
         <?php
         $msj = $this->session->flashdata('msj');
         if ($msj) {
@@ -82,15 +92,27 @@
         var coordY = $('#coordY').val();
         var numSub = $('#numSub').val();
         var loc = $('#localizacion').val();
+        var capa = $('#capacidad').val();
+        var capaN = parseFloat(capa);
         var msj = '';
         if (coordX === '' || coordY === '') {
             msj = msj + '<li>Debe seleccionar un punto en el mapa.</li>';
         }
         if (numSub === '') {
             msj = msj + '<li>Debe completar el campo Numero Subestacion</li>';
+        }else{
+            if(!isNumerico(numSub)){
+                msj = msj + '<li>El campo Numero Subestacion debe ser numerico</li>';
+            }
         }
         if (loc === '') {
             msj = msj + '<li>Debe completar el campo Localizacion</li>';
+        }
+        
+        if(capa != ''){
+            if(capaN == 'NaN'){
+                msj = msj + '<li>El campo Capacidad debe ser entero o decimal.</li>';
+            }
         }
         if (msj !== '') {
             showMsg('modal_msj', 'aceptar', 'Debe completar la siguiente informacion: <br /><ul>' + msj + '</ul>');
@@ -210,7 +232,7 @@
                 <label for="localizacion">Localizacion</label>
             </div>
             <div class="in-right">
-                <input type="input" id="localizacion" name="localizacion">
+                <input type="input" id="localizacion" name="localizacion" maxlength="100">
             </div>
         </div>
         <div class="limpiar"></div>
@@ -228,7 +250,7 @@
                 <label for="conexion">Conexion</label>
             </div>
             <div class="in-right">
-                <input type="input" id="conexion" name="conexion" />
+                <input type="input" id="conexion" name="conexion" maxlength="100"/>
             </div>
         </div>
         <div class="limpiar"></div>

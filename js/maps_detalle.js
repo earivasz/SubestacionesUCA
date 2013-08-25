@@ -1,6 +1,6 @@
 var berlin = new google.maps.LatLng(13.681099, -89.235701);
 var newMarker;
-
+var centro;
 /*var neighborhoods = [
     new google.maps.LatLng(52.511467, 13.447179),
     new google.maps.LatLng(52.549061, 13.422975),
@@ -48,6 +48,7 @@ function addMarker_modificar() {
       map: map,
       animation: google.maps.Animation.DROP
     });
+    map.setCenter(centro);
 }
 
 function addMarker() {
