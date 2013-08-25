@@ -77,6 +77,17 @@
             $th.val( $th.val().replace(/[^0-9.]/g, function(str) { return ''; } ) );
         });
         
+        $('#capacidad').blur(function() {
+            var $th = $(this);
+            var valor = parseFloat($th.val());
+            if(isNaN(valor)){
+                $th.val('');
+            }else{
+                $th.val(valor);
+            }
+            
+        });
+        
         <?php
         $msj = $this->session->flashdata('msj');
         if ($msj) {

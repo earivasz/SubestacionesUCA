@@ -29,7 +29,7 @@ class Subest_model extends CI_Model {
         
         public function getAll_trans()
         {
-            $query = 'SELECT t.*, s.localizacion, CASE WHEN t.aterrizamiento = 1 THEN "ACTIVO" WHEN t.aterrizamiento = 0 THEN "INACTIVO" END AS nomAterr, CASE WHEN t.pararrayos = 1 THEN "ACTIVO" WHEN t.pararrayos = 0 THEN "INACTIVO" END AS nomPara, CASE WHEN t.cuchillas = 1 THEN "ACTIVO" WHEN t.cuchillas = 0 THEN "INACTIVO" END AS nomCuchillas, CASE WHEN t.activoTrans = 1 THEN "ACTIVO" WHEN t.activoTrans = 0 THEN "INACTIVO" END AS nomActivo FROM subestuca.transformador t INNER JOIN subestuca.subestacion s ON t.idSubestacion = s.idSubestacion;';
+            $query = 'SELECT t.*, s.localizacion, CASE WHEN t.aterrizamiento = 1 THEN "SI" WHEN t.aterrizamiento = 0 THEN "NO" END AS nomAterr, CASE WHEN t.pararrayos = 1 THEN "SI" WHEN t.pararrayos = 0 THEN "NO" END AS nomPara, CASE WHEN t.cuchillas = 1 THEN "SI" WHEN t.cuchillas = 0 THEN "NO" END AS nomCuchillas, CASE WHEN t.activoTrans = 1 THEN "ACTIVO" WHEN t.activoTrans = 0 THEN "INACTIVO" END AS nomActivo FROM subestuca.transformador t INNER JOIN subestuca.subestacion s ON t.idSubestacion = s.idSubestacion;';
             //$query = $this->db->get('transformador');
             $trans = $this->db->query($query);
             return $trans->result_array();
@@ -377,15 +377,15 @@ class Subest_model extends CI_Model {
                 }
                 $aterrizamiento = $this->input->post('aterriza');
                 if($aterrizamiento==''){
-                    $aterrizamiento = null;
+                    $aterrizamiento = 0;
                 }
                 $pararrayos = $this->input->post('pararrayos');
                 if($pararrayos==''){
-                    $pararrayos = null;
+                    $pararrayos = 0;
                 }
                 $cuchillas = $this->input->post('cuchillas');
                 if($cuchillas==''){
-                    $cuchillas = null;
+                    $cuchillas = 0;
                 }
                 $idSub = $this->input->post('idSub');
                 $data = $this->correl_get($idSub);

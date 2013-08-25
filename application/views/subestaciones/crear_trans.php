@@ -52,6 +52,22 @@
             ]
         });
         
+        $('#capaTra').keyup(function() {
+            var $th = $(this);
+            $th.val( $th.val().replace(/[^0-9.]/g, function(str) { return ''; } ) );
+        });
+        
+        $('#capaTra').blur(function() {
+            var $th = $(this);
+            var valor = parseFloat($th.val());
+            if(isNaN(valor)){
+                $th.val('');
+            }else{
+                $th.val(valor);
+            }
+            
+        });
+        
         $("#jqxgrid").jqxGrid('autoresizecolumns');
         
         $("#jqxgrid").bind('rowselect', function(event) {
@@ -112,7 +128,11 @@
             var idDiv=$(this).attr('id');
             numParams = 0;
             $('#'+idDiv+' :input[type="input"]').each(function(){
-                var valor = $(this).val();
+                var valor = $.trim($(this).val());
+                var id = $(this).attr('id');
+                if (id=='capaTra' && valor!=''){
+                    
+                }
                 if(valor!==''){
                     numParams++;
                 }
@@ -252,7 +272,7 @@
                     <label for="noSerie">Numero de serie</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="noSerie" name="noSerie" value="<?php echo set_value('noSerie'); ?>" />
+                    <input type="input" id="noSerie" name="noSerie" value="<?php echo set_value('noSerie'); ?>" maxlength="25"/>
                 </div>
             </div>
             <div class="limpiar"></div>
@@ -269,7 +289,7 @@
                     <label for="fabricante">Fabricante</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="fabricante" name="fabricante" value="<?php echo set_value('fabricante'); ?>" />
+                    <input type="input" id="fabricante" name="fabricante" value="<?php echo set_value('fabricante'); ?>" maxlength="55"/>
                 </div>
             </div>
             <div class="limpiar"></div>
@@ -278,7 +298,7 @@
                     <label for="enfriamiento">Enfriamento</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="enfriamiento" name="enfriamiento" value="<?php echo set_value('enfriamiento'); ?>" />
+                    <input type="input" id="enfriamiento" name="enfriamiento" value="<?php echo set_value('enfriamiento'); ?>" maxlength="25"/>
                 </div>
             </div>
             <div class="params-tra-right">
@@ -286,7 +306,7 @@
                     <label for="impedancia">Impedancia</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="impedancia" name="impedancia" value="<?php echo set_value('impedancia'); ?>" />
+                    <input type="input" id="impedancia" name="impedancia" value="<?php echo set_value('impedancia'); ?>" maxlength="25"/>
                 </div>
             </div>
             <div class="limpiar"></div>
@@ -295,7 +315,7 @@
                     <label for="vPrimaria">Voltaje primario</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="vPrimaria" name="vPrimaria" value="<?php echo set_value('vPrimaria'); ?>" />
+                    <input type="input" id="vPrimaria" name="vPrimaria" value="<?php echo set_value('vPrimaria'); ?>" maxlength="30"/>
                 </div>
             </div>
             
@@ -304,16 +324,16 @@
                     <label for="vSecundario">Voltaje secundario</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="vSecundario" name="vSecundario" value="<?php echo set_value('vSecundario'); ?>" />
+                    <input type="input" id="vSecundario" name="vSecundario" value="<?php echo set_value('vSecundario'); ?>" maxlength="30"/>
                 </div>
             </div>
             <div class="limpiar"></div>
             <div class="params-tra-left">
                 <div class="lbl-left">
-                    <label for="rTrans">Resistencia transformador</label>
+                    <label for="rTrans">Relacion de transformacion</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="rTrans" name="rTrans" value="<?php echo set_value('rTrans'); ?>"  />
+                    <input type="input" id="rTrans" name="rTrans" value="<?php echo set_value('rTrans'); ?>"  maxlength="15"/>
                 </div>
             </div>
             
@@ -322,7 +342,7 @@
                     <label for="polaridad">Polaridad</label>
                 </div>
                 <div class="in-right">
-                    <input type="input" id="polaridad" name="polaridad" value="<?php echo set_value('polaridad'); ?>" />
+                    <input type="input" id="polaridad" name="polaridad" value="<?php echo set_value('polaridad'); ?>" maxlength="20"/>
                 </div>
             </div>
             <div class="limpiar"></div>
