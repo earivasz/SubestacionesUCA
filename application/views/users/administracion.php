@@ -54,7 +54,21 @@
                 });
                 
                 $("#jqxgrid").jqxGrid('autoresizecolumns');
-                
+        $('.trimI').blur(function(){
+            var $th = $(this);
+            var valor = $.trim($th.val());
+            $th.val(valor);
+        });
+        
+        $('#nomUser').keyup(function(){
+            var $th = $(this);
+            $th.val( $th.val().replace(/[^a-zA-Z ]/g, function(str) { return ''; } ) );
+        });
+        
+        $('#apel').keyup(function(){
+            var $th = $(this);
+            $th.val( $th.val().replace(/[^a-zA-Z ]/g, function(str) { return ''; } ) );
+        });
         $("#jqxgrid").bind('rowselect', function(event) {
             var row = event.args.rowindex;
             var datarow = $("#jqxgrid").jqxGrid('getrowdata', row);
@@ -162,23 +176,23 @@ if ($msj) {
         echo '<tr><td width=40%">';
         echo form_open('login/crear_user', 'id="userForm"');
         echo '</td><td width="5%"></td><td width="55%">';
-        echo form_input(array('name' => 'isMod', 'type' => 'hidden', 'id' => 'isMod', 'value' => 'False'));
+        echo form_input(array('name' => 'isMod', 'type' => 'hidden', 'id' => 'isMod', 'value' => 'False', 'class' => 'trimI'));
         echo '</td><td></td></tr><tr align="right"><td>';
         echo form_label('Usuario:', 'usuario');
         echo '</td></td><td><td align="left">';
-        echo form_input(array('name' => 'usuario', 'type' => 'text', 'id' => 'usuario'));
+        echo form_input(array('name' => 'usuario', 'type' => 'text', 'id' => 'usuario', 'class' => 'trimI', 'maxlength' => '10'));
         echo '</td><td></td></tr><tr  align="right"><td>';
         echo form_label('Nombre:', 'nomUser');
         echo '</td></td><td><td align="left">';
-        echo form_input(array('name' => 'nomUser', 'type' => 'text', 'id' => 'nomUser'));
+        echo form_input(array('name' => 'nomUser', 'type' => 'text', 'id' => 'nomUser', 'class' => 'trimI', 'maxlength' => '50'));
         echo '</td><td></td></tr><tr  align="right"><td>';
         echo form_label('Apellido:', 'apel');
         echo '</td></td><td><td align="left">';
-        echo form_input(array('name' => 'apel', 'type' => 'text', 'id' => 'apel'));
+        echo form_input(array('name' => 'apel', 'type' => 'text', 'id' => 'apel', 'class' => 'trimI', 'maxlength' => '75'));
        echo '</td><td></td></tr><tr  align="right"><td>';
         echo form_label('Correo:', 'correo');
         echo '</td></td><td><td align="left">';
-        echo form_input(array('name' => 'correo', 'type' => 'text', 'id' => 'correo'));
+        echo form_input(array('name' => 'correo', 'type' => 'text', 'id' => 'correo', 'class' => 'trimI', 'maxlength' => '50'));
         echo '</td><td></td></tr><tr  align="right"><td>';
         echo form_label('Estado:', 'estado');
         echo '</td></td><td><td align="left">';

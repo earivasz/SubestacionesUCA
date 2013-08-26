@@ -129,7 +129,7 @@
             showMsg('modal_msj', 'aceptar', 'Debe completar la siguiente informacion: <br /><ul>' + msj + '</ul>');
             return false;
         } else {
-            showMsg('modal_msj', 'loading', 'Un momento mientras el archivo esta siendo cargado');
+            showMsg('modal_msj', 'loading', 'Un momento mientras se procesa su solicitud');
             $("#subForm").submit();
             return true;
         }
@@ -234,7 +234,7 @@
                 <label for="numSub">Numero Subestacion</label>
             </div>
             <div class="in-right">
-                <input type="input" id="numSub" name="numSub" />
+                <input type="input" id="numSub" name="numSub" class="trimI"/>
             </div>
         </div>
         <div class="limpiar"></div>
@@ -243,7 +243,7 @@
                 <label for="localizacion">Localizacion</label>
             </div>
             <div class="in-right">
-                <input type="input" id="localizacion" name="localizacion" maxlength="100">
+                <input type="input" id="localizacion" name="localizacion" maxlength="100" class="trimI" />
             </div>
         </div>
         <div class="limpiar"></div>
@@ -261,7 +261,7 @@
                 <label for="conexion">Conexion</label>
             </div>
             <div class="in-right">
-                <input type="input" id="conexion" name="conexion" maxlength="100"/>
+                <input type="input" id="conexion" name="conexion" maxlength="100" class="trimI"/>
             </div>
         </div>
         <div class="limpiar"></div>
