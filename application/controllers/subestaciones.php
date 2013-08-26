@@ -103,14 +103,22 @@ class Subestaciones extends CI_Controller {
                                 $image_info = getimagesize($_FILES["arrimg"]["tmp_name"][$ar]);
                                 $image_width = $image_info[0];
                                 $image_height = $image_info[1];
-                                $new_width = 300;
-                                $new_height = $image_width/$image_height;
-                                $new_height = $new_width/$new_height;
-                                //jpeg output quality
-                                $quality = 100;
-                                $destimg=imagecreatetruecolor($new_width,$new_height); 
-                                $srcimg=imagecreatefromjpeg($_FILES["arrimg"]["tmp_name"][$ar]); 
-                                imagecopyresized($destimg,$srcimg,0,0,0,0,$new_width,$new_height,ImageSX($srcimg),ImageSY($srcimg)); 
+                                if($image_height > 300){
+                                    $new_width = 300;
+                                    $new_height = $image_width/$image_height;
+                                    $new_height = $new_width/$new_height;
+                                    //jpeg output quality
+                                    $quality = 100;
+                                    $destimg=imagecreatetruecolor($new_width,$new_height); 
+                                    $srcimg=imagecreatefromjpeg($_FILES["arrimg"]["tmp_name"][$ar]); 
+                                    imagecopyresized($destimg,$srcimg,0,0,0,0,$new_width,$new_height,ImageSX($srcimg),ImageSY($srcimg)); 
+                                }
+                                else{
+                                    $quality = 100;
+                                    $destimg=imagecreatetruecolor($image_width,$image_height); 
+                                    $srcimg=imagecreatefromjpeg($_FILES["arrimg"]["tmp_name"][$ar]); 
+                                    imagecopyresized($destimg,$srcimg,0,0,0,0,$image_width,$image_height,ImageSX($srcimg),ImageSY($srcimg)); 
+                                }
                                 imagejpeg($destimg,$rutaGuardar . $picnum . '.jpeg',$quality);
                                //move_uploaded_file($_FILES["arrimg"]["tmp_name"][$ar],
                                //$rutaGuardar . $sub . '/' . $picnum . '.jpeg');

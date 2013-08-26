@@ -22,6 +22,7 @@
         
         Seleccione una Subestacion:
         <select onchange="javascript:setSub(this);" style="height:25px; width: 150px; font-size:14px; position: relative; top:0px;">
+            <option value="#">Seleccione una Subestación</option>
             <?php foreach ($subest as $subest_item): ?>
             <option value="<?php echo $subest_item['idSubestacion'] ?>"><?php echo $subest_item['localizacion'] ?></option>
             <?php endforeach ?>

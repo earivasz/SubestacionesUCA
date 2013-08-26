@@ -19,7 +19,7 @@
     endforeach;       
     ?>
     $(document).ready( function(){
-         $('#slideshowHolder').jqFancyTransitions({ width: 300, height: 200, navigation: true });
+         $('#slideshowHolder').jqFancyTransitions({ width: 300, height: 250, navigation: true });
          //$("#cssmenu .active").removeClass(".active");
          //$('#cssmenu ul li[id=cssmenu1]')("refresh");
          //$('#cssmenu ul li[id=cssmenu2]').addClass("active");
