@@ -43,7 +43,7 @@
 <div id="map-canvas" class="map-create"></div>
 <br>
 <h2 class="subtitles" align="center">INFORMACIÓN GENERAL</h2>
-       <div style="width:100%; height:230px;">
+       <div style="width:100%; height:250px;">
            <div style="float:left; width:300px; margin-left:20px;">
                <?php 
                 echo "";
