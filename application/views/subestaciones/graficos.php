@@ -607,9 +607,9 @@ var setListaCB = function(f1, f2, f3){
         if ($tipo == 'pri'){
             echo '<div id="filtrosPri" style="height:50px;">
                 Fase: <br>
-                <input type="checkbox" name="fase1" id="cboxfase1">1
-                <input type="checkbox" name="fase2" id="cboxfase2">2
-                <input type="checkbox" name="fase3" id="cboxfase3">3
+                <input type="checkbox" name="fase1" id="cboxfase1" style="width:15px;">1
+                <input type="checkbox" name="fase2" id="cboxfase2" style="width:15px;">2
+                <input type="checkbox" name="fase3" id="cboxfase3" style="width:15px;">3
                 </div>
                 <div id="jqxlistbox"></div>
                 <button style="width: 135px; height: 25px;" onClick="graficaPri()" name="graficarPri">Graficar</button>';
