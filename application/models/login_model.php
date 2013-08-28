@@ -69,7 +69,7 @@ class Login_model extends CI_Model {
             }
         }else{
             //echo 'FALSE';
-            //$this->session->set_flashdata('usuario_incorrecto','Los datos introducidos son incorrectos');
+            $this->session->set_flashdata('msj', 'Usuario o contraseña incorrecta.');
             redirect(base_url().'index.php/login');
         }
     }
