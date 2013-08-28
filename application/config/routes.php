@@ -56,7 +56,7 @@ $route['archivos/mantenimiento'] = 'archivos/mant_archivos';
 $route['archivos/set_archivo'] = 'archivos/set_archivo';
 //$route['excel'] = 'excel';
 //$route['excel/importar'] = 'excel/importar_line';
-
+$route['login'] = 'login/index';
 $route['login/new_user'] = 'login/new_user';
 $route['login/logout_ci'] = 'login/logout_ci';
 $route['login/crear_user'] = 'login/crear_user';

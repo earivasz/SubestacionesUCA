@@ -287,6 +287,12 @@ class Subest_model extends CI_Model {
                 $conexion = $this->input->post('conexion');
             }
             
+            if($this->input->post('activo')==''){
+                $activo = 0;
+            }else{
+                $activo = 1;
+            }
+            
             $data = array(
               'coordX' => $this->input->post('coordX'),
                 'coordY' => $this->input->post('coordY'),
@@ -294,7 +300,7 @@ class Subest_model extends CI_Model {
                 'localizacion' => $localizacion,
                 'capacidad' => $capacidad,
                 'conexion' => $conexion,
-                'activo' => $this->input->post('activo')
+                'activo' => $activo
             );
             
             $this->db->where('idSubestacion', $id);
