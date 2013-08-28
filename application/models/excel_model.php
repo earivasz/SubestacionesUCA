@@ -71,7 +71,7 @@ class Excel_model extends CI_Model {
             }
         } catch (Exception $e) {
             //die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
-            $this->session->set_flashdata('msj', $e);
+            $this->session->set_flashdata('msj', $e->getMessage());
             $this->db->trans_rollback();
             return FALSE;
         }
