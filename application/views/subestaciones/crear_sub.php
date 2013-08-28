@@ -144,7 +144,9 @@
     }
     
     function crear_sub() {
-        newMarker.setPosition(null);
+        if(newMarker){
+            newMarker.setPosition(null);
+        }
         $("#numSub").removeAttr('readonly');
         $("#coordX").val('');
         $("#coordY").val('');
