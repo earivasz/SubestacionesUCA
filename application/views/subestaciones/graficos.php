@@ -295,10 +295,6 @@ $(document).ready( function(){
       }
       //console.log(arrColsGraf);
       recargarGrafico('principal', arrColsGraf, '', 0);
-      document.getElementById("cboxfase1").checked = true;
-      document.getElementById("cboxfase2").checked = true;
-      document.getElementById("cboxfase3").checked = true;
-      
   };
   
   var graficaPredef = function(tipoGrafico){
@@ -432,6 +428,9 @@ $(document).ready( function(){
                   $("#graficosPredefinidos").children().prop('disabled',false);
                   $("#filtrosPri").children().prop('disabled',false);
                   close_modal();
+                  $('#cboxfase1').prop('checked', true);
+                  $('#cboxfase2').prop('checked', true);
+                  $('#cboxfase3').prop('checked', true);
                 });
                 request.fail(function(XHR, textStatus, response) {
                   close_modal();

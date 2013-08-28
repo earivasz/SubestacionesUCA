@@ -145,9 +145,6 @@
     }
     
     function crear_sub() {
-        if(newMarker){
-            newMarker.setPosition(null);
-        }
         $("#numSub").removeAttr('readonly');
         $("#coordX").val('');
         $("#coordY").val('');
@@ -158,7 +155,9 @@
         $('#activo').prop('checked',true);
         $('#activo').val('1');
         $("#isMod").val('False');
-        newMarker.setPosition(null);
+        if(newMarker){
+            newMarker.setPosition(null);
+        }
     }
     
 </script>
