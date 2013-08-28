@@ -171,9 +171,9 @@
         $("#vSecundario").val('');
         $("#rTrans").val('');
         $("#polaridad").val('');
-        $("#aterriza").val('');
-        $("#pararrayos").val('');
-        $("#cuchillas").val('');
+        $("#aterriza").prop('checked',false);
+        $("#pararrayos").prop('checked',false);
+        $("#cuchillas").prop('checked',false);
         $("#isMod").val('False');
         $('#activo').prop('checked',true);
         $("#activo").val('1');

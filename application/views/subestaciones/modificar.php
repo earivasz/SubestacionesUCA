@@ -1,4 +1,4 @@
-<script src="https://maps.googleapis.com/maps/api/js?v=3.14&sensor=false"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.13&sensor=false"></script>
 <script src="<?=base_url()?>js/maps2.js"></script>
 <script>
     var neighborhoods = [
