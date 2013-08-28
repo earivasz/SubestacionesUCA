@@ -295,6 +295,9 @@ $(document).ready( function(){
       }
       //console.log(arrColsGraf);
       recargarGrafico('principal', arrColsGraf, '', 0);
+      $('#cboxfase1').attr('checked', true);
+        $('#cboxfase2').attr('checked', true);
+        $('#cboxfase3').attr('checked', true);
   };
   
   var graficaPredef = function(tipoGrafico){

@@ -39,7 +39,7 @@
     <h4>Selecciones subestaciones visibles a INVITADOS:</h4>
     <?php 
         foreach($subest as $sub){
-            echo '<input type="checkbox" name="sub' . $sub['idSubestacion'] . '" value="' . $sub['idSubestacion'] .'" ' . (($sub['idPerfil'] == '3') ? 'checked="true"' : '') . '>' . $sub['numSubestacion'] . ', ' . $sub['localizacion'] . '<br>';
+            echo '<input style="width:20px;" type="checkbox" name="sub' . $sub['idSubestacion'] . '" value="' . $sub['idSubestacion'] .'" ' . (($sub['idPerfil'] == '3') ? 'checked="true"' : '') . '>' . $sub['numSubestacion'] . ', ' . $sub['localizacion'] . '<br>';
         }
     ?>
 </div>
