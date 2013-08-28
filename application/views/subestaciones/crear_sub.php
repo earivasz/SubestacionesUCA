@@ -145,12 +145,9 @@
     }
     
     function crear_sub() {
-<<<<<<< HEAD
-=======
         if(newMarker){
             newMarker.setPosition(null);
         }
->>>>>>> 93fba42aef71c5ec7edcf7d0596428ac000d6212
         $("#numSub").removeAttr('readonly');
         $("#coordX").val('');
         $("#coordY").val('');
