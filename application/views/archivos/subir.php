@@ -71,7 +71,7 @@ if ($msj) {
  </td><td>
 <textarea align="center" name="notas"></textarea><br />
 <br>  
-<input align="center" type="submit" name="submit_me" id="submitArch" value="Subir Cargas" />
+<input align="center" type="submit" name="submit_me" id="submitArch" value="Subir Archivo" />
     
 <?php echo form_close(); ?>
     

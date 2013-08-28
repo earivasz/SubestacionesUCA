@@ -85,7 +85,7 @@ if ($msj) {
 <textarea name="notas"></textarea><br />
 <br/>
     
-<input type="submit" id="submitArch" name="submit" value="Subir Cargas" />
+<input type="submit" id="submitArch" name="submit" value="Subir Archivo" />
     
 
 </table>
