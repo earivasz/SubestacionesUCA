@@ -19,6 +19,7 @@
     var numId = 1;
     window.onload = function() {
         arreglo_completo = <?php echo json_encode($subs); ?>;
+         //$("crear-sub").attr("disabled", "disabled");
         //AQUI IBA EL CODIGO DEL GRID ANTERIOR
         //console.log(arreglo_completo);
         //var theme = getDemoTheme();
@@ -144,7 +145,6 @@
     }
     
     function crear_sub() {
-        newMarker.setPosition(null);
         $("#numSub").removeAttr('readonly');
         $("#coordX").val('');
         $("#coordY").val('');
@@ -155,6 +155,7 @@
         $('#activo').prop('checked',true);
         $('#activo').val('1');
         $("#isMod").val('False');
+        newMarker.setPosition(null);
     }
     
 </script>
@@ -280,7 +281,7 @@
         <div class="prev-step">
         </div>
         <div class="finish-step">
-            <input type="button" id="crear-sub" value="Crear" onclick="javascript:crear_sub();" style="width:100px;"/>
+            <input type="button" id="crear-sub" value="Limpiar" onclick="javascript:crear_sub();" style="width:100px;"/>
             <input type="button" id="fin-sub" value="Guardar" onclick="javascript:validSub();" style="width:100px;"/>
         </div>
         <br>

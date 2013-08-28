@@ -295,9 +295,10 @@ $(document).ready( function(){
       }
       //console.log(arrColsGraf);
       recargarGrafico('principal', arrColsGraf, '', 0);
-      $('#cboxfase1').attr('checked', true);
-        $('#cboxfase2').attr('checked', true);
-        $('#cboxfase3').attr('checked', true);
+      document.getElementById("cboxfase1").checked = true;
+      document.getElementById("cboxfase2").checked = true;
+      document.getElementById("cboxfase3").checked = true;
+      
   };
   
   var graficaPredef = function(tipoGrafico){
