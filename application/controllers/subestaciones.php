@@ -286,13 +286,13 @@ class Subestaciones extends CI_Controller {
                 }
                 else{
                     try{
-                        $this->output->enable_profiler(TRUE);
+                        //$this->output->enable_profiler(TRUE);
                         if($this->input->post('isMod')=='True'){
                             $response = $this->subest_model->update_trans();
-                            $this->session->set_flashdata('msj', 'El transformador se modifico con éxito');
+                            //$this->session->set_flashdata('msj', 'El transformador se modifico con éxito');
                         }else{
                             $response=$this->subest_model->set_trans_sub();
-                            $this->session->set_flashdata('msj', 'El transformador se creo con éxito');
+                            //$this->session->set_flashdata('msj', 'El transformador se creo con éxito');
                         }
                     }catch(Exception $e){
                         $this->session->set_flashdata('msj', 'Ocurrio un problema al momento de recibir su peticion');
