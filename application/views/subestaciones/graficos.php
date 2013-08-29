@@ -565,7 +565,8 @@ var setListaCB = function(f1, f2, f3){
         ?>
   </div>
   <div style="width: 100%; text-align:center;"><h2 style="margin: 5px 5px 20px 20px;">GRAFICOS <?php echo (($tipo == 'pri') ? 'TABLA PRINCIPAL' : 'TABLA ARMONICOS ' . (($tipo == 'armi') ? '(CORRIENTE)' : '(VOLTAJE)')) . ', SUBESTACION ' . $subest[0]['numSubestacion'] . ', ' . $subest[0]['localizacion'];?></h2></div>
-<div style="text-align: center; width: 100%; margin-bottom: 20px;">
+  <div style="text-align: center; width: 100%; margin-bottom: 20px;">Seleccione un rango de fechas:</div>
+  <div style="text-align: center; width: 100%; margin-bottom: 20px;">
     <div style="float:left; margin-left: 175px; margin-right: 30px;">Fecha de inicio<br>
     <input name="start-date" id="start-date" class="date-pick" value="Fecha de inicio" /></div>
     <div style="float:left;">Fecha de finalizacion<br>
@@ -604,12 +605,16 @@ var setListaCB = function(f1, f2, f3){
   </div>
 <div style="height: 40px; font-size: 30px; text-align: center; width:100%;">Datos de tabla</div>
 <div id='jqxWidget' style="height: 400px;">
-        
+        <?php 
+        if ($tipo != 'pri'){
+              echo '<div style="width:100%; text-align:center;">Seleccione una fila para ver su grafica</div>';
+        }
+        ?>
         <div style="height: 400px;  float:left;" id="jqxgrid"></div>
         <?php 
         if ($tipo == 'pri'){
             echo '<div id="filtrosPri" style="height:50px;">
-                Fase: <br>
+                Filtrado por fase: <br>
                 <input type="checkbox" name="fase1" id="cboxfase1" style="width:15px;">1
                 <input type="checkbox" name="fase2" id="cboxfase2" style="width:15px;">2
                 <input type="checkbox" name="fase3" id="cboxfase3" style="width:15px;">3

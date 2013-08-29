@@ -4,7 +4,7 @@
 
 </div>
 <div id="separacion_abajo" style=""></div>
-        <div id="footer">Universidad Centroamericana "José Simeón Cañas"<br />2013</div>
+        <div id="footer">Universidad Centroamericana "José Simeón Cañas"<br />Departamento de Electrónica e Informática 2013</div>
     </div>
 </body>
 </html>
