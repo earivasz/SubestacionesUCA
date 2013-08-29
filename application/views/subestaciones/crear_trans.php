@@ -396,7 +396,7 @@
     </div>
     <div class="params" id="but-trans">
         <div class="finish-step">
-            <input type="button" id="crear-sub" value="Crear" onclick="javascript:crear_trans();" style="width:100px;"/>
+            <input type="button" id="crear-sub" value="Limpiar" onclick="javascript:crear_trans();" style="width:100px;"/>
             <input type="button" id="add-trans" value="Guardar" onclick="javascript:validTrans();" style="width:100px;"/>
         </div>
         <div class="next-step">

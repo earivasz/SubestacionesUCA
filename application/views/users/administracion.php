@@ -21,7 +21,7 @@
     var myGrid;
     window.onload = function() {
         //******************CARGA DE TABLA
-        $("#usuario").attr('readonly', 'readonly');
+        //$("#usuario").attr('readonly', 'readonly');
         arreglo_completo = <?php echo json_encode($usuarios); ?>;
         //AQUI IBA EL CODIGO DEL GRID ANTERIOR
 
@@ -214,7 +214,7 @@ if ($msj) {
             }
         endforeach;
         echo '</select> </td><td></td></tr><tr><td colspan="3">&nbsp;</td></tr><tr align="left"><td  colspan="2"></td><td>';
-        echo form_button('crear', 'Crear', 'id="crear" onclick="javascript:crear_user();"');
+        echo form_button('crear', 'Limpiar', 'id="crear" onclick="javascript:crear_user();"');
         echo form_button('save', 'Guardar', 'id="guardar" onclick="javascript:submit_user();"');
         echo '</td></tr>';
         echo form_close();
