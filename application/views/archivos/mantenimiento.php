@@ -153,8 +153,8 @@ function validArch() {
         padding-left: 10px;
     }
 </style>
-<div align="center" id='jqxWidget'>         
-    <h2>ARCHIVOS</h2>
+<div align="center" id='jqxWidget'><br>      
+    <h2>ARCHIVOS</h2><br>
     <div align="center" style="width:100%; height: 700px;" id="jqxgrid"></div>
 </div>
 <br/>
