@@ -156,21 +156,21 @@ class Subest_model extends CI_Model {
         
         public function get_fechasConDatos($idSub, $tipo){
             if($tipo == 'pri'){
-                $query = $this->db->query("select distinct DATE_FORMAT(fechaHora, '%d-%m-%Y') as dia 
-                from subestuca.tiempo t inner join subestuca.datop dp 
+                $query = $this->db->query("select distinct DATE_FORMAT(fechaHora, '%d-%m-%Y') as dia
+                from subestuca.datop dp inner join subestuca.tiempo t on dp.idTiempo = t.idTiempo
                 where dp.idSubestacion = ?;", array($idSub));
                 return $query->result_array();
             }
             else{
                 if($tipo == 'armv'){
                     $query = $this->db->query("select distinct DATE_FORMAT(fechaHora, '%d-%m-%Y') as dia 
-                    from subestuca.tiempo t inner join subestuca.datov dv 
+                    from subestuca.datov dv inner join subestuca.tiempo t on dv.idTiempo = t.idTiempo
                     where dv.idSubestacion = ?;", array($idSub));
                     return $query->result_array();
                 }
                 else{//armi
                     $query = $this->db->query("select distinct DATE_FORMAT(fechaHora, '%d-%m-%Y') as dia 
-                    from subestuca.tiempo t inner join subestuca.datoi di 
+                    from subestuca.datoi di inner join subestuca.tiempo t on di.idTiempo = t.idTiempo
                     where di.idSubestacion = ?;", array($idSub));
                     return $query->result_array();
                 }
